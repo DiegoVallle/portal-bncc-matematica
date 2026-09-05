@@ -1,0 +1,103 @@
+import Link from "next/link";
+import { redirect, notFound } from "next/navigation";
+import { obterSessao } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { desempenhoPorUnidade } from "@/lib/relatorios";
+import GraficoUnidades from "@/components/GraficoUnidades";
+
+export default async function AlunoDetalhePage({
+  params,
+}: {
+  params: Promise<{ alunoId: string }>;
+}) {
+  const sessao = await obterSessao();
+  if (!sessao || sessao.role !== "professor") redirect("/professor/login");
+
+  const { alunoId } = await params;
+
+  const aluno = await prisma.aluno.findUnique({ where: { id: alunoId } });
+  if (!aluno || aluno.professorId !== sessao.id) notFound();
+
+  const tentativas = await prisma.tentativa.findMany({
+    where: { alunoId, finalizadoEm: { not: null } },
+    orderBy: [{ anoEscolar: "asc" }, { bimestre: "asc" }],
+  });
+
+  const respostas = await prisma.resposta.findMany({
+    where: { tentativa: { alunoId, finalizadoEm: { not: null } } },
+    select: {
+      correta: true,
+      questao: { select: { habilidade: { select: { unidadeTematica: true } } } },
+    },
+  });
+
+  const desempenho = desempenhoPorUnidade(respostas).filter((d) => d.total > 0);
+
+  return (
+    <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12">
+      <p>
+        <Link href="/professor/dashboard" className="text-sm text-slate-600 hover:underline">
+          ← Meus alunos
+        </Link>
+      </p>
+
+      <div className="mt-2">
+        <h1 className="text-2xl font-bold text-slate-900">{aluno.nome}</h1>
+        <p className="text-sm text-slate-600">
+          @{aluno.usuario} · {aluno.anoEscolar}º ano
+        </p>
+      </div>
+
+      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-slate-900">Desempenho por unidade temática</h2>
+        <p className="text-sm text-slate-600">Considera todos os testes finalizados.</p>
+        {respostas.length === 0 ? (
+          <p className="mt-4 text-sm text-slate-600">Este aluno ainda não finalizou nenhum teste.</p>
+        ) : (
+          <div className="mt-4">
+            <GraficoUnidades dados={desempenho} />
+          </div>
+        )}
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-lg font-semibold text-slate-900">Testes realizados</h2>
+        {tentativas.length === 0 ? (
+          <p className="mt-3 text-sm text-slate-600">Nenhum teste finalizado ainda.</p>
+        ) : (
+          <ul className="mt-3 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white shadow-sm">
+            {tentativas.map((t) => {
+              const percentual =
+                t.totalQuestoes > 0 ? Math.round((t.totalAcertos / t.totalQuestoes) * 100) : 0;
+              return (
+                <li key={t.id} className="flex items-center justify-between gap-3 px-5 py-4">
+                  <div>
+                    <p className="font-medium text-slate-900">
+                      {t.anoEscolar}º ano · {t.bimestre}º bimestre
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      {t.finalizadoEm?.toLocaleDateString("pt-BR")}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <p className="font-semibold text-slate-900">
+                      {t.totalAcertos}/{t.totalQuestoes} ({percentual}%)
+                    </p>
+                    <Link
+                      href={`/aluno/resultado/${t.id}/imprimir`}
+                      target="_blank"
+                      className="text-sm text-slate-500 hover:underline"
+                      title="Gerar relatório para impressão"
+                    >
+                      🖨️ Relatório
+                    </Link>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+    </main>
+  );
+}

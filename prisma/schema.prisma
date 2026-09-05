@@ -1,0 +1,108 @@
+// Prisma schema — Portal de Diagnóstico BNCC Matemática (Fundamental I e II)
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Professor {
+  id        String   @id @default(cuid())
+  nome      String
+  email     String   @unique
+  senhaHash String
+  createdAt DateTime @default(now())
+
+  alunos Aluno[]
+}
+
+model Aluno {
+  id         String   @id @default(cuid())
+  nome       String
+  usuario    String   @unique
+  senhaHash  String
+  anoEscolar Int // 1 a 9
+  createdAt  DateTime @default(now())
+
+  professorId String
+  professor   Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
+
+  tentativas Tentativa[]
+}
+
+// Habilidade da BNCC (ex: EF05MA01), associada a um ano, unidade temática e bimestre sugerido
+model Habilidade {
+  id              String @id @default(cuid())
+  codigo          String @unique // EF01MA01 ... EF09MA23
+  anoEscolar      Int
+  unidadeTematica String // NUMEROS | ALGEBRA | GEOMETRIA | GRANDEZAS_MEDIDAS | PROBABILIDADE_ESTATISTICA
+  bimestre        Int // 1 a 4
+  descricao       String
+
+  questoes Questao[]
+}
+
+model Questao {
+  id            String  @id @default(cuid())
+  anoEscolar    Int
+  bimestre      Int
+  enunciado     String
+  explicacao    String
+  ordem         Int     @default(0)
+  ilustracaoSvg String? // SVG inline opcional (figuras geométricas, gráficos, etc.)
+
+  habilidadeId String
+  habilidade   Habilidade @relation(fields: [habilidadeId], references: [id], onDelete: Cascade)
+
+  alternativas Alternativa[]
+  respostas    Resposta[]
+}
+
+model Alternativa {
+  id      String  @id @default(cuid())
+  texto   String
+  correta Boolean @default(false)
+  ordem   Int
+
+  questaoId String
+  questao   Questao @relation(fields: [questaoId], references: [id], onDelete: Cascade)
+
+  respostas Resposta[]
+}
+
+model Tentativa {
+  id            String    @id @default(cuid())
+  anoEscolar    Int
+  bimestre      Int
+  iniciadoEm    DateTime  @default(now())
+  finalizadoEm  DateTime?
+  totalQuestoes Int       @default(0)
+  totalAcertos  Int       @default(0)
+
+  alunoId String
+  aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  respostas Resposta[]
+
+  @@index([alunoId, anoEscolar, bimestre])
+}
+
+model Resposta {
+  id        String   @id @default(cuid())
+  correta   Boolean
+  createdAt DateTime @default(now())
+
+  tentativaId String
+  tentativa   Tentativa @relation(fields: [tentativaId], references: [id], onDelete: Cascade)
+
+  questaoId String
+  questao   Questao @relation(fields: [questaoId], references: [id], onDelete: Cascade)
+
+  alternativaId String
+  alternativa   Alternativa @relation(fields: [alternativaId], references: [id], onDelete: Cascade)
+
+  @@unique([tentativaId, questaoId])
+}
