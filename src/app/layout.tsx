@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Diagnóstico BNCC Matemática",
+  title: "ValeEdu Matemática",
   description: "Testes diagnósticos de Matemática alinhados à BNCC, por ano e bimestre.",
 };
 

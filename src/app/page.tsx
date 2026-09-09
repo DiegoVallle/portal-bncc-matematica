@@ -14,7 +14,7 @@ export default async function Home() {
           BNCC · Matemática · Ensino Fundamental
         </p>
         <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-          Portal de Diagnóstico
+          ValeEdu Matemática
         </h1>
         <p className="mt-4 text-lg text-slate-600">
           Testes diagnósticos de Matemática, organizados por ano escolar (1º ao 9º ano)

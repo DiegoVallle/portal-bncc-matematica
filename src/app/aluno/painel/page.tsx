@@ -30,6 +30,19 @@ export default async function PainelAlunoPage() {
         </form>
       </div>
 
+      <section className="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-slate-900">Trilha de conteúdo</h2>
+        <p className="mt-1 text-sm text-slate-600">
+          Estude teoria, exemplos e pratique exercícios por habilidade, no seu ritmo.
+        </p>
+        <Link
+          href="/aluno/trilha"
+          className="mt-4 inline-block rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+        >
+          Ir para a trilha →
+        </Link>
+      </section>
+
       <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-900">Fazer um teste diagnóstico</h2>
         <p className="mt-1 text-sm text-slate-600">

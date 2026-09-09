@@ -30,7 +30,9 @@ model Aluno {
   professorId String
   professor   Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
 
-  tentativas Tentativa[]
+  tentativas       Tentativa[]
+  tentativasTrilha TentativaQuestaoConteudo[]
+  progressos       ProgressoHabilidade[]
 }
 
 // Habilidade da BNCC (ex: EF05MA01), associada a um ano, unidade temática e bimestre sugerido
@@ -43,6 +45,7 @@ model Habilidade {
   descricao       String
 
   questoes Questao[]
+  conteudo Conteudo?
 }
 
 model Questao {
@@ -71,6 +74,156 @@ model Alternativa {
   questao   Questao @relation(fields: [questaoId], references: [id], onDelete: Cascade)
 
   respostas Resposta[]
+}
+
+// --- Trilha de conteúdo adaptativa (estudo por habilidade: teoria + exemplo +
+// banco de exercícios + progresso/domínio do aluno) ---
+// Modelos próprios, separados do diagnóstico (Questao/Alternativa acima) para não
+// misturar contextos nem exigir filtro por origem em nenhuma tela já existente.
+// "QuestaoConteudo" (não "Questao") evita colidir com o model do diagnóstico.
+
+enum NivelQuestaoConteudo {
+  FACIL
+  MEDIO
+  APOSTILA
+  DESAFIO
+  AVALIACAO
+}
+
+enum TipoRespostaConteudo {
+  MULTIPLA_ESCOLHA
+  NUMERICA
+  TEXTO
+  ORDENACAO
+  CONSTRUCAO
+  SIMULACAO
+  PROJETO
+}
+
+enum TipoErro {
+  CONCEITO
+  PROCEDIMENTO
+  CALCULO
+  INTERPRETACAO
+  REPRESENTACAO
+  PRE_REQUISITO
+  ERRO_NAO_CLASSIFICADO
+}
+
+enum StatusDominio {
+  NAO_INICIADO
+  DIAGNOSTICO
+  EM_APRENDIZAGEM
+  EM_PRATICA
+  DOMINIO_PROVISORIO
+  DOMINADO
+  REVISAO
+  PRE_REQUISITO_PENDENTE
+}
+
+model Conteudo {
+  id               String   @id @default(cuid())
+  objetivoAluno    String? // "Ao final, você consegue..."
+  teoriaBase       String // markdown completo — material de consulta, não exibido inteiro por padrão
+  microBlocos      Json? // blocos curtos p/ tela (CONCEITO|VISUAL|PROCEDIMENTO|ERRO_COMUM|EXEMPLO|TENTE_COMIGO)
+  exemploResolvido String // markdown, passo a passo
+  errosComuns      Json? // más concepções conhecidas da habilidade
+  preRequisitos    Json? // códigos BNCC ou descrições de pré-requisito
+  recursosVisuais  Json? // notas "*Ilustração: ...*" extraídas da teoria, estruturadas
+  ordemPedagogica  Int? // ordem sugerida na trilha, pode diferir da ordem do código BNCC
+  ilustracaoSvg    String? // SVG inline opcional, mesmo padrão de Questao.ilustracaoSvg
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  habilidadeId String     @unique // 1 conteúdo por habilidade
+  habilidade   Habilidade @relation(fields: [habilidadeId], references: [id], onDelete: Cascade)
+
+  questoes   QuestaoConteudo[]
+  progressos ProgressoHabilidade[]
+}
+
+// Exercício aberto da trilha (fácil/médio/apostila/desafio/avaliação final).
+// Formato aberto — resposta esperada em texto, sem alternativas prontas — porque é
+// assim que o banco de conteúdo fornece as questões hoje. `alternativas` fica
+// disponível pra quando algum item ganhar múltipla escolha de verdade.
+// Metadados ricos (subhabilidade, conceito, pré-requisitos, erros prováveis, dicas)
+// são opcionais e não vêm todos preenchidos pelo seed inicial — enriquecimento é
+// incremental (fácil/médio/avaliação primeiro, apostila/desafio depois).
+model QuestaoConteudo {
+  id               String               @id @default(cuid())
+  enunciado        String
+  respostaEsperada String? // gabarito em texto; nulo quando o banco de conteúdo não traz
+  // resposta pra avaliação final (intencional: "sem correção na hora")
+  resolucao        String? // resolução comentada, quando houver
+  nivel            NivelQuestaoConteudo
+  tipoResposta     TipoRespostaConteudo @default(TEXTO)
+  ordem            Int                  @default(0)
+
+  subhabilidade    String? // recorte fino dentro da habilidade, ex: "adicao_de_inteiros_sinais_diferentes"
+  conceitoAvaliado String?
+  preRequisitos    Json? // array de códigos/descrições de pré-requisito
+  errosProvaveis   Json? // array de { codigo, tipo: TipoErro, intervencao }
+  dicas            Json? // array de strings, em ordem de uso
+
+  alternativas  Json? // só usado se tipoResposta = MULTIPLA_ESCOLHA
+  requerImagem  Boolean @default(false)
+  recursoVisual Json?
+  ilustracaoSvg String?
+
+  podeSerDiagnostico Boolean @default(false)
+  podeSerAvaliacao   Boolean @default(false)
+  podeSerRevisao     Boolean @default(true)
+  atividadePratica   Boolean @default(false) // construção/experimento/pesquisa — não deve virar só múltipla escolha
+
+  conteudoId String
+  conteudo   Conteudo @relation(fields: [conteudoId], references: [id], onDelete: Cascade)
+
+  tentativas TentativaQuestaoConteudo[]
+}
+
+// Registro de cada tentativa de resposta do aluno num exercício da trilha —
+// alimenta a seleção adaptativa e a classificação de padrões de erro.
+model TentativaQuestaoConteudo {
+  id            String    @id @default(cuid())
+  resposta      Json?
+  correta       Boolean
+  tipoErro      TipoErro?
+  confiancaErro Float? // 0 a 1 — a classificação de erro é hipótese pedagógica, não certeza
+  usouDica      Boolean   @default(false)
+  dicasUsadas   Int       @default(0)
+  tempoMs       Int?
+  autoavaliada  Boolean   @default(false) // avaliação final sem gabarito automático: o aluno
+  // se autoavalia depois de responder. `correta` guarda o autorrelato — não é
+  // verificação do servidor — e por isso nunca fecha DOMINADO sozinho.
+  criadaEm      DateTime  @default(now())
+
+  alunoId String
+  aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  questaoConteudoId String
+  questaoConteudo   QuestaoConteudo @relation(fields: [questaoConteudoId], references: [id], onDelete: Cascade)
+
+  @@index([alunoId, questaoConteudoId])
+}
+
+// Estado de domínio do aluno em cada habilidade da trilha (1 por aluno × conteúdo).
+model ProgressoHabilidade {
+  id                String        @id @default(cuid())
+  status            StatusDominio @default(NAO_INICIADO)
+  dominio           Float         @default(0)
+  acertosSemAjuda   Int           @default(0)
+  errosConsecutivos Int           @default(0)
+  ultimoTipoErro    TipoErro?
+  proximaRevisaoEm  DateTime?
+  atualizadoEm      DateTime      @updatedAt
+
+  alunoId String
+  aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  conteudoId String
+  conteudo   Conteudo @relation(fields: [conteudoId], references: [id], onDelete: Cascade)
+
+  @@unique([alunoId, conteudoId])
 }
 
 model Tentativa {

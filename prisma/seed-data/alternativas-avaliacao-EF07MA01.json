@@ -1,0 +1,199 @@
+{
+  "habilidadeCodigo": "EF07MA01",
+  "geradoEm": "2026-09-09T16:13:34.129Z",
+  "totalConvertido": 5,
+  "totalNaoConvertido": 0,
+  "convertidos": [
+    {
+      "questaoId": "cmtu6khmx0010gmuvafefroy6",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "AVALIACAO",
+      "ordem": 35,
+      "enunciadoHash": "ab39423ea1695e25",
+      "enunciado": "Calcule o MDC(16, 24).",
+      "respostaEsperadaOriginal": "8",
+      "alternativas": [
+        {
+          "texto": "4",
+          "correta": false
+        },
+        {
+          "texto": "48",
+          "correta": false
+        },
+        {
+          "texto": "8",
+          "correta": true
+        },
+        {
+          "texto": "16",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "48"
+        },
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "16"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx0011gmuvohgl9x0f",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "AVALIACAO",
+      "ordem": 36,
+      "enunciadoHash": "6b35898612528568",
+      "enunciado": "Calcule o MMC(6, 10).",
+      "respostaEsperadaOriginal": "30",
+      "alternativas": [
+        {
+          "texto": "2",
+          "correta": false
+        },
+        {
+          "texto": "60",
+          "correta": false
+        },
+        {
+          "texto": "16",
+          "correta": false
+        },
+        {
+          "texto": "30",
+          "correta": true
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "2"
+        },
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "16"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx0012gmuvshefzxxe",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "AVALIACAO",
+      "ordem": 37,
+      "enunciadoHash": "a13a6ba65bdf1553",
+      "enunciado": "Duas campainhas tocam: uma a cada 15 minutos e outra a cada 25 minutos. Tocando juntas agora, depois de quanto tempo tocam juntas de novo?",
+      "respostaEsperadaOriginal": "75 minutos",
+      "alternativas": [
+        {
+          "texto": "15 minutos",
+          "correta": false
+        },
+        {
+          "texto": "75 minutos",
+          "correta": true
+        },
+        {
+          "texto": "375 minutos",
+          "correta": false
+        },
+        {
+          "texto": "40 minutos",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "15 minutos"
+        },
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "375 minutos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx0013gmuvdgv9ltsr",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "AVALIACAO",
+      "ordem": 38,
+      "enunciadoHash": "0525bbbab0b94571",
+      "enunciado": "Um marceneiro tem duas tábuas de 48 cm e 72 cm e quer cortar as duas em pedaços iguais, do maior tamanho possível, sem sobrar madeira. Qual o tamanho de cada pedaço?",
+      "respostaEsperadaOriginal": "24 cm",
+      "alternativas": [
+        {
+          "texto": "12 cm",
+          "correta": false
+        },
+        {
+          "texto": "144 cm",
+          "correta": false
+        },
+        {
+          "texto": "48 cm",
+          "correta": false
+        },
+        {
+          "texto": "24 cm",
+          "correta": true
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "12 cm"
+        },
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "144 cm"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx0014gmuvlzoeldub",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "AVALIACAO",
+      "ordem": 39,
+      "enunciadoHash": "9d9e17a578d71e85",
+      "enunciado": "Calcule o MMC(4, 6, 9).",
+      "respostaEsperadaOriginal": "36",
+      "alternativas": [
+        {
+          "texto": "1",
+          "correta": false
+        },
+        {
+          "texto": "216",
+          "correta": false
+        },
+        {
+          "texto": "36",
+          "correta": true
+        },
+        {
+          "texto": "12",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "216"
+        },
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "12"
+        }
+      ]
+    }
+  ],
+  "naoConvertidos": []
+}

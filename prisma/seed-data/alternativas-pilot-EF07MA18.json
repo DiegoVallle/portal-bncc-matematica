@@ -1,0 +1,1400 @@
+{
+  "habilidadeCodigo": "EF07MA18",
+  "geradoEm": "2026-09-09T20:17:49.399Z",
+  "totalQuestoes": 40,
+  "totalConvertido": 40,
+  "totalNaoConvertido": 0,
+  "convertidos": [
+    {
+      "questaoId": "cmtu6l2o000jegmuvexg1t4gj",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 0,
+      "enunciadoHash": "3eb3517d64132189",
+      "enunciado": "Resolva: x \\+ 5 \\= 12\\.",
+      "respostaEsperadaOriginal": "x \\= 7",
+      "alternativas": [
+        {
+          "texto": "x = 17",
+          "correta": false
+        },
+        {
+          "texto": "x = 7",
+          "correta": true
+        },
+        {
+          "texto": "x = 60",
+          "correta": false
+        },
+        {
+          "texto": "x = 2,4",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Faça a operação inversa dos dois lados: subtraia 5."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 17"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jfgmuved66by9m",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 1,
+      "enunciadoHash": "7967043ed37ed639",
+      "enunciado": "Resolva: x − 3 \\= 10\\.",
+      "respostaEsperadaOriginal": "x \\= 13",
+      "alternativas": [
+        {
+          "texto": "x = 7",
+          "correta": false
+        },
+        {
+          "texto": "x = 13",
+          "correta": true
+        },
+        {
+          "texto": "x = 30",
+          "correta": false
+        },
+        {
+          "texto": "x = 3,33",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Faça a operação inversa: some 3 dos dois lados."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 7"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jggmuv5oq5x4ln",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 2,
+      "enunciadoHash": "9860a8a77b6a5675",
+      "enunciado": "Resolva: 2x \\= 18\\.",
+      "respostaEsperadaOriginal": "x \\= 9",
+      "alternativas": [
+        {
+          "texto": "x = 16",
+          "correta": false
+        },
+        {
+          "texto": "x = 9",
+          "correta": true
+        },
+        {
+          "texto": "x = 36",
+          "correta": false
+        },
+        {
+          "texto": "x = 20",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Divida os dois lados por 2."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 16"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jhgmuv40mzjlvy",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 3,
+      "enunciadoHash": "ff91cfa60bc3469e",
+      "enunciado": "Resolva: x/3 \\= 4\\.",
+      "respostaEsperadaOriginal": "x \\= 12",
+      "alternativas": [
+        {
+          "texto": "x = 1,33",
+          "correta": false
+        },
+        {
+          "texto": "x = 12",
+          "correta": true
+        },
+        {
+          "texto": "x = 7",
+          "correta": false
+        },
+        {
+          "texto": "x = 4/3",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Multiplique os dois lados por 3."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "x = 1,33"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jigmuvz1d328n6",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 4,
+      "enunciadoHash": "452195de93fbfd12",
+      "enunciado": "Resolva: 2x \\+ 1 \\= 9\\.",
+      "respostaEsperadaOriginal": "x \\= 4",
+      "alternativas": [
+        {
+          "texto": "x = 4,5",
+          "correta": false
+        },
+        {
+          "texto": "x = 4",
+          "correta": true
+        },
+        {
+          "texto": "x = 10",
+          "correta": false
+        },
+        {
+          "texto": "x = 16",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro subtraia 1 dos dois lados, depois divida por 2."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 4,5"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jjgmuvgu2zvwkc",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 5,
+      "enunciadoHash": "16aaea60841469cd",
+      "enunciado": "Resolva: 3x − 2 \\= 13\\.",
+      "respostaEsperadaOriginal": "x \\= 5",
+      "alternativas": [
+        {
+          "texto": "x = 15",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": true
+        },
+        {
+          "texto": "x = 11",
+          "correta": false
+        },
+        {
+          "texto": "x = 45",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro some 2 dos dois lados (3x = 15), depois divida por 3."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 15"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jkgmuvimg4hd9m",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 6,
+      "enunciadoHash": "6388a0eb1ec93ba5",
+      "enunciado": "Resolva: 4x \\= 20\\.",
+      "respostaEsperadaOriginal": "x \\= 5",
+      "alternativas": [
+        {
+          "texto": "x = 16",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": true
+        },
+        {
+          "texto": "x = 80",
+          "correta": false
+        },
+        {
+          "texto": "x = 24",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Divida os dois lados por 4."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 16"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jlgmuvvry3dnha",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 7,
+      "enunciadoHash": "eb09af408d2aeffa",
+      "enunciado": "Resolva: x \\+ 8 \\= 8\\.",
+      "respostaEsperadaOriginal": "x \\= 0",
+      "alternativas": [
+        {
+          "texto": "x = 8",
+          "correta": false
+        },
+        {
+          "texto": "x = 0",
+          "correta": true
+        },
+        {
+          "texto": "x = 16",
+          "correta": false
+        },
+        {
+          "texto": "x = 1",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Subtraia 8 dos dois lados: x = 8 − 8."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "x = 8"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jmgmuv9djqthwv",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 8,
+      "enunciadoHash": "471389e8b1981716",
+      "enunciado": "Resolva: 5x − 5 \\= 20\\.",
+      "respostaEsperadaOriginal": "x \\= 5",
+      "alternativas": [
+        {
+          "texto": "x = 25",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": true
+        },
+        {
+          "texto": "x = 15",
+          "correta": false
+        },
+        {
+          "texto": "x = 3",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro some 5 dos dois lados (5x = 25), depois divida por 5."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 25"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jngmuvde9rn3kq",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "FACIL",
+      "ordem": 9,
+      "enunciadoHash": "3b01842ca2736eed",
+      "enunciado": "Pensei num número, somei 6, e o resultado foi 15\\. Monte a equação e descubra o número.",
+      "respostaEsperadaOriginal": "x \\+ 6 \\= 15 → x \\= 9",
+      "alternativas": [
+        {
+          "texto": "x = 21",
+          "correta": false
+        },
+        {
+          "texto": "x = 9",
+          "correta": true
+        },
+        {
+          "texto": "x = 90",
+          "correta": false
+        },
+        {
+          "texto": "x = 2,5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é x + 6 = 15. Subtraia 6 dos dois lados."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 21"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jogmuvuadvrtph",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 10,
+      "enunciadoHash": "d08e3fc4e1b74422",
+      "enunciado": "Resolva: 3x \\+ 7 \\= 25\\.",
+      "respostaEsperadaOriginal": "x \\= 6",
+      "alternativas": [
+        {
+          "texto": "x = 18",
+          "correta": false
+        },
+        {
+          "texto": "x = 6",
+          "correta": true
+        },
+        {
+          "texto": "x = 54",
+          "correta": false
+        },
+        {
+          "texto": "x = 32",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro subtraia 7 dos dois lados (3x = 18), depois divida por 3."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 18"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jpgmuv4eca20us",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 11,
+      "enunciadoHash": "5e2d8b33c4106463",
+      "enunciado": "Resolva: 5x − 8 \\= 27\\.",
+      "respostaEsperadaOriginal": "x \\= 7",
+      "alternativas": [
+        {
+          "texto": "x = 35",
+          "correta": false
+        },
+        {
+          "texto": "x = 7",
+          "correta": true
+        },
+        {
+          "texto": "x = 5,4",
+          "correta": false
+        },
+        {
+          "texto": "x = 95",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro some 8 dos dois lados (5x = 35), depois divida por 5."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 35"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jqgmuvbeacmiev",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 12,
+      "enunciadoHash": "c8ddc07072f6cfaf",
+      "enunciado": "Resolva: 2x \\+ 15 \\= 31\\.",
+      "respostaEsperadaOriginal": "x \\= 8",
+      "alternativas": [
+        {
+          "texto": "x = 16",
+          "correta": false
+        },
+        {
+          "texto": "x = 8",
+          "correta": true
+        },
+        {
+          "texto": "x = 23",
+          "correta": false
+        },
+        {
+          "texto": "x = 32",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro subtraia 15 dos dois lados (2x = 16), depois divida por 2."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 16"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jrgmuv905ti1kf",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 13,
+      "enunciadoHash": "878ef6a34516dc16",
+      "enunciado": "Resolva: 6x − 9 \\= 21\\.",
+      "respostaEsperadaOriginal": "x \\= 5",
+      "alternativas": [
+        {
+          "texto": "x = 30",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": true
+        },
+        {
+          "texto": "x = 2",
+          "correta": false
+        },
+        {
+          "texto": "x = 180",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro some 9 dos dois lados (6x = 30), depois divida por 6."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 30"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jsgmuv9hqbct62",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 14,
+      "enunciadoHash": "867eff072c76c420",
+      "enunciado": "O perímetro de um retângulo é 46 cm. O comprimento é 3 cm maior que a largura (x). Monte a equação 4x \\+ 6 \\= 46 e encontre a largura.",
+      "respostaEsperadaOriginal": "x \\= 10 cm",
+      "alternativas": [
+        {
+          "texto": "x = 40",
+          "correta": false
+        },
+        {
+          "texto": "x = 10",
+          "correta": true
+        },
+        {
+          "texto": "x = 13",
+          "correta": false
+        },
+        {
+          "texto": "x = 8",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro subtraia 6 dos dois lados (4x = 40), depois divida por 4."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 40"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jtgmuvmei37q5p",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 15,
+      "enunciadoHash": "39e59ac5f840a7fc",
+      "enunciado": "Pensei num número, multipliquei por 4 e somei 7, chegando a 39\\. Que número pensei?",
+      "respostaEsperadaOriginal": "4x \\+ 7 \\= 39 → x \\= 8",
+      "alternativas": [
+        {
+          "texto": "x = 32",
+          "correta": false
+        },
+        {
+          "texto": "x = 8",
+          "correta": true
+        },
+        {
+          "texto": "x = 46",
+          "correta": false
+        },
+        {
+          "texto": "x = 9,75",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é 4x + 7 = 39. Primeiro subtraia 7, depois divida por 4."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 32"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jugmuvg8jn8az1",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 16,
+      "enunciadoHash": "141f2990ad738796",
+      "enunciado": "Uma van cobra R$ 5,00 de bandeirada mais R$ 2,00 por km rodado. Se uma corrida custou R$ 27,00, quantos km foram rodados?",
+      "respostaEsperadaOriginal": "5 \\+ 2x \\= 27 → x \\= 11 km",
+      "alternativas": [
+        {
+          "texto": "x = 22",
+          "correta": false
+        },
+        {
+          "texto": "x = 11",
+          "correta": true
+        },
+        {
+          "texto": "x = 16",
+          "correta": false
+        },
+        {
+          "texto": "x = 44",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é 5 + 2x = 27. Primeiro subtraia 5, depois divida por 2."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 22"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jvgmuv8eombwdb",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 17,
+      "enunciadoHash": "8492cd826db51d3e",
+      "enunciado": "Daqui a 4 anos, o triplo da idade de Ana será 51 anos. Qual é a idade de Ana hoje?",
+      "respostaEsperadaOriginal": "3(x+4) \\= 51 → x \\= 13 anos",
+      "alternativas": [
+        {
+          "texto": "x = 17",
+          "correta": false
+        },
+        {
+          "texto": "x = 13",
+          "correta": true
+        },
+        {
+          "texto": "x = 21",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é 3(x+4) = 51. Primeiro divida por 3, depois subtraia 4."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 17"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jwgmuvhimxw60n",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 18,
+      "enunciadoHash": "f069c99265273fa3",
+      "enunciado": "Resolva (x aparece nos dois lados): 7x − 12 \\= 2x \\+ 13\\.",
+      "respostaEsperadaOriginal": "x \\= 5",
+      "alternativas": [
+        {
+          "texto": "x = 25",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": true
+        },
+        {
+          "texto": "x = 1",
+          "correta": false
+        },
+        {
+          "texto": "x = -5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Junte os termos com x de um lado e os números do outro."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 25"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jxgmuvohl96040",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "MEDIO",
+      "ordem": 19,
+      "enunciadoHash": "89db708d43a346cb",
+      "enunciado": "Resolva: 4x \\+ 6 \\= 2x \\+ 20\\.",
+      "respostaEsperadaOriginal": "x \\= 7",
+      "alternativas": [
+        {
+          "texto": "x = 14",
+          "correta": false
+        },
+        {
+          "texto": "x = 7",
+          "correta": true
+        },
+        {
+          "texto": "x = 3,5",
+          "correta": false
+        },
+        {
+          "texto": "x = 13",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Junte os termos com x de um lado e os números do outro (2x = 14)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 14"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jygmuvppaclq2i",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 20,
+      "enunciadoHash": "3509c639a2a70a4f",
+      "enunciado": "Resolva: 5(x − 2\\) \\= 3x \\+ 4\\.",
+      "respostaEsperadaOriginal": "x \\= 7",
+      "alternativas": [
+        {
+          "texto": "x = 3",
+          "correta": false
+        },
+        {
+          "texto": "x = 7",
+          "correta": true
+        },
+        {
+          "texto": "x = 14",
+          "correta": false
+        },
+        {
+          "texto": "x = -3",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Distribua o 5 em 5(x−2) antes de juntar os termos."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 3"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000jzgmuvhna9fm23",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 21,
+      "enunciadoHash": "f60a4308b9f7e9fc",
+      "enunciado": "Resolva: 2(x \\+ 3\\) − 4 \\= 3(x − 1).",
+      "respostaEsperadaOriginal": "x \\= 5",
+      "alternativas": [
+        {
+          "texto": "x = -5",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": true
+        },
+        {
+          "texto": "x = 1",
+          "correta": false
+        },
+        {
+          "texto": "x = 9",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Distribua os dois lados antes de juntar os termos."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "x = -5"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000k0gmuv8k0dae7p",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 22,
+      "enunciadoHash": "5d7982b1770c3626",
+      "enunciado": "Resolva: x/2 \\+ x/3 \\= 10\\.",
+      "respostaEsperadaOriginal": "x \\= 12",
+      "alternativas": [
+        {
+          "texto": "x = 6",
+          "correta": false
+        },
+        {
+          "texto": "x = 12",
+          "correta": true
+        },
+        {
+          "texto": "x = 60",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Ache um denominador comum pra x/2 e x/3 (é 6)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 6"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000k1gmuvmm1dcvuu",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 23,
+      "enunciadoHash": "d558f919065918bb",
+      "enunciado": "Resolva: 3x/4 − 5 \\= 1\\.",
+      "respostaEsperadaOriginal": "x \\= 8",
+      "alternativas": [
+        {
+          "texto": "x = 6",
+          "correta": false
+        },
+        {
+          "texto": "x = 8",
+          "correta": true
+        },
+        {
+          "texto": "x = 2",
+          "correta": false
+        },
+        {
+          "texto": "x = 24",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro some 5 dos dois lados (3x/4 = 6), depois multiplique por 4/3."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 6"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000k2gmuv7j3kw1pv",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 24,
+      "enunciadoHash": "585bf8fc155d8d96",
+      "enunciado": "O triplo de um número, menos 8, é igual à metade do mesmo número mais 12\\. Qual é o número?",
+      "respostaEsperadaOriginal": "3x − 8 \\= x/2 \\+ 12 → x \\= 8",
+      "alternativas": [
+        {
+          "texto": "x = 4",
+          "correta": false
+        },
+        {
+          "texto": "x = 8",
+          "correta": true
+        },
+        {
+          "texto": "x = 16",
+          "correta": false
+        },
+        {
+          "texto": "x = 2",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Monte a equação: 3x − 8 = x/2 + 12."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6l2o000k3gmuv19alr9ln",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 25,
+      "enunciadoHash": "5f7a24266eba14ff",
+      "enunciado": "Numa loja, uma camisa custa x reais e uma calça custa o dobro da camisa mais R$ 10,00. Juntas custam R$ 130,00. Quanto custa a camisa?",
+      "respostaEsperadaOriginal": "x \\+ (2x+10) \\= 130 → x \\= R$ 40,00",
+      "alternativas": [
+        {
+          "texto": "x = 30",
+          "correta": false
+        },
+        {
+          "texto": "x = 40",
+          "correta": true
+        },
+        {
+          "texto": "x = 43,33",
+          "correta": false
+        },
+        {
+          "texto": "x = 60",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é x + (2x+10) = 130."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 30"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000k4gmuv26pz11ek",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 26,
+      "enunciadoHash": "7408de8f9479676a",
+      "enunciado": "A soma da idade de Pedro com a idade de sua irmã, que tem 5 anos a mais que ele, é 33\\. Qual é a idade de Pedro?",
+      "respostaEsperadaOriginal": "x \\+ (x+5) \\= 33 → x \\= 14 anos",
+      "alternativas": [
+        {
+          "texto": "x = 16,5",
+          "correta": false
+        },
+        {
+          "texto": "x = 14",
+          "correta": true
+        },
+        {
+          "texto": "x = 28",
+          "correta": false
+        },
+        {
+          "texto": "x = 9",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é x + (x+5) = 33."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 28"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000k5gmuvftwuk9eb",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 27,
+      "enunciadoHash": "8d8c9bcdd14666b7",
+      "enunciado": "Um número somado ao seu triplo é igual a 60 menos o próprio número. Que número é esse?",
+      "respostaEsperadaOriginal": "x \\+ 3x \\= 60 − x → x \\= 12",
+      "alternativas": [
+        {
+          "texto": "x = 15",
+          "correta": false
+        },
+        {
+          "texto": "x = 12",
+          "correta": true
+        },
+        {
+          "texto": "x = 20",
+          "correta": false
+        },
+        {
+          "texto": "x = 7,5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é x + 3x = 60 − x. Junte todos os x de um lado."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6l2o000k6gmuvond3evu6",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 28,
+      "enunciadoHash": "1a216d89582cc421",
+      "enunciado": "Se eu multiplicar um número por 6 e subtrair 15, obtenho o mesmo resultado que se multiplicar esse número por 4 e somar 7\\. Qual é o número?",
+      "respostaEsperadaOriginal": "6x − 15 \\= 4x \\+ 7 → x \\= 11",
+      "alternativas": [
+        {
+          "texto": "x = 22",
+          "correta": false
+        },
+        {
+          "texto": "x = 11",
+          "correta": true
+        },
+        {
+          "texto": "x = 4",
+          "correta": false
+        },
+        {
+          "texto": "x = -4",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é 6x − 15 = 4x + 7. Junte os x de um lado."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "x = 22"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000k7gmuv8dgs34lg",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "APOSTILA",
+      "ordem": 29,
+      "enunciadoHash": "5085522abfa7045c",
+      "enunciado": "Um livro tem x páginas. Marcos leu 1/4 do livro na segunda-feira e mais 30 páginas na terça-feira; ainda faltam 90 páginas pra terminar. Quantas páginas tem o livro?",
+      "respostaEsperadaOriginal": "x/4 \\+ 30 \\+ 90 \\= x → x \\= 160 páginas",
+      "alternativas": [
+        {
+          "texto": "x = 120",
+          "correta": false
+        },
+        {
+          "texto": "x = 160",
+          "correta": true
+        },
+        {
+          "texto": "x = 200",
+          "correta": false
+        },
+        {
+          "texto": "x = 90",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é x/4 + 30 + 90 = x."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6l2o000k8gmuv8dlz9k8s",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "DESAFIO",
+      "ordem": 30,
+      "enunciadoHash": "58691d2f733ea102",
+      "enunciado": "**Desafio:** Resolva: 3(2x − 1\\) \\+ 4 \\= 5(x \\+ 2\\) − 3\\.",
+      "respostaEsperadaOriginal": "x \\= 6",
+      "alternativas": [
+        {
+          "texto": "x = 7",
+          "correta": false
+        },
+        {
+          "texto": "x = 6",
+          "correta": true
+        },
+        {
+          "texto": "x = 2",
+          "correta": false
+        },
+        {
+          "texto": "x = -6",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Distribua os dois lados antes de juntar os termos."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "x = 7"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000k9gmuv1bqispat",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "DESAFIO",
+      "ordem": 31,
+      "enunciadoHash": "92ba9c914793e43a",
+      "enunciado": "**Desafio:** Daqui a 10 anos, a idade de Carla será o dobro da idade que ela tinha há 5 anos. Qual é a idade de Carla hoje?",
+      "respostaEsperadaOriginal": "x \\+ 10 \\= 2(x − 5\\) → x \\= 20 anos",
+      "alternativas": [
+        {
+          "texto": "x = 0",
+          "correta": false
+        },
+        {
+          "texto": "x = 20",
+          "correta": true
+        },
+        {
+          "texto": "x = 30",
+          "correta": false
+        },
+        {
+          "texto": "x = -20",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é x + 10 = 2(x−5). Distribua o lado direito primeiro."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "x = 0"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000kagmuv13c9xuus",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "DESAFIO",
+      "ordem": 32,
+      "enunciadoHash": "659a8b3511a3769c",
+      "enunciado": "**Desafio:** Um triângulo tem lados medindo x, x \\+ 2 e x \\+ 4 centímetros. Se o perímetro é 42 cm, quanto mede o maior lado?",
+      "respostaEsperadaOriginal": "3x \\+ 6 \\= 42 → x \\= 12; maior lado \\= x+4 \\= 16 cm",
+      "alternativas": [
+        {
+          "texto": "12 cm",
+          "correta": false
+        },
+        {
+          "texto": "16 cm",
+          "correta": true
+        },
+        {
+          "texto": "14 cm",
+          "correta": false
+        },
+        {
+          "texto": "18 cm",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Ache x primeiro (3x+6=42), depois calcule x+4 pro maior lado."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "12 cm"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000kbgmuv8irqyrdw",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "DESAFIO",
+      "ordem": 33,
+      "enunciadoHash": "08825956001a6a4f",
+      "enunciado": "**Desafio:** Júlia tem o dobro do dinheiro de Marcos. Juntos, eles têm R$ 96,00. Quanto tem cada um?",
+      "respostaEsperadaOriginal": "x \\+ 2x \\= 96 → Marcos: x \\= R$ 32,00; Júlia: R$ 64,00",
+      "alternativas": [
+        {
+          "texto": "Marcos: R$ 48,00 e Júlia: R$ 48,00",
+          "correta": false
+        },
+        {
+          "texto": "Marcos: R$ 32,00 e Júlia: R$ 64,00",
+          "correta": true
+        },
+        {
+          "texto": "Marcos: R$ 64,00 e Júlia: R$ 32,00",
+          "correta": false
+        },
+        {
+          "texto": "Marcos: R$ 24,00 e Júlia: R$ 72,00",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A equação é x + 2x = 96, onde x é o dinheiro de Marcos."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "Marcos: R$ 48,00 e Júlia: R$ 48,00"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000kcgmuvsdb8yds8",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "DESAFIO",
+      "ordem": 34,
+      "enunciadoHash": "5e1b6a183d05d730",
+      "enunciado": "**Desafio:** Resolva: 2(x \\+ 3\\) \\= 3(x − 1\\) \\+ 5\\.",
+      "respostaEsperadaOriginal": "x \\= 4",
+      "alternativas": [
+        {
+          "texto": "x = 8",
+          "correta": false
+        },
+        {
+          "texto": "x = 4",
+          "correta": true
+        },
+        {
+          "texto": "x = 2",
+          "correta": false
+        },
+        {
+          "texto": "x = -4",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Distribua os dois lados antes de juntar os termos."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "x = 8"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6l2o000kdgmuv1h3v4q9e",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "AVALIACAO",
+      "ordem": 35,
+      "enunciadoHash": "db11b1012c617783",
+      "enunciado": "Resolva: 3x \\+ 5 \\= 20\\.",
+      "respostaEsperadaOriginal": "x \\= 5",
+      "alternativas": [
+        {
+          "texto": "x = 15",
+          "correta": false
+        },
+        {
+          "texto": "x = 5",
+          "correta": true
+        },
+        {
+          "texto": "x = 75",
+          "correta": false
+        },
+        {
+          "texto": "x = 25",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6l2o000kegmuvg0fuwhg8",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "AVALIACAO",
+      "ordem": 36,
+      "enunciadoHash": "fa9f757d8c5471a8",
+      "enunciado": "Resolva (x nos dois lados): 2x − 7 \\= 4x − 15\\.",
+      "respostaEsperadaOriginal": "x \\= 4",
+      "alternativas": [
+        {
+          "texto": "x = -4",
+          "correta": false
+        },
+        {
+          "texto": "x = 4",
+          "correta": true
+        },
+        {
+          "texto": "x = 11",
+          "correta": false
+        },
+        {
+          "texto": "x = 8",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6l2o000kfgmuv3mfb07fh",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "AVALIACAO",
+      "ordem": 37,
+      "enunciadoHash": "3f476b2670e72a66",
+      "enunciado": "Rafael pensou em um número, multiplicou por 5 e subtraiu 6, obtendo 34\\. Qual é o número?",
+      "respostaEsperadaOriginal": "5x − 6 \\= 34 → x \\= 8",
+      "alternativas": [
+        {
+          "texto": "x = 40",
+          "correta": false
+        },
+        {
+          "texto": "x = 8",
+          "correta": true
+        },
+        {
+          "texto": "x = 5,6",
+          "correta": false
+        },
+        {
+          "texto": "x = 28",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6l2o000kggmuv15q93jbe",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "AVALIACAO",
+      "ordem": 38,
+      "enunciadoHash": "c9a75ce93311f31a",
+      "enunciado": "O perímetro de um retângulo é 60 cm e o comprimento é o dobro da largura. Qual é a largura?",
+      "respostaEsperadaOriginal": "6x \\= 60 → x \\= 10 cm",
+      "alternativas": [
+        {
+          "texto": "x = 15",
+          "correta": false
+        },
+        {
+          "texto": "x = 10",
+          "correta": true
+        },
+        {
+          "texto": "x = 30",
+          "correta": false
+        },
+        {
+          "texto": "x = 20",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6l2o000khgmuvj4c0tgm9",
+      "habilidadeCodigo": "EF07MA18",
+      "nivel": "AVALIACAO",
+      "ordem": 39,
+      "enunciadoHash": "13923e078ff7a61d",
+      "enunciado": "Numa loja, uma calça custa x reais e uma camisa custa a metade do preço da calça mais R$ 8,00. Juntas custam R$ 83,00. Qual é o preço da calça?",
+      "respostaEsperadaOriginal": "x \\+ (x/2 \\+ 8\\) \\= 83 → x \\= R$ 50,00",
+      "alternativas": [
+        {
+          "texto": "x = 45",
+          "correta": false
+        },
+        {
+          "texto": "x = 50",
+          "correta": true
+        },
+        {
+          "texto": "x = 150",
+          "correta": false
+        },
+        {
+          "texto": "x = 41,67",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": []
+    }
+  ],
+  "naoConvertidos": []
+}

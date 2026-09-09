@@ -91,7 +91,7 @@ export default async function ImprimirRelatorioPage({
       {/* Cabeçalho */}
       <header className="border-b-2 border-slate-800 pb-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-          Portal de Diagnóstico · BNCC Matemática
+          ValeEdu · BNCC Matemática
         </p>
         <h1 className="mt-1 text-2xl font-bold">Relatório de Diagnóstico</h1>
         <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-700">
@@ -244,7 +244,7 @@ export default async function ImprimirRelatorioPage({
       </section>
 
       <footer className="mt-8 border-t border-slate-300 pt-3 text-xs text-slate-500">
-        Relatório gerado em {dataGeracao} pelo Portal de Diagnóstico BNCC Matemática.
+        Relatório gerado em {dataGeracao} pelo ValeEdu Matemática.
       </footer>
     </main>
   );

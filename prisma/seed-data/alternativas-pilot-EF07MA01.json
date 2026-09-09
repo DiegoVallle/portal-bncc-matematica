@@ -1,0 +1,1131 @@
+{
+  "habilidadeCodigo": "EF07MA01",
+  "geradoEm": "2026-09-09T15:25:12.247Z",
+  "totalQuestoesPratica": 35,
+  "totalConvertido": 28,
+  "totalNaoConvertido": 7,
+  "convertidos": [
+    {
+      "questaoId": "cmtu6khmw0003gmuv6ge9u6o9",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "FACIL",
+      "ordem": 2,
+      "enunciadoHash": "1a7f7f0aaab24a51",
+      "enunciado": "O número 45 é múltiplo de 9? Justifique dividindo.",
+      "respostaEsperadaOriginal": "Sim, 45 ÷ 9 \\= 5, resto 0",
+      "alternativas": [
+        {
+          "texto": "Sim — 45 ÷ 9 = 5, resto 0",
+          "correta": true
+        },
+        {
+          "texto": "Não — 45 ÷ 9 = 5, resto 4",
+          "correta": false
+        },
+        {
+          "texto": "Sim — mas só porque 45 é ímpar",
+          "correta": false
+        },
+        {
+          "texto": "Não — 9 não aparece na tabuada de 45",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Divida 45 por 9 e veja se o resto é zero.",
+        "45 ÷ 9 dá exatamente 5 — não sobra nada."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "Não — 45 ÷ 9 = 5, resto 4"
+        },
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "Sim — mas só porque 45 é ímpar"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw0004gmuvn0yb5p7g",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "FACIL",
+      "ordem": 3,
+      "enunciadoHash": "3d699290503b4569",
+      "enunciado": "O número 7 é divisor de 42? Justifique.",
+      "respostaEsperadaOriginal": "Sim, 42 ÷ 7 \\= 6, resto 0",
+      "alternativas": [
+        {
+          "texto": "Não — 7 é primo, então não pode ser divisor de 42",
+          "correta": false
+        },
+        {
+          "texto": "Sim — 42 ÷ 7 = 6, resto 0",
+          "correta": true
+        },
+        {
+          "texto": "Não — 42 ÷ 7 = 6, resto 1",
+          "correta": false
+        },
+        {
+          "texto": "Sim — mas só de números pares",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Divida 42 por 7.",
+        "Se o resto for zero, 7 é divisor de 42."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "Não — 7 é primo, então não pode ser divisor de 42"
+        },
+        {
+          "tipoErro": "CALCULO",
+          "distratorTexto": "Não — 42 ÷ 7 = 6, resto 1"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw0006gmuveu53hrbz",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "FACIL",
+      "ordem": 5,
+      "enunciadoHash": "a0e895dbce8451a1",
+      "enunciado": "Qual é o maior desses divisores comuns de 8 e 12? Esse número é o MDC(8, 12).",
+      "respostaEsperadaOriginal": "4",
+      "alternativas": [
+        {
+          "texto": "2",
+          "correta": false
+        },
+        {
+          "texto": "8",
+          "correta": false
+        },
+        {
+          "texto": "4",
+          "correta": true
+        },
+        {
+          "texto": "24",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Os divisores comuns de 8 e 12 são 1, 2 e 4.",
+        "O MDC é o MAIOR desses divisores comuns."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "2"
+        },
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "24"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw0008gmuvxce9tuc9",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "FACIL",
+      "ordem": 7,
+      "enunciadoHash": "882bc3db874741a4",
+      "enunciado": "Qual é o menor desses múltiplos comuns de 3 e 4? Esse número é o MMC(3, 4).",
+      "respostaEsperadaOriginal": "12",
+      "alternativas": [
+        {
+          "texto": "24",
+          "correta": false
+        },
+        {
+          "texto": "3",
+          "correta": false
+        },
+        {
+          "texto": "12",
+          "correta": true
+        },
+        {
+          "texto": "4",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Os múltiplos comuns de 3 e 4 começam em 12, 24, 36...",
+        "O MMC é o MENOR desses múltiplos comuns."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "24"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw0009gmuvtfhwv71c",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "FACIL",
+      "ordem": 8,
+      "enunciadoHash": "4379a11f14a421ac",
+      "enunciado": "Calcule o MDC(10, 15\\) usando fatoração simultânea.",
+      "respostaEsperadaOriginal": "5",
+      "alternativas": [
+        {
+          "texto": "1",
+          "correta": false
+        },
+        {
+          "texto": "5",
+          "correta": true
+        },
+        {
+          "texto": "30",
+          "correta": false
+        },
+        {
+          "texto": "10",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Fatore 10 e 15 ao mesmo tempo, primo por primo.",
+        "O MDC é o produto dos primos que dividem os dois ao mesmo tempo."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "30"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000agmuvaxsrfpen",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "FACIL",
+      "ordem": 9,
+      "enunciadoHash": "c24c3798ecb8e51b",
+      "enunciado": "Calcule o MMC(4, 6\\) usando fatoração simultânea.",
+      "respostaEsperadaOriginal": "12",
+      "alternativas": [
+        {
+          "texto": "2",
+          "correta": false
+        },
+        {
+          "texto": "24",
+          "correta": false
+        },
+        {
+          "texto": "6",
+          "correta": false
+        },
+        {
+          "texto": "12",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "Fatoração simultânea de 4 e 6.",
+        "O MMC é o produto de TODAS as linhas da fatoração."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "2"
+        },
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "24"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000bgmuvllxeb8k1",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 10,
+      "enunciadoHash": "b9951084e2454a12",
+      "enunciado": "Calcule o MDC(24, 36\\) usando fatoração simultânea.",
+      "respostaEsperadaOriginal": "12",
+      "alternativas": [
+        {
+          "texto": "6",
+          "correta": false
+        },
+        {
+          "texto": "12",
+          "correta": true
+        },
+        {
+          "texto": "72",
+          "correta": false
+        },
+        {
+          "texto": "24",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Fatore 24 e 36 ao mesmo tempo.",
+        "MDC = produto das linhas marcadas com ✓."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "72"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000cgmuvxppljf5v",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 11,
+      "enunciadoHash": "b059db475b8c1c72",
+      "enunciado": "Calcule o MMC(15, 20\\) usando fatoração simultânea.",
+      "respostaEsperadaOriginal": "60",
+      "alternativas": [
+        {
+          "texto": "5",
+          "correta": false
+        },
+        {
+          "texto": "40",
+          "correta": false
+        },
+        {
+          "texto": "300",
+          "correta": false
+        },
+        {
+          "texto": "60",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "Fatoração simultânea de 15 e 20.",
+        "MMC = produto de todas as linhas."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "5"
+        },
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "300"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000dgmuvjgrqgbid",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 12,
+      "enunciadoHash": "79a4d7face7c7f6a",
+      "enunciado": "Calcule o MDC e o MMC de 18 e 24 ao mesmo tempo, na mesma fatoração.",
+      "respostaEsperadaOriginal": "MDC=6, MMC=72",
+      "alternativas": [
+        {
+          "texto": "MDC = 12, MMC = 36",
+          "correta": false
+        },
+        {
+          "texto": "MDC = 6, MMC = 72",
+          "correta": true
+        },
+        {
+          "texto": "MDC = 6, MMC = 432",
+          "correta": false
+        },
+        {
+          "texto": "MDC = 3, MMC = 72",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Faça a fatoração simultânea de 18 e 24 numa tabela só.",
+        "As linhas com ✓ formam o MDC; todas as linhas formam o MMC."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "MDC = 12, MMC = 36"
+        },
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "MDC = 6, MMC = 432"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000egmuvz7ktq0km",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 13,
+      "enunciadoHash": "21c0e496d31dacab",
+      "enunciado": "Duas torneiras pingam: uma a cada 6 segundos e outra a cada 8 segundos. De quanto em quanto tempo elas pingam juntas?",
+      "respostaEsperadaOriginal": "24 segundos — MMC",
+      "alternativas": [
+        {
+          "texto": "48 segundos",
+          "correta": false
+        },
+        {
+          "texto": "2 segundos",
+          "correta": false
+        },
+        {
+          "texto": "14 segundos",
+          "correta": false
+        },
+        {
+          "texto": "24 segundos",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "'Pingar juntas de novo' é uma repetição em ciclos — isso é MMC, não MDC.",
+        "Calcule o MMC(6, 8)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "2 segundos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000fgmuvwe6oblcl",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 14,
+      "enunciadoHash": "ef06f632e6b61d9f",
+      "enunciado": "Uma professora quer dividir 30 lápis e 45 canetas em kits iguais, do maior tamanho possível, sem sobrar nada. Quantos kits ela consegue montar?",
+      "respostaEsperadaOriginal": "15 kits — MDC(30,45)=15",
+      "alternativas": [
+        {
+          "texto": "5 kits",
+          "correta": false
+        },
+        {
+          "texto": "15 kits",
+          "correta": true
+        },
+        {
+          "texto": "90 kits",
+          "correta": false
+        },
+        {
+          "texto": "3 kits",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "'Do maior tamanho possível, sem sobrar' é MDC.",
+        "Calcule o MDC(30, 45)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "90 kits"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000ggmuv24xf38l7",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 15,
+      "enunciadoHash": "9f1ba511fd78f3ed",
+      "enunciado": "Dois carros fazem um circuito: um completa uma volta a cada 9 minutos e outro a cada 15 minutos. Partindo juntos, depois de quanto tempo se encontram de novo na largada?",
+      "respostaEsperadaOriginal": "45 minutos — MMC",
+      "alternativas": [
+        {
+          "texto": "9 minutos",
+          "correta": false
+        },
+        {
+          "texto": "3 minutos",
+          "correta": false
+        },
+        {
+          "texto": "45 minutos",
+          "correta": true
+        },
+        {
+          "texto": "135 minutos",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "'Encontram de novo na largada' é MMC.",
+        "Calcule o MMC(9, 15)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "135 minutos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000hgmuvbykjd7f9",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 16,
+      "enunciadoHash": "aa6de9a63a51637e",
+      "enunciado": "Encontre o MDC(28, 42).",
+      "respostaEsperadaOriginal": "14",
+      "alternativas": [
+        {
+          "texto": "7",
+          "correta": false
+        },
+        {
+          "texto": "14",
+          "correta": true
+        },
+        {
+          "texto": "84",
+          "correta": false
+        },
+        {
+          "texto": "28",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Fatoração simultânea de 28 e 42.",
+        "MDC = produto das linhas marcadas."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "84"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000igmuvnelgxgfy",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 17,
+      "enunciadoHash": "b16db5d568c89f30",
+      "enunciado": "Encontre o MMC(9, 12).",
+      "respostaEsperadaOriginal": "36",
+      "alternativas": [
+        {
+          "texto": "3",
+          "correta": false
+        },
+        {
+          "texto": "108",
+          "correta": false
+        },
+        {
+          "texto": "18",
+          "correta": false
+        },
+        {
+          "texto": "36",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "Fatoração simultânea de 9 e 12.",
+        "MMC = produto de todas as linhas."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "3"
+        },
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "108"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000jgmuvvyl8oytm",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 18,
+      "enunciadoHash": "4477600452922c1b",
+      "enunciado": "Um terreno retangular de 24 m por 36 m será dividido em lotes quadrados iguais, do maior tamanho possível, sem sobrar terreno. Qual o lado de cada lote quadrado?",
+      "respostaEsperadaOriginal": "12 m — MDC(24,36)=12",
+      "alternativas": [
+        {
+          "texto": "6 m",
+          "correta": false
+        },
+        {
+          "texto": "72 m",
+          "correta": false
+        },
+        {
+          "texto": "12 m",
+          "correta": true
+        },
+        {
+          "texto": "24 m",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "'Do maior tamanho possível, sem sobrar terreno' é MDC.",
+        "Calcule o MDC(24, 36)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "72 m"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmw000kgmuvjx2xkww1",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "MEDIO",
+      "ordem": 19,
+      "enunciadoHash": "d149781c5ec297b5",
+      "enunciado": "Calcule o MMC(5, 6, 15\\) — com três números.",
+      "respostaEsperadaOriginal": "30",
+      "alternativas": [
+        {
+          "texto": "1",
+          "correta": false
+        },
+        {
+          "texto": "450",
+          "correta": false
+        },
+        {
+          "texto": "30",
+          "correta": true
+        },
+        {
+          "texto": "15",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Fatoração simultânea com os três números na mesma tabela.",
+        "MMC = produto de todas as linhas."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "450"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000lgmuvda1t5tju",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "APOSTILA",
+      "ordem": 20,
+      "enunciadoHash": "6355c602639b5873",
+      "enunciado": "Determine o MDC(36, 60, 84), usando fatoração simultânea com três números na mesma tabela.",
+      "respostaEsperadaOriginal": "12",
+      "alternativas": [
+        {
+          "texto": "6",
+          "correta": false
+        },
+        {
+          "texto": "2520",
+          "correta": false
+        },
+        {
+          "texto": "4",
+          "correta": false
+        },
+        {
+          "texto": "12",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "Fatoração simultânea com três números na mesma tabela.",
+        "MDC = produto das linhas marcadas com ✓ nos três."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "2520"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000mgmuv6l59xal5",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "APOSTILA",
+      "ordem": 21,
+      "enunciadoHash": "155dd09c3cc16ed1",
+      "enunciado": "Determine o MMC(6, 8, 10).",
+      "respostaEsperadaOriginal": "120",
+      "alternativas": [
+        {
+          "texto": "2",
+          "correta": false
+        },
+        {
+          "texto": "120",
+          "correta": true
+        },
+        {
+          "texto": "480",
+          "correta": false
+        },
+        {
+          "texto": "48",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Fatoração simultânea com os três números.",
+        "MMC = produto de todas as linhas."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "2"
+        },
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "480"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000ngmuv5067tmyq",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "APOSTILA",
+      "ordem": 22,
+      "enunciadoHash": "4e2af7562e44442e",
+      "enunciado": "Um posto de saúde vacina de 15 em 15 dias e faz mutirão de limpeza de 20 em 20 dias. Se as duas coisas aconteceram juntas hoje, depois de quantos dias voltam a acontecer no mesmo dia?",
+      "respostaEsperadaOriginal": "60 dias — MMC",
+      "alternativas": [
+        {
+          "texto": "5 dias",
+          "correta": false
+        },
+        {
+          "texto": "300 dias",
+          "correta": false
+        },
+        {
+          "texto": "60 dias",
+          "correta": true
+        },
+        {
+          "texto": "35 dias",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "'Voltam a acontecer juntas' é MMC.",
+        "Calcule o MMC(15, 20)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "35 dias"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000ogmuv2zyt0tfl",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "APOSTILA",
+      "ordem": 23,
+      "enunciadoHash": "b05aad32b6ac3cd2",
+      "enunciado": "Uma fábrica tem 3 rolos de tecido com 84 m, 126 m e 168 m. Ela quer cortar todos em pedaços do mesmo tamanho, o maior possível, sem desperdiçar tecido. Quantos metros terá cada pedaço, e quantos pedaços serão cortados no total?",
+      "respostaEsperadaOriginal": "MDC(84,126,168)=42 m; total \\= 2+3+4 \\= 9 pedaços",
+      "alternativas": [
+        {
+          "texto": "42 m; 3 pedaços ao todo",
+          "correta": false
+        },
+        {
+          "texto": "21 m; 18 pedaços ao todo",
+          "correta": false
+        },
+        {
+          "texto": "84 m; 4 pedaços ao todo",
+          "correta": false
+        },
+        {
+          "texto": "42 m; 9 pedaços ao todo",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "O MDC dá o tamanho de cada pedaço; depois some quantos pedaços saem de cada rolo.",
+        "MDC(84, 126, 168) = 42 m."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "42 m; 3 pedaços ao todo"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000pgmuv5kq3n0vq",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "APOSTILA",
+      "ordem": 24,
+      "enunciadoHash": "70e5f19904e968dd",
+      "enunciado": "Três amigos treinam corrida: um dá uma volta na pista a cada 8 min, outro a cada 10 min e outro a cada 12 min. Partindo juntos, depois de quanto tempo os três voltam a se encontrar na largada?",
+      "respostaEsperadaOriginal": "120 minutos — MMC(8,10,12)",
+      "alternativas": [
+        {
+          "texto": "2 minutos",
+          "correta": false
+        },
+        {
+          "texto": "960 minutos",
+          "correta": false
+        },
+        {
+          "texto": "120 minutos",
+          "correta": true
+        },
+        {
+          "texto": "30 minutos",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "'Voltam a se encontrar' é MMC.",
+        "Fatoração simultânea de 8, 10 e 12."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "2 minutos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000tgmuvynq2nnaw",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "APOSTILA",
+      "ordem": 28,
+      "enunciadoHash": "91b517be2d170d71",
+      "enunciado": "Se o MDC de dois números é 1, o que isso significa sobre esses números?",
+      "respostaEsperadaOriginal": "são \"primos entre si\" — não têm nenhum divisor comum além do 1",
+      "alternativas": [
+        {
+          "texto": "São números iguais",
+          "correta": false
+        },
+        {
+          "texto": "São \"primos entre si\" — não têm nenhum divisor comum além do 1",
+          "correta": true
+        },
+        {
+          "texto": "Um dos números é primo",
+          "correta": false
+        },
+        {
+          "texto": "Não têm MMC",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Pense: se o MDC é 1, que divisores eles compartilham além do 1?",
+        "O nome desse tipo de par de números é \"primos entre si\"."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6khmx000ugmuvdgpcplo8",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "APOSTILA",
+      "ordem": 29,
+      "enunciadoHash": "6c9f81c8ef02a8eb",
+      "enunciado": "Um ônibus passa de 20 em 20 minutos e outro de 30 em 30 minutos, e os dois passaram juntos às 7h. **A que horas eles passarão juntos pela terceira vez depois das 7h?**",
+      "respostaEsperadaOriginal": "MMC=60 min; depois das 7h, coincidem às 8h, 9h e 10h — a terceira coincidência posterior às 7h é às 10h",
+      "alternativas": [
+        {
+          "texto": "9h",
+          "correta": false
+        },
+        {
+          "texto": "8h",
+          "correta": false
+        },
+        {
+          "texto": "11h",
+          "correta": false
+        },
+        {
+          "texto": "10h",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "O MMC(20, 30) = 60 minutos = 1 hora entre coincidências.",
+        "Depois das 7h: 8h (1ª vez), 9h (2ª vez), 10h (3ª vez)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "9h"
+        },
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "8h"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000vgmuvwds6ddtq",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "DESAFIO",
+      "ordem": 30,
+      "enunciadoHash": "fa33d5e834fff0b0",
+      "enunciado": "**Desafio:** Um número quando dividido por 12 dá resto 5, e quando dividido por 18 também dá resto 5\\. Qual é o menor número maior que 5 que satisfaz essa condição?",
+      "respostaEsperadaOriginal": "Resposta: MMC(12,18) \\+ 5 \\= 36 \\+ 5 \\= 41",
+      "alternativas": [
+        {
+          "texto": "36",
+          "correta": false
+        },
+        {
+          "texto": "41",
+          "correta": true
+        },
+        {
+          "texto": "46",
+          "correta": false
+        },
+        {
+          "texto": "31",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "O número é 5 a mais que um múltiplo comum de 12 e 18.",
+        "MMC(12, 18) = 36; some o resto 5."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "36"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000wgmuv7v0vwy9a",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "DESAFIO",
+      "ordem": 31,
+      "enunciadoHash": "03b899cb162eec85",
+      "enunciado": "**Desafio:** Três sinaleiros de trânsito ficam verdes juntos às 8h. Um fica verde a cada 40 segundos, outro a cada 60 segundos e outro a cada 90 segundos. Depois de quantos minutos os três voltam a ficar verdes juntos?",
+      "respostaEsperadaOriginal": "MMC(40,60,90)=360 segundos \\= 6 minutos",
+      "alternativas": [
+        {
+          "texto": "360 minutos",
+          "correta": false
+        },
+        {
+          "texto": "3 minutos",
+          "correta": false
+        },
+        {
+          "texto": "6 minutos",
+          "correta": true
+        },
+        {
+          "texto": "60 segundos",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Calcule o MMC(40, 60, 90) em segundos primeiro.",
+        "Depois converta o resultado (360 segundos) pra minutos."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "360 minutos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000xgmuvvhod30y3",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "DESAFIO",
+      "ordem": 32,
+      "enunciadoHash": "15566df5671d155b",
+      "enunciado": "**Desafio:** O MDC de dois números é 8 e o produto dos dois números é 768\\. Qual é o MMC desses dois números?",
+      "respostaEsperadaOriginal": "Propriedade: MDC × MMC \\= produto dos números, quando são só 2 números. MMC \\= 768 ÷ 8 \\= 96",
+      "alternativas": [
+        {
+          "texto": "6144",
+          "correta": false
+        },
+        {
+          "texto": "8",
+          "correta": false
+        },
+        {
+          "texto": "96",
+          "correta": true
+        },
+        {
+          "texto": "48",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Use a propriedade: MDC × MMC = produto dos dois números (só vale pra 2 números).",
+        "MMC = 768 ÷ 8."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "6144"
+        },
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "8"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000ygmuvwcalguv4",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "DESAFIO",
+      "ordem": 33,
+      "enunciadoHash": "c3db6b59120cd9df",
+      "enunciado": "**Desafio:** Uma horta tem 90 pés de tomate e 150 pés de alface, organizados em fileiras. Cada fileira deve ter só um tipo de planta, todas as fileiras com o mesmo número de pés, o maior possível. Quantas fileiras de tomate e quantas de alface serão formadas?",
+      "respostaEsperadaOriginal": "MDC(90,150)=30; fileiras de tomate \\= 90÷30 \\= 3; fileiras de alface \\= 150÷30 \\= 5",
+      "alternativas": [
+        {
+          "texto": "5 fileiras de tomate e 3 de alface",
+          "correta": false
+        },
+        {
+          "texto": "30 fileiras de cada",
+          "correta": false
+        },
+        {
+          "texto": "3 fileiras de tomate e 5 de alface",
+          "correta": true
+        },
+        {
+          "texto": "9 fileiras de tomate e 15 de alface",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "O MDC(90, 150) dá quantos pés cabem em cada fileira.",
+        "Divida cada quantidade pelo MDC pra saber o número de fileiras."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "5 fileiras de tomate e 3 de alface"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6khmx000zgmuvnf1f73dc",
+      "habilidadeCodigo": "EF07MA01",
+      "nivel": "DESAFIO",
+      "ordem": 34,
+      "enunciadoHash": "ae31dc6b7f288a3d",
+      "enunciado": "**Desafio:** Pensei em dois números. O MMC deles é 60 e o MDC é 5\\. Um dos números é 15\\. Qual é o outro?",
+      "respostaEsperadaOriginal": "MDC × MMC \\= produto: 5×60=300; 300÷15=20",
+      "alternativas": [
+        {
+          "texto": "12",
+          "correta": false
+        },
+        {
+          "texto": "45",
+          "correta": false
+        },
+        {
+          "texto": "4",
+          "correta": false
+        },
+        {
+          "texto": "20",
+          "correta": true
+        }
+      ],
+      "dicas": [
+        "Use MDC × MMC = produto dos dois números.",
+        "5 × 60 = 300; divida por 15."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "45"
+        }
+      ]
+    }
+  ],
+  "naoConvertidos": [
+    {
+      "questaoId": "cmtu6khmw0001gmuvz6v5q6m3",
+      "ordem": 0,
+      "nivel": "FACIL",
+      "enunciado": "Liste os 6 primeiros múltiplos de 5\\.",
+      "motivo": "Lista, explicação aberta ou pergunta com mais de uma resposta válida — não converte honestamente pra múltipla escolha."
+    },
+    {
+      "questaoId": "cmtu6khmw0002gmuva7azgv9h",
+      "ordem": 1,
+      "nivel": "FACIL",
+      "enunciado": "Liste todos os divisores de 20\\.",
+      "motivo": "Lista, explicação aberta ou pergunta com mais de uma resposta válida — não converte honestamente pra múltipla escolha."
+    },
+    {
+      "questaoId": "cmtu6khmw0005gmuvsd7btzl0",
+      "ordem": 4,
+      "nivel": "FACIL",
+      "enunciado": "Liste os divisores comuns de 8 e 12\\.",
+      "motivo": "Lista, explicação aberta ou pergunta com mais de uma resposta válida — não converte honestamente pra múltipla escolha."
+    },
+    {
+      "questaoId": "cmtu6khmw0007gmuv6npa7r1y",
+      "ordem": 6,
+      "nivel": "FACIL",
+      "enunciado": "Liste os 5 primeiros múltiplos comuns de 3 e 4\\.",
+      "motivo": "Lista, explicação aberta ou pergunta com mais de uma resposta válida — não converte honestamente pra múltipla escolha."
+    },
+    {
+      "questaoId": "cmtu6khmx000qgmuved8zd8l1",
+      "ordem": 25,
+      "nivel": "APOSTILA",
+      "enunciado": "Explique com suas palavras por que o MDC de dois números nunca pode ser maior que o menor deles.",
+      "motivo": "Lista, explicação aberta ou pergunta com mais de uma resposta válida — não converte honestamente pra múltipla escolha."
+    },
+    {
+      "questaoId": "cmtu6khmx000rgmuv0im3tis8",
+      "ordem": 26,
+      "nivel": "APOSTILA",
+      "enunciado": "Explique por que o MMC de dois números nunca pode ser menor que o maior deles.",
+      "motivo": "Lista, explicação aberta ou pergunta com mais de uma resposta válida — não converte honestamente pra múltipla escolha."
+    },
+    {
+      "questaoId": "cmtu6khmx000sgmuv89xs9jgo",
+      "ordem": 27,
+      "nivel": "APOSTILA",
+      "enunciado": "Determine dois números cujo MDC seja 6 e o MMC seja 36\\. (Dica: existe mais de uma resposta possível.)",
+      "motivo": "Lista, explicação aberta ou pergunta com mais de uma resposta válida — não converte honestamente pra múltipla escolha."
+    }
+  ]
+}

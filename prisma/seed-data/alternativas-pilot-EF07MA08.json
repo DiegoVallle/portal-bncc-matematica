@@ -1,0 +1,1298 @@
+{
+  "habilidadeCodigo": "EF07MA08",
+  "geradoEm": "2026-09-09T20:16:28.366Z",
+  "totalQuestoes": 40,
+  "totalConvertido": 38,
+  "totalNaoConvertido": 2,
+  "convertidos": [
+    {
+      "questaoId": "cmtu6kqk50080gmuvew3qzg5r",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 0,
+      "enunciadoHash": "e65fe2b747a20a3d",
+      "enunciado": "Compare 2/5 e 4/5. Qual é maior?",
+      "respostaEsperadaOriginal": "4/5",
+      "alternativas": [
+        {
+          "texto": "2/5",
+          "correta": false
+        },
+        {
+          "texto": "4/5",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "Não dá pra comparar",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Mesmo denominador: compare só os numeradores."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "2/5"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk50081gmuvb5qerf9d",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 1,
+      "enunciadoHash": "3377807065b30b01",
+      "enunciado": "Compare 3/8 e 5/8. Qual é maior?",
+      "respostaEsperadaOriginal": "5/8",
+      "alternativas": [
+        {
+          "texto": "3/8",
+          "correta": false
+        },
+        {
+          "texto": "5/8",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "Depende do contexto",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Mesmo denominador: compare os numeradores."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk50082gmuvdstb5rxk",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 2,
+      "enunciadoHash": "617aaddc43620b9c",
+      "enunciado": "Coloque em ordem crescente: 1/6, 5/6, 3/6.",
+      "respostaEsperadaOriginal": "1/6, 3/6, 5/6",
+      "alternativas": [
+        {
+          "texto": "5/6, 3/6, 1/6",
+          "correta": false
+        },
+        {
+          "texto": "1/6, 3/6, 5/6",
+          "correta": true
+        },
+        {
+          "texto": "3/6, 1/6, 5/6",
+          "correta": false
+        },
+        {
+          "texto": "1/6, 5/6, 3/6",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Mesmo denominador: ordene pelos numeradores, do menor pro maior."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "5/6, 3/6, 1/6"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk50083gmuvga5ywhkq",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 3,
+      "enunciadoHash": "71fc7ccdfb54023a",
+      "enunciado": "Um bolo foi cortado em 10 pedaços iguais. Comi 4 pedaços. Que fração do bolo eu comi?",
+      "respostaEsperadaOriginal": "4/10",
+      "alternativas": [
+        {
+          "texto": "10/4",
+          "correta": false
+        },
+        {
+          "texto": "4/10",
+          "correta": true
+        },
+        {
+          "texto": "6/10",
+          "correta": false
+        },
+        {
+          "texto": "4/6",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "A fração é: pedaços comidos sobre o total de pedaços."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "6/10"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk50084gmuv9hnvga52",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 4,
+      "enunciadoHash": "6794cbaaee53adbd",
+      "enunciado": "5 amigos vão dividir 2 pizzas em partes iguais. Que fração de pizza cada um recebe?",
+      "respostaEsperadaOriginal": "2/5 — resultado da divisão",
+      "alternativas": [
+        {
+          "texto": "5/2",
+          "correta": false
+        },
+        {
+          "texto": "2/5",
+          "correta": true
+        },
+        {
+          "texto": "1/5",
+          "correta": false
+        },
+        {
+          "texto": "2/10",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "2 pizzas divididas entre 5 pessoas: cada um recebe 2/5."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk50085gmuvodbjitem",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 5,
+      "enunciadoHash": "d3f8e0acce93c1ca",
+      "enunciado": "Numa caixa há 4 bolas vermelhas e 6 bolas azuis. Qual é a razão entre bolas vermelhas e o total de bolas?",
+      "respostaEsperadaOriginal": "4/10",
+      "alternativas": [
+        {
+          "texto": "4/6",
+          "correta": false
+        },
+        {
+          "texto": "4/10",
+          "correta": true
+        },
+        {
+          "texto": "6/10",
+          "correta": false
+        },
+        {
+          "texto": "6/4",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Razão é sempre sobre o TOTAL (vermelhas + azuis)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "4/6"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk50086gmuv8r8ecxj0",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 6,
+      "enunciadoHash": "05246ae472263c49",
+      "enunciado": "Calcule 1/2 de 20 balas (fração como operador).",
+      "respostaEsperadaOriginal": "10 balas",
+      "alternativas": [
+        {
+          "texto": "2 balas",
+          "correta": false
+        },
+        {
+          "texto": "10 balas",
+          "correta": true
+        },
+        {
+          "texto": "20 balas",
+          "correta": false
+        },
+        {
+          "texto": "40 balas",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "1/2 de 20 é 20 dividido por 2."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk50087gmuvgipujamf",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 7,
+      "enunciadoHash": "919bc3fe3cdc8691",
+      "enunciado": "Calcule 3/4 de 16 figurinhas.",
+      "respostaEsperadaOriginal": "12 figurinhas",
+      "alternativas": [
+        {
+          "texto": "4 figurinhas",
+          "correta": false
+        },
+        {
+          "texto": "12 figurinhas",
+          "correta": true
+        },
+        {
+          "texto": "16 figurinhas",
+          "correta": false
+        },
+        {
+          "texto": "20 figurinhas",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro ache 1/4 de 16 (divida por 4), depois multiplique por 3."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "4 figurinhas"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk50088gmuvbumx0w2e",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 8,
+      "enunciadoHash": "939e2e132a1d8809",
+      "enunciado": "Compare 3/10 e 3/100. Qual é maior?",
+      "respostaEsperadaOriginal": "3/10",
+      "alternativas": [
+        {
+          "texto": "3/100",
+          "correta": false
+        },
+        {
+          "texto": "3/10",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "Depende",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Mesmo numerador: quanto MAIOR o denominador, MENOR a fração."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "3/100"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk50089gmuvdk2pjtxh",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "FACIL",
+      "ordem": 9,
+      "enunciadoHash": "840f6c9a1b845e3f",
+      "enunciado": "Compare 1/3 e 1/4. Qual é maior?",
+      "respostaEsperadaOriginal": "1/3 — quanto maior o denominador, menor cada pedaço",
+      "alternativas": [
+        {
+          "texto": "1/4",
+          "correta": false
+        },
+        {
+          "texto": "1/3",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "Depende do contexto",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Mesmo numerador: quanto MENOR o denominador, MAIOR a fração."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "1/4"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk5008agmuvj6bj15qr",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 10,
+      "enunciadoHash": "a491244ed88d6810",
+      "enunciado": "Compare 2/3 e 3/5 usando o método do MMC dos denominadores.",
+      "respostaEsperadaOriginal": "2/3 \\> 3/5, pois 10/15 \\> 9/15",
+      "alternativas": [
+        {
+          "texto": "3/5",
+          "correta": false
+        },
+        {
+          "texto": "2/3",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "Impossível comparar sem calculadora",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "MMC(3,5)=15. Reescreva as duas frações com denominador 15."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk5008bgmuvdgqqed92",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 11,
+      "enunciadoHash": "c0944b85dc4696c5",
+      "enunciado": "Compare 5/6 e 7/9 usando multiplicação cruzada.",
+      "respostaEsperadaOriginal": "5/6 \\> 7/9, pois 45 \\> 42",
+      "alternativas": [
+        {
+          "texto": "7/9",
+          "correta": false
+        },
+        {
+          "texto": "5/6",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "5/6 ≈ 7/9",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Multiplique em X: 5×9 e 7×6, compare os resultados."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk5008cgmuvouzb3oxn",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 12,
+      "enunciadoHash": "b0ee3cdaf4e33a8b",
+      "enunciado": "Coloque em ordem crescente: 3/4, 5/8, 2/3.",
+      "respostaEsperadaOriginal": "5/8, 2/3, 3/4",
+      "alternativas": [
+        {
+          "texto": "3/4, 2/3, 5/8",
+          "correta": false
+        },
+        {
+          "texto": "5/8, 2/3, 3/4",
+          "correta": true
+        },
+        {
+          "texto": "2/3, 5/8, 3/4",
+          "correta": false
+        },
+        {
+          "texto": "5/8, 3/4, 2/3",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Ache o MMC dos três denominadores (4, 8, 3) e compare."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk5008dgmuvhnr3lzgm",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 13,
+      "enunciadoHash": "5080cff82db99520",
+      "enunciado": "Um time venceu 9 de 12 jogos que disputou. Qual é a fração (simplificada) de jogos vencidos?",
+      "respostaEsperadaOriginal": "9/12 \\= 3/4",
+      "alternativas": [
+        {
+          "texto": "9/12",
+          "correta": false
+        },
+        {
+          "texto": "3/4",
+          "correta": true
+        },
+        {
+          "texto": "4/3",
+          "correta": false
+        },
+        {
+          "texto": "3/9",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Simplifique 9/12 dividindo os dois números pelo MDC(9,12)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "9/12"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk5008egmuvufw7x6hn",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 14,
+      "enunciadoHash": "1ddba6c3e1d2d7bd",
+      "enunciado": "Numa escola de 30 professores, 18 são mulheres. Qual é a razão de professoras mulheres em relação ao total?",
+      "respostaEsperadaOriginal": "18/30 \\= 3/5",
+      "alternativas": [
+        {
+          "texto": "5/3",
+          "correta": false
+        },
+        {
+          "texto": "3/5",
+          "correta": true
+        },
+        {
+          "texto": "12/30",
+          "correta": false
+        },
+        {
+          "texto": "2/5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Razão de professoras é: mulheres sobre o TOTAL de professores."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "12/30"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk5008fgmuvvf7bo64e",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 15,
+      "enunciadoHash": "5353195aa78b632c",
+      "enunciado": "Calcule 2/5 de 45 alunos (quantos alunos representa).",
+      "respostaEsperadaOriginal": "18 alunos",
+      "alternativas": [
+        {
+          "texto": "9 alunos",
+          "correta": false
+        },
+        {
+          "texto": "18 alunos",
+          "correta": true
+        },
+        {
+          "texto": "27 alunos",
+          "correta": false
+        },
+        {
+          "texto": "90 alunos",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Ache 1/5 de 45 primeiro, depois multiplique por 2."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk5008ggmuv7vdme9ot",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 16,
+      "enunciadoHash": "c17d8af486b90d3b",
+      "enunciado": "Marina leu 3/8 de um livro de 240 páginas. Quantas páginas ela já leu?",
+      "respostaEsperadaOriginal": "90 páginas",
+      "alternativas": [
+        {
+          "texto": "30 páginas",
+          "correta": false
+        },
+        {
+          "texto": "90 páginas",
+          "correta": true
+        },
+        {
+          "texto": "80 páginas",
+          "correta": false
+        },
+        {
+          "texto": "150 páginas",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Ache 1/8 de 240 primeiro (divida por 8), depois multiplique por 3."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "30 páginas"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008hgmuvuosde8un",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 17,
+      "enunciadoHash": "3016eaca29faf6d3",
+      "enunciado": "Compare 4/7 e 5/9. Qual é maior?",
+      "respostaEsperadaOriginal": "4/7, pois 36 \\> 35 na multiplicação cruzada",
+      "alternativas": [
+        {
+          "texto": "5/9",
+          "correta": false
+        },
+        {
+          "texto": "4/7",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "5/9, pois 9 > 7",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Multiplique em X: 4×9 e 5×7."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "5/9, pois 9 > 7"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008igmuvrjt1ct0d",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 18,
+      "enunciadoHash": "4ac10b1178dc59a0",
+      "enunciado": "Num litro de suco, 2/5 é polpa de fruta e o resto é água. Que fração é água?",
+      "respostaEsperadaOriginal": "3/5",
+      "alternativas": [
+        {
+          "texto": "2/5",
+          "correta": false
+        },
+        {
+          "texto": "3/5",
+          "correta": true
+        },
+        {
+          "texto": "1/5",
+          "correta": false
+        },
+        {
+          "texto": "4/5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "O total é 5/5. Se 2/5 é polpa, o resto é 5/5 − 2/5."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008jgmuvar6t9hjn",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "MEDIO",
+      "ordem": 19,
+      "enunciadoHash": "933bb872d72d033b",
+      "enunciado": "Coloque em ordem decrescente: 7/10, 2/3, 3/5.",
+      "respostaEsperadaOriginal": "7/10, 2/3, 3/5",
+      "alternativas": [
+        {
+          "texto": "3/5, 2/3, 7/10",
+          "correta": false
+        },
+        {
+          "texto": "7/10, 2/3, 3/5",
+          "correta": true
+        },
+        {
+          "texto": "2/3, 7/10, 3/5",
+          "correta": false
+        },
+        {
+          "texto": "7/10, 3/5, 2/3",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Ache o MMC dos três denominadores e compare os numeradores equivalentes."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "3/5, 2/3, 7/10"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008kgmuv42v2mqq6",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 20,
+      "enunciadoHash": "c75201b94d0f61ca",
+      "enunciado": "Compare 5/12, 7/18 e 3/8, colocando as três em ordem crescente (dica: ache o MMC dos três denominadores).",
+      "respostaEsperadaOriginal": "3/8, 7/18, 5/12 — MMC=72: 3/8=27/72, 7/18=28/72, 5/12=30/72",
+      "alternativas": [
+        {
+          "texto": "5/12, 7/18, 3/8",
+          "correta": false
+        },
+        {
+          "texto": "3/8, 7/18, 5/12",
+          "correta": true
+        },
+        {
+          "texto": "7/18, 3/8, 5/12",
+          "correta": false
+        },
+        {
+          "texto": "3/8, 5/12, 7/18",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "MMC(12,18,8)=72. Reescreva as três frações com denominador 72."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008lgmuv6h7ish5d",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 21,
+      "enunciadoHash": "2860c45c09248c91",
+      "enunciado": "Num torneio, o time A venceu 5/8 dos jogos e o time B venceu 7/11 dos jogos. Qual time teve o melhor aproveitamento?",
+      "respostaEsperadaOriginal": "Time B — multiplicação cruzada: 5×11=55 e 7×8=56; como 56\\>55, 7/11 \\> 5/8",
+      "alternativas": [
+        {
+          "texto": "Time A",
+          "correta": false
+        },
+        {
+          "texto": "Time B",
+          "correta": true
+        },
+        {
+          "texto": "Empate",
+          "correta": false
+        },
+        {
+          "texto": "Não dá pra saber sem mais dados",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Multiplique em X: 5×11 e 7×8, compare os resultados."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008mgmuvw38hy6yd",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 22,
+      "enunciadoHash": "1da61d391fda2e57",
+      "enunciado": "Uma receita usa 3/4 de xícara de açúcar para 1 bolo. Para fazer 5 bolos, quantas xícaras de açúcar são necessárias?",
+      "respostaEsperadaOriginal": "15/4 \\= 3¾ xícaras",
+      "alternativas": [
+        {
+          "texto": "3/4 xícara",
+          "correta": false
+        },
+        {
+          "texto": "15/4 (3¾) xícaras",
+          "correta": true
+        },
+        {
+          "texto": "20/4 (5) xícaras",
+          "correta": false
+        },
+        {
+          "texto": "8/4 (2) xícaras",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Multiplique 3/4 por 5 (a quantidade de bolos)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "3/4 xícara"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008ngmuvfazdnqfp",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 23,
+      "enunciadoHash": "41cba65a89b1628a",
+      "enunciado": "Numa votação com 450 pessoas, 2/9 votaram contra. Quantas pessoas votaram a favor?",
+      "respostaEsperadaOriginal": "450 − 100 \\= 350, já que 2/9 de 450 \\= 100",
+      "alternativas": [
+        {
+          "texto": "100 pessoas",
+          "correta": false
+        },
+        {
+          "texto": "350 pessoas",
+          "correta": true
+        },
+        {
+          "texto": "250 pessoas",
+          "correta": false
+        },
+        {
+          "texto": "400 pessoas",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro ache 2/9 de 450 (quem votou contra), depois subtraia do total."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "100 pessoas"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008pgmuvv2j0vspz",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 25,
+      "enunciadoHash": "57265f233383214b",
+      "enunciado": "Se 3/5 de uma turma de 40 alunos foi ao passeio, quantos alunos NÃO foram?",
+      "respostaEsperadaOriginal": "16 alunos — 3/5 de 40 é 24, então 40−24=16",
+      "alternativas": [
+        {
+          "texto": "24 alunos",
+          "correta": false
+        },
+        {
+          "texto": "16 alunos",
+          "correta": true
+        },
+        {
+          "texto": "12 alunos",
+          "correta": false
+        },
+        {
+          "texto": "8 alunos",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro ache quantos FORAM (3/5 de 40), depois subtraia do total."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "24 alunos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008qgmuvpl92v36c",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 26,
+      "enunciadoHash": "4153c5941b20aef2",
+      "enunciado": "Compare 11/15 e 13/18 usando multiplicação cruzada.",
+      "respostaEsperadaOriginal": "11/15 \\> 13/18, pois 198 \\> 195",
+      "alternativas": [
+        {
+          "texto": "13/18",
+          "correta": false
+        },
+        {
+          "texto": "11/15",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "13/18, pois 18 > 15",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Multiplique em X: 11×18 e 13×15."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008rgmuvzfhpqwte",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 27,
+      "enunciadoHash": "2a23e04344763613",
+      "enunciado": "Dois tanques de combustível: o tanque A está com 5/8 cheio e o tanque B, do mesmo tamanho, está com 9/16 cheio. Qual tanque tem mais combustível?",
+      "respostaEsperadaOriginal": "Tanque A: 5/8=10/16 \\> 9/16",
+      "alternativas": [
+        {
+          "texto": "Tanque B",
+          "correta": false
+        },
+        {
+          "texto": "Tanque A",
+          "correta": true
+        },
+        {
+          "texto": "Os dois têm a mesma quantidade",
+          "correta": false
+        },
+        {
+          "texto": "Não dá pra comparar sem saber o tamanho",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Reescreva 5/8 com denominador 16 e compare com 9/16."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008sgmuv3ucwxtq0",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 28,
+      "enunciadoHash": "19fc54c52adc7485",
+      "enunciado": "Ordene do menor para o maior: 7/20, 2/5, 9/25.",
+      "respostaEsperadaOriginal": "7/20, 9/25, 2/5 — MMC=100: 35/100, 36/100, 40/100",
+      "alternativas": [
+        {
+          "texto": "2/5, 9/25, 7/20",
+          "correta": false
+        },
+        {
+          "texto": "7/20, 9/25, 2/5",
+          "correta": true
+        },
+        {
+          "texto": "9/25, 7/20, 2/5",
+          "correta": false
+        },
+        {
+          "texto": "7/20, 2/5, 9/25",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "MMC(20,25,5)=100. Reescreva as três frações com denominador 100."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008tgmuvgqsj72zy",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "APOSTILA",
+      "ordem": 29,
+      "enunciadoHash": "98bb461fcd1da7db",
+      "enunciado": "Uma fábrica produz 5/6 da meta diária na segunda-feira e 11/12 da meta na terça-feira. Em qual dia a produção chegou mais perto da meta completa?",
+      "respostaEsperadaOriginal": "Terça-feira: 11/12 \\> 5/6, pois 11/12=0,916... e 5/6=0,833...",
+      "alternativas": [
+        {
+          "texto": "Segunda-feira",
+          "correta": false
+        },
+        {
+          "texto": "Terça-feira",
+          "correta": true
+        },
+        {
+          "texto": "Os dois ficaram igualmente perto",
+          "correta": false
+        },
+        {
+          "texto": "Não dá pra saber sem o valor da meta",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Compare 5/6 e 11/12 — transforme em decimal ou tire o MMC."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008ugmuv4sx66ooq",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "DESAFIO",
+      "ordem": 30,
+      "enunciadoHash": "23cdd84b9b414a9c",
+      "enunciado": "**Desafio:** Ordene as frações 5/6, 7/9, 11/12 e 3/4 da menor para a maior, sem calculadora.",
+      "respostaEsperadaOriginal": "3/4, 7/9, 5/6, 11/12 — MMC=36: 27/36, 28/36, 30/36, 33/36",
+      "alternativas": [
+        {
+          "texto": "5/6, 7/9, 11/12, 3/4",
+          "correta": false
+        },
+        {
+          "texto": "3/4, 7/9, 5/6, 11/12",
+          "correta": true
+        },
+        {
+          "texto": "3/4, 5/6, 7/9, 11/12",
+          "correta": false
+        },
+        {
+          "texto": "11/12, 5/6, 7/9, 3/4",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "MMC(6,9,12,4)=36. Reescreva as quatro frações com denominador 36."
+      ],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk6008vgmuv8qcc4q0g",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "DESAFIO",
+      "ordem": 31,
+      "enunciadoHash": "a1b408acec97393f",
+      "enunciado": "**Desafio:** Um reservatório tem capacidade para 2.400 litros. Ele está com 5/8 da capacidade cheia. Quantos litros faltam para encher completamente?",
+      "respostaEsperadaOriginal": "cheio \\= 1.500L; faltam 900L",
+      "alternativas": [
+        {
+          "texto": "1500 litros",
+          "correta": false
+        },
+        {
+          "texto": "900 litros",
+          "correta": true
+        },
+        {
+          "texto": "300 litros",
+          "correta": false
+        },
+        {
+          "texto": "1200 litros",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Primeiro ache quanto JÁ tem (5/8 de 2400), depois subtraia da capacidade total."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "1500 litros"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008wgmuvfjkah9gj",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "DESAFIO",
+      "ordem": 32,
+      "enunciadoHash": "91c430685b2dfdd6",
+      "enunciado": "**Desafio:** Numa cidade, a razão entre carros e motos é 7 para 3 (ou seja, 7/10 dos veículos são carros). Se há 4.500 veículos no total, quantas são motos?",
+      "respostaEsperadaOriginal": "3/10 de 4.500 \\= 1.350 motos",
+      "alternativas": [
+        {
+          "texto": "3150 motos",
+          "correta": false
+        },
+        {
+          "texto": "1350 motos",
+          "correta": true
+        },
+        {
+          "texto": "1500 motos",
+          "correta": false
+        },
+        {
+          "texto": "643 motos",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Motos são 3/10 do total (já que carros são 7/10)."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "3150 motos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008xgmuvr5enhebl",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "DESAFIO",
+      "ordem": 33,
+      "enunciadoHash": "3e1e04f1a80467ec",
+      "enunciado": "**Desafio:** Pedro fez 2/3 de um trabalho na segunda-feira e mais 1/5 do trabalho na terça-feira. Que fração do trabalho ainda falta para terminar?",
+      "respostaEsperadaOriginal": "2/3+1/5 \\= 10/15+3/15=13/15 feito; falta 2/15",
+      "alternativas": [
+        {
+          "texto": "13/15",
+          "correta": false
+        },
+        {
+          "texto": "2/15",
+          "correta": true
+        },
+        {
+          "texto": "1/15",
+          "correta": false
+        },
+        {
+          "texto": "1/5",
+          "correta": false
+        }
+      ],
+      "dicas": [
+        "Some o que já foi feito (2/3 + 1/5) e depois subtraia de 1 inteiro."
+      ],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "13/15"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk6008zgmuv72y3hwn5",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "AVALIACAO",
+      "ordem": 35,
+      "enunciadoHash": "ecc9f34dac02051b",
+      "enunciado": "Compare 3/7 e 4/9. Qual é maior?",
+      "respostaEsperadaOriginal": "4/9 — multiplicação cruzada: 3×9=27 e 4×7=28; como 28\\>27, 4/9 \\> 3/7",
+      "alternativas": [
+        {
+          "texto": "3/7",
+          "correta": false
+        },
+        {
+          "texto": "4/9",
+          "correta": true
+        },
+        {
+          "texto": "Iguais",
+          "correta": false
+        },
+        {
+          "texto": "3/7, pois 7 < 9",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk60090gmuvls6ko8fv",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "AVALIACAO",
+      "ordem": 36,
+      "enunciadoHash": "afcb0e92f268f2d6",
+      "enunciado": "Coloque em ordem crescente: 5/8, 3/4, 7/12.",
+      "respostaEsperadaOriginal": "7/12, 5/8, 3/4",
+      "alternativas": [
+        {
+          "texto": "3/4, 5/8, 7/12",
+          "correta": false
+        },
+        {
+          "texto": "7/12, 5/8, 3/4",
+          "correta": true
+        },
+        {
+          "texto": "5/8, 7/12, 3/4",
+          "correta": false
+        },
+        {
+          "texto": "7/12, 3/4, 5/8",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": []
+    },
+    {
+      "questaoId": "cmtu6kqk60091gmuvmwqcx6kf",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "AVALIACAO",
+      "ordem": 37,
+      "enunciadoHash": "4a69aeb096fb8ffe",
+      "enunciado": "Numa turma de 32 alunos, 3/8 preferem matemática. Quantos alunos preferem matemática?",
+      "respostaEsperadaOriginal": "12 alunos",
+      "alternativas": [
+        {
+          "texto": "4 alunos",
+          "correta": false
+        },
+        {
+          "texto": "12 alunos",
+          "correta": true
+        },
+        {
+          "texto": "20 alunos",
+          "correta": false
+        },
+        {
+          "texto": "16 alunos",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "PROCEDIMENTO",
+          "distratorTexto": "4 alunos"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk60092gmuvkuwfscvj",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "AVALIACAO",
+      "ordem": 38,
+      "enunciadoHash": "dab205cb2edc0f17",
+      "enunciado": "Numa caixa com 9 bolas azuis e 15 bolas verdes, qual é a razão entre bolas azuis e o total?",
+      "respostaEsperadaOriginal": "9/24 \\= 3/8",
+      "alternativas": [
+        {
+          "texto": "9/15",
+          "correta": false
+        },
+        {
+          "texto": "3/8",
+          "correta": true
+        },
+        {
+          "texto": "5/8",
+          "correta": false
+        },
+        {
+          "texto": "3/5",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "CONCEITO",
+          "distratorTexto": "9/15"
+        }
+      ]
+    },
+    {
+      "questaoId": "cmtu6kqk60093gmuv32idurf2",
+      "habilidadeCodigo": "EF07MA08",
+      "nivel": "AVALIACAO",
+      "ordem": 39,
+      "enunciadoHash": "6a511dab52d0fe05",
+      "enunciado": "Ana correu 5/6 de uma prova de 12 km na primeira parte. Quantos km ela já correu?",
+      "respostaEsperadaOriginal": "10 km",
+      "alternativas": [
+        {
+          "texto": "2 km",
+          "correta": false
+        },
+        {
+          "texto": "10 km",
+          "correta": true
+        },
+        {
+          "texto": "7,2 km",
+          "correta": false
+        },
+        {
+          "texto": "6 km",
+          "correta": false
+        }
+      ],
+      "dicas": [],
+      "errosProvaveis": [
+        {
+          "tipoErro": "INTERPRETACAO",
+          "distratorTexto": "2 km"
+        }
+      ]
+    }
+  ],
+  "naoConvertidos": [
+    {
+      "questaoId": "cmtu6kqk6008ogmuvb8hhq6a0",
+      "ordem": 24,
+      "nivel": "APOSTILA",
+      "enunciado": "Explique com suas palavras a diferença entre usar a fração como \"razão\" e usar a fração como \"parte de um inteiro\", dando um exemplo de cada.",
+      "motivo": "Explicação aberta — não converte honestamente pra múltipla escolha."
+    },
+    {
+      "questaoId": "cmtu6kqk6008ygmuv6as008im",
+      "ordem": 34,
+      "nivel": "DESAFIO",
+      "enunciado": "**Desafio:** Explique por que, ao comparar duas frações com o mesmo numerador (por exemplo, 3/5 e 3/8), a fração com o MENOR denominador é sempre a MAIOR fração. Use um desenho ou exemplo pra justificar.",
+      "motivo": "Explicação aberta — não converte honestamente pra múltipla escolha."
+    }
+  ]
+}
