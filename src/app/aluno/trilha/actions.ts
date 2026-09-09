@@ -144,29 +144,40 @@ export async function responderExercicio(
       },
     });
 
-    const progresso = await tx.progressoHabilidade.upsert({
+    // Calcula os valores finais UMA vez, a partir do que já existia (ou da
+    // base zerada, se essa é a 1ª tentativa nessa habilidade), e aplica no
+    // upsert só uma vez — nunca em create+update separados. Fazer os dois
+    // (create já com o incremento desta tentativa, seguido de um update
+    // incondicional por cima) contava a mesma tentativa em dobro na estreia.
+    const progressoExistente = await tx.progressoHabilidade.findUnique({
+      where: { alunoId_conteudoId: { alunoId: sessao.id, conteudoId } },
+    });
+
+    const novoDominio = Math.max(0, Math.min(1, (progressoExistente?.dominio ?? 0) + incrementoDominio));
+    const novosAcertosSemAjuda = correta ? (progressoExistente?.acertosSemAjuda ?? 0) + 1 : progressoExistente?.acertosSemAjuda ?? 0;
+    const novosErrosConsecutivos = correta ? 0 : (progressoExistente?.errosConsecutivos ?? 0) + 1;
+    // Só atualiza em erro — um acerto não apaga o padrão de erro mais recente,
+    // ele só volta a mudar quando outro erro acontecer.
+    const novoUltimoTipoErro = !correta
+      ? ((diagnostico?.tipoErro as never) ?? "ERRO_NAO_CLASSIFICADO")
+      : progressoExistente?.ultimoTipoErro;
+
+    await tx.progressoHabilidade.upsert({
       where: { alunoId_conteudoId: { alunoId: sessao.id, conteudoId } },
       create: {
         alunoId: sessao.id,
         conteudoId,
         status: "EM_APRENDIZAGEM",
-        dominio: Math.max(0, Math.min(1, incrementoDominio)),
-        acertosSemAjuda: correta ? 1 : 0,
-        errosConsecutivos: correta ? 0 : 1,
-        ultimoTipoErro: !correta ? (diagnostico?.tipoErro as never) ?? "ERRO_NAO_CLASSIFICADO" : undefined,
+        dominio: novoDominio,
+        acertosSemAjuda: novosAcertosSemAjuda,
+        errosConsecutivos: novosErrosConsecutivos,
+        ultimoTipoErro: correta ? undefined : novoUltimoTipoErro,
       },
-      update: {},
-    });
-
-    await tx.progressoHabilidade.update({
-      where: { id: progresso.id },
-      data: {
-        dominio: Math.max(0, Math.min(1, progresso.dominio + incrementoDominio)),
-        acertosSemAjuda: correta ? progresso.acertosSemAjuda + 1 : progresso.acertosSemAjuda,
-        errosConsecutivos: correta ? 0 : progresso.errosConsecutivos + 1,
-        // Só atualiza em erro — um acerto não apaga o padrão de erro mais
-        // recente, ele só volta a mudar quando outro erro acontecer.
-        ...(correta ? {} : { ultimoTipoErro: (diagnostico?.tipoErro as never) ?? "ERRO_NAO_CLASSIFICADO" }),
+      update: {
+        dominio: novoDominio,
+        acertosSemAjuda: novosAcertosSemAjuda,
+        errosConsecutivos: novosErrosConsecutivos,
+        ...(correta ? {} : { ultimoTipoErro: novoUltimoTipoErro }),
       },
     });
   });
