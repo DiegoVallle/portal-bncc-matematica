@@ -168,6 +168,12 @@ export default function RespostaExercicio({
 
       {estado?.erro && !revelado && <p className="mt-3 text-sm text-red-600">{estado.erro}</p>}
 
+      {!revelado && estado?.mensagemDiagnostico && (
+        <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+          🔍 <strong>Possível causa:</strong> {estado.mensagemDiagnostico}
+        </div>
+      )}
+
       {!revelado && estado?.dica && (
         <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
           💡 <strong>Dica:</strong> {estado.dica}

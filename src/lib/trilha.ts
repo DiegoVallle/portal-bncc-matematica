@@ -261,6 +261,59 @@ export function obterFeedbackTentativa(params: {
   return { correta: false, tentativasRestantes, dica, mostrarResposta: false };
 }
 
+// --- Sondagem da origem da dificuldade (classificação de erro por distrator) ---
+// Cada item de prática pode ter, em `QuestaoConteudo.errosProvaveis`, um mapa
+// autorado à mão de "se o aluno escolheu ESTE distrator errado, o motivo
+// provável é ESTE tipo de erro" (ver prisma/seed-data/gerar-alternativas-pilot-*.ts
+// e o TipoErro do schema). Isso já era gerado e importado desde a Fase 2, mas
+// nunca era lido de volta na hora de responder — o erro era só "certo/errado".
+// `classificarErro` fecha esse laço: casa o texto da alternativa escolhida com
+// `distratorTexto` e devolve o tipo de erro provável, se autorado. Não é uma
+// certeza pedagógica — por isso sempre acompanha uma `confianca` (<1) e nunca
+// decide sozinho nenhum status de domínio.
+export type ErroProvavel = { tipoErro: string; distratorTexto: string };
+
+// Confiança fixa da Fase 2.5: os distratores são autorados manualmente (não
+// inferidos automaticamente), então a classificação é confiável quando bate,
+// mas continua sendo uma hipótese pedagógica — não uma verificação formal do
+// raciocínio do aluno. Ver `TentativaQuestaoConteudo.confiancaErro` no schema.
+export const CONFIANCA_ERRO_AUTORADO = 0.75;
+
+export function classificarErro(
+  errosProvaveis: unknown,
+  textoAlternativaEscolhida: string
+): { tipoErro: string; confianca: number } | null {
+  if (!Array.isArray(errosProvaveis)) return null;
+  const encontrado = (errosProvaveis as ErroProvavel[]).find(
+    (e) => e && typeof e.distratorTexto === "string" && e.distratorTexto === textoAlternativaEscolhida
+  );
+  return encontrado ? { tipoErro: encontrado.tipoErro, confianca: CONFIANCA_ERRO_AUTORADO } : null;
+}
+
+// Mensagem curta, em linguagem de aluno, pra cada tipo de erro provável —
+// mostrada junto da dica progressiva quando a origem da dificuldade foi
+// identificada. Não substitui a dica (que ajuda a resolver ESSA questão); ela
+// nomeia o PADRÃO por trás do erro, que é o que interessa pro professor
+// acompanhar ao longo do tempo (`ProgressoHabilidade.ultimoTipoErro`).
+export const TIPO_ERRO_LABELS: Record<string, string> = {
+  CONCEITO: "Conceito",
+  PROCEDIMENTO: "Procedimento",
+  CALCULO: "Cálculo",
+  INTERPRETACAO: "Interpretação do enunciado",
+  REPRESENTACAO: "Representação da resposta",
+  PRE_REQUISITO: "Pré-requisito",
+  ERRO_NAO_CLASSIFICADO: "Não identificado",
+};
+
+export const TIPO_ERRO_MENSAGENS: Record<string, string> = {
+  CONCEITO: "Pode não ser conta — parece que o conceito por trás da questão ainda não ficou claro. Vale revisar a teoria antes de tentar de novo.",
+  PROCEDIMENTO: "O caminho usado pra chegar na resposta parece não ser o certo pra esse tipo de questão. Repense os passos, não só a conta final.",
+  CALCULO: "A ideia parece certa — o problema foi na conta. Refaça o cálculo com calma.",
+  INTERPRETACAO: "Releia o enunciado com atenção: o que foi pedido pode ser diferente do que foi respondido.",
+  REPRESENTACAO: "A forma de escrever/representar a resposta pode estar confundindo, mesmo que o raciocínio esteja certo.",
+  PRE_REQUISITO: "Esse erro costuma aparecer quando um conteúdo anterior ainda não está firme. Pode valer revisar uma habilidade de base.",
+};
+
 // O banco de conteúdo original escapa pontuação em markdown (ex: "x \+ 5 \= 12\.")
 // de forma inconsistente — às vezes escapa, às vezes não, mas nunca deveria
 // aparecer o "\" literal na tela. Enunciado/resolução/gabarito são exibidos

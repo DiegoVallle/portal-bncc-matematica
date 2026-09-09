@@ -6,7 +6,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { obterSessao } from "@/lib/auth";
-import { obterFeedbackTentativa, unescapeMarkdown } from "@/lib/trilha";
+import { classificarErro, obterFeedbackTentativa, TIPO_ERRO_MENSAGENS, unescapeMarkdown } from "@/lib/trilha";
 
 export type EstadoResposta =
   | undefined
@@ -18,6 +18,10 @@ export type EstadoResposta =
       alternativaCorretaIndex?: number;
       resolucao?: string | null;
       erro?: string;
+      // Sondagem da origem da dificuldade: quando o distrator escolhido tem um
+      // tipo de erro autorado (ver src/lib/trilha.ts), mostra uma mensagem
+      // nomeando o padrão provável, além da dica de como resolver ESSA questão.
+      mensagemDiagnostico?: string | null;
     };
 
 // Ação explícita — chamada pelo botão "Começar aula"/"Continuar aula", nunca
@@ -103,6 +107,15 @@ export async function responderExercicio(
 
   const feedback = obterFeedbackTentativa({ correta, numeroTentativa, dicas });
 
+  // Sondagem da origem da dificuldade: numa resposta errada, tenta casar o
+  // distrator escolhido com o mapa `errosProvaveis` autorado pra essa questão
+  // (Fase 2 — ver gerar-alternativas-pilot-*.ts). Não decide nada sozinho: é
+  // guardado como hipótese (tipoErro + confiança) e só vira mensagem quando
+  // encontrado; sem match, o erro simplesmente fica sem classificação.
+  const diagnostico = !correta
+    ? classificarErro(questao.errosProvaveis, alternativas[indiceEscolhido]?.texto ?? "")
+    : null;
+
   // tempoMs é telemetria — não influencia correta/dica/status, só é guardado.
   const tempoMsBruto = Number(formData.get("tempoMs"));
   const tempoMs = Number.isFinite(tempoMsBruto) && tempoMsBruto > 0 ? Math.round(tempoMsBruto) : null;
@@ -118,6 +131,16 @@ export async function responderExercicio(
         resposta: { alternativaIndex: indiceEscolhido },
         correta,
         tempoMs,
+        tipoErro: diagnostico?.tipoErro as
+          | "CONCEITO"
+          | "PROCEDIMENTO"
+          | "CALCULO"
+          | "INTERPRETACAO"
+          | "REPRESENTACAO"
+          | "PRE_REQUISITO"
+          | "ERRO_NAO_CLASSIFICADO"
+          | undefined,
+        confiancaErro: diagnostico?.confianca,
       },
     });
 
@@ -130,6 +153,7 @@ export async function responderExercicio(
         dominio: Math.max(0, Math.min(1, incrementoDominio)),
         acertosSemAjuda: correta ? 1 : 0,
         errosConsecutivos: correta ? 0 : 1,
+        ultimoTipoErro: !correta ? (diagnostico?.tipoErro as never) ?? "ERRO_NAO_CLASSIFICADO" : undefined,
       },
       update: {},
     });
@@ -140,6 +164,9 @@ export async function responderExercicio(
         dominio: Math.max(0, Math.min(1, progresso.dominio + incrementoDominio)),
         acertosSemAjuda: correta ? progresso.acertosSemAjuda + 1 : progresso.acertosSemAjuda,
         errosConsecutivos: correta ? 0 : progresso.errosConsecutivos + 1,
+        // Só atualiza em erro — um acerto não apaga o padrão de erro mais
+        // recente, ele só volta a mudar quando outro erro acontecer.
+        ...(correta ? {} : { ultimoTipoErro: (diagnostico?.tipoErro as never) ?? "ERRO_NAO_CLASSIFICADO" }),
       },
     });
   });
@@ -148,6 +175,7 @@ export async function responderExercicio(
     ...feedback,
     alternativaCorretaIndex: feedback.mostrarResposta ? indiceCorreto : undefined,
     resolucao: feedback.mostrarResposta && questao.resolucao ? unescapeMarkdown(questao.resolucao) : undefined,
+    mensagemDiagnostico: diagnostico ? TIPO_ERRO_MENSAGENS[diagnostico.tipoErro] ?? null : null,
   };
 }
 

@@ -27,6 +27,11 @@ model Aluno {
   anoEscolar Int // 1 a 9
   createdAt  DateTime @default(now())
 
+  // Ponto de partida da trilha de conteúdo, definido pelo professor (código
+  // BNCC, ex: EF07MA08). Só direciona onde o aluno cai ao entrar na trilha —
+  // nunca bloqueia acesso às outras habilidades.
+  trilhaPontoPartida String?
+
   professorId String
   professor   Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
 

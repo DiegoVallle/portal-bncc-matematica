@@ -27,6 +27,7 @@ export default async function TrilhaPage() {
     codigo: c.habilidade.codigo,
     descricao: c.habilidade.descricao,
     status: statusPorConteudo.get(c.id) ?? "NAO_INICIADO",
+    recomendada: c.habilidade.codigo === aluno.trilhaPontoPartida,
   }));
 
   const habilidadePorCodigo = new Map(habilidades.map((h) => [h.codigo, h]));

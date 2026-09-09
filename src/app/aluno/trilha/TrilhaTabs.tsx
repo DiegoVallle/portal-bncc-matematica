@@ -9,6 +9,7 @@ export type HabilidadeTrilha = {
   codigo: string;
   descricao: string;
   status: string;
+  recomendada: boolean;
 };
 
 type Nucleo = {
@@ -63,9 +64,12 @@ export default function TrilhaTabs({
             <li key={h.codigo}>
               <Link
                 href={`/aluno/trilha/${h.codigo}`}
-                className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-slate-50"
+                className={`flex items-center justify-between gap-3 px-5 py-3 hover:bg-slate-50 ${
+                  h.recomendada ? "bg-emerald-50" : ""
+                }`}
               >
                 <span className="text-sm text-slate-900">
+                  {h.recomendada && <span title="Recomendado pelo professor">⭐ </span>}
                   <span className="mr-2 font-mono text-slate-500">{h.codigo}</span>
                   {h.descricao}
                 </span>

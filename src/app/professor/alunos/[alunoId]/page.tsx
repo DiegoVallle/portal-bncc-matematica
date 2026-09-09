@@ -4,6 +4,8 @@ import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { desempenhoPorUnidade } from "@/lib/relatorios";
 import GraficoUnidades from "@/components/GraficoUnidades";
+import { NUCLEOS } from "@/lib/trilha";
+import DefinirPontoPartidaForm from "./DefinirPontoPartidaForm";
 
 export default async function AlunoDetalhePage({
   params,
@@ -33,6 +35,19 @@ export default async function AlunoDetalhePage({
 
   const desempenho = desempenhoPorUnidade(respostas).filter((d) => d.total > 0);
 
+  const habilidadesTrilha = await prisma.habilidade.findMany({
+    where: { anoEscolar: aluno.anoEscolar, conteudo: { isNot: null } },
+    select: { codigo: true, descricao: true },
+  });
+  const descricaoPorCodigo = new Map(habilidadesTrilha.map((h) => [h.codigo, h.descricao]));
+  const nucleosDoAno = NUCLEOS.map((n) => ({
+    letra: n.letra,
+    nome: n.nome,
+    habilidades: n.codigos
+      .filter((c) => descricaoPorCodigo.has(c))
+      .map((c) => ({ codigo: c, descricao: descricaoPorCodigo.get(c)! })),
+  })).filter((n) => n.habilidades.length > 0);
+
   return (
     <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12">
       <p>
@@ -47,6 +62,17 @@ export default async function AlunoDetalhePage({
           @{aluno.usuario} · {aluno.anoEscolar}º ano
         </p>
       </div>
+
+      {nucleosDoAno.length > 0 && (
+        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-slate-900">Trilha de conteúdo</h2>
+          <p className="text-sm text-slate-600">
+            Escolha por onde {aluno.nome.split(" ")[0]} deve começar. Isso só direciona o ponto de partida — o
+            aluno continua podendo navegar livremente pra qualquer outra habilidade.
+          </p>
+          <DefinirPontoPartidaForm alunoId={aluno.id} atual={aluno.trilhaPontoPartida} nucleos={nucleosDoAno} />
+        </section>
+      )}
 
       <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-900">Desempenho por unidade temática</h2>
