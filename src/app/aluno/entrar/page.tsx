@@ -22,7 +22,7 @@ export default function EntrarAlunoPage() {
               type="text"
               name="usuario"
               required
-              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-valeedu-green focus:outline-none"
             />
           </div>
           <div>
@@ -31,7 +31,7 @@ export default function EntrarAlunoPage() {
               type="password"
               name="senha"
               required
-              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-valeedu-green focus:outline-none"
             />
           </div>
 
@@ -40,7 +40,7 @@ export default function EntrarAlunoPage() {
           <button
             type="submit"
             disabled={pendente}
-            className="w-full rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-60"
+            className="w-full rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark disabled:opacity-60"
           >
             {pendente ? "Entrando..." : "Entrar"}
           </button>

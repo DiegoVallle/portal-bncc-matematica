@@ -82,7 +82,7 @@ export default async function AvaliacaoConcluidaPage({
         {proximoCodigo && (
           <Link
             href={`/aluno/trilha/${proximoCodigo}`}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+            className="rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
           >
             Continuar para próxima →
           </Link>

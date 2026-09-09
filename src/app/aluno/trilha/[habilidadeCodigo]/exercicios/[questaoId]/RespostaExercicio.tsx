@@ -13,7 +13,7 @@ function BotaoResponder({ texto }: { texto: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="mt-5 w-full rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60 sm:w-auto"
+      className="mt-5 w-full rounded-lg bg-valeedu-green px-4 py-3 text-sm font-semibold text-white hover:bg-valeedu-green-dark disabled:opacity-60 sm:w-auto"
     >
       {pending ? "Enviando..." : texto}
     </button>
@@ -44,7 +44,7 @@ function CardAlternativas({
         // uma seleção é só "escolhida", nunca fica verde, pra não parecer que
         // já foi validada como correta.
         let classe = "border-slate-200 hover:bg-slate-50";
-        if (revelado && eCorreta) classe = "border-emerald-500 bg-emerald-50";
+        if (revelado && eCorreta) classe = "border-valeedu-green bg-emerald-50";
         else if (revelado && eEscolhida && !eCorreta) classe = "border-red-400 bg-red-50";
         else if (!revelado && eEscolhida) classe = "border-blue-400 bg-blue-50";
 
@@ -68,7 +68,7 @@ function CardAlternativas({
             )}
             <span className="font-mono text-sm text-slate-500">{LETRAS[i]})</span>
             <span>{texto}</span>
-            {revelado && eCorreta && <span className="ml-auto text-emerald-600">✓</span>}
+            {revelado && eCorreta && <span className="ml-auto text-valeedu-green">✓</span>}
             {revelado && eEscolhida && !eCorreta && <span className="ml-auto text-red-500">✗</span>}
           </label>
         );
@@ -127,7 +127,7 @@ export default function RespostaExercicio({
           indiceEscolhido={null}
           interativo={false}
         />
-        <p className={`mt-4 text-sm font-medium ${revelacaoInicial.algumaCorreta ? "text-emerald-700" : "text-slate-600"}`}>
+        <p className={`mt-4 text-sm font-medium ${revelacaoInicial.algumaCorreta ? "text-valeedu-green-dark" : "text-slate-600"}`}>
           {revelacaoInicial.algumaCorreta ? "Você já acertou essa questão." : "Você já usou as 3 tentativas desta questão."}
         </p>
         {revelacaoInicial.resolucao && (
@@ -135,7 +135,7 @@ export default function RespostaExercicio({
         )}
         <Link
           href={proximaHref}
-          className="mt-5 inline-block rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+          className="mt-5 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
         >
           Próxima →
         </Link>
@@ -182,13 +182,13 @@ export default function RespostaExercicio({
 
       {revelado ? (
         <div className="mt-4">
-          <p className={`text-sm font-medium ${estado?.correta ? "text-emerald-700" : "text-slate-700"}`}>
+          <p className={`text-sm font-medium ${estado?.correta ? "text-valeedu-green-dark" : "text-slate-700"}`}>
             {estado?.correta ? "Correto! 🎉" : "Não foi dessa vez — veja a resposta certa acima."}
           </p>
           {estado?.resolucao && <p className="mt-2 text-sm text-slate-600">{estado.resolucao}</p>}
           <Link
             href={proximaHref}
-            className="mt-5 inline-block rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+            className="mt-5 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
           >
             Próxima →
           </Link>

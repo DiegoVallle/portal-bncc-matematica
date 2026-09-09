@@ -34,7 +34,7 @@ export default function TrilhaTabs({
           onClick={() => setAba("pedagogica")}
           className={`px-4 py-2 text-sm font-medium ${
             aba === "pedagogica"
-              ? "border-b-2 border-emerald-600 text-emerald-700"
+              ? "border-b-2 border-valeedu-green text-valeedu-green-dark"
               : "text-slate-500 hover:text-slate-700"
           }`}
         >
@@ -44,7 +44,7 @@ export default function TrilhaTabs({
           onClick={() => setAba("todas")}
           className={`px-4 py-2 text-sm font-medium ${
             aba === "todas"
-              ? "border-b-2 border-emerald-600 text-emerald-700"
+              ? "border-b-2 border-valeedu-green text-valeedu-green-dark"
               : "text-slate-500 hover:text-slate-700"
           }`}
         >

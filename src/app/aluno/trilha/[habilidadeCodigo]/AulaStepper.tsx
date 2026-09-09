@@ -16,7 +16,7 @@ export default function AulaStepper({
 }) {
   return (
     <div className="flex gap-1 border-b border-slate-200" aria-label={`Etapas de ${habilidadeCodigo}`}>
-      <span className="border-b-2 border-emerald-600 px-4 py-2 text-sm font-medium text-emerald-700">Aula</span>
+      <span className="border-b-2 border-valeedu-green px-4 py-2 text-sm font-medium text-valeedu-green-dark">Aula</span>
       {temExercicios ? (
         <Link
           href={`/aluno/trilha/${habilidadeCodigo}/exercicios`}

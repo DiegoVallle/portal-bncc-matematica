@@ -16,7 +16,7 @@ export default function IniciarTesteForm({ anoSugerido }: { anoSugerido: number 
           name="anoEscolar"
           value={ano}
           onChange={(e) => setAno(Number(e.target.value))}
-          className="mt-1 w-32 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+          className="mt-1 w-32 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-valeedu-green focus:outline-none"
         >
           {ANOS_ESCOLARES.map((a) => (
             <option key={a} value={a}>
@@ -31,7 +31,7 @@ export default function IniciarTesteForm({ anoSugerido }: { anoSugerido: number 
           name="bimestre"
           value={bimestre}
           onChange={(e) => setBimestre(Number(e.target.value))}
-          className="mt-1 w-32 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+          className="mt-1 w-32 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-valeedu-green focus:outline-none"
         >
           {BIMESTRES.map((b) => (
             <option key={b} value={b}>
@@ -42,7 +42,7 @@ export default function IniciarTesteForm({ anoSugerido }: { anoSugerido: number 
       </div>
       <button
         type="submit"
-        className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+        className="rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
       >
         Iniciar teste
       </button>

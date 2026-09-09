@@ -4,6 +4,12 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Identidade visual ValeEdu Matemática — extraídas do logo (public/logo-valeedu.png) */
+  --color-valeedu-blue: #1a4d80;
+  --color-valeedu-blue-dark: #0f3159;
+  --color-valeedu-green: #4a9c4e;
+  --color-valeedu-green-dark: #357a39;
 }
 
 @media print {

@@ -69,7 +69,7 @@ export default async function ConteudoHabilidadePage({
           <form action={comecar}>
             <button
               type="submit"
-              className="w-full rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700 sm:w-auto"
+              className="w-full rounded-lg bg-valeedu-green px-4 py-3 text-sm font-semibold text-white hover:bg-valeedu-green-dark sm:w-auto"
             >
               {progresso ? "Continuar aula →" : "Começar aula →"}
             </button>

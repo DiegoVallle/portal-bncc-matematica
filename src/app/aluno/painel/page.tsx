@@ -39,7 +39,7 @@ export default async function PainelAlunoPage() {
         </p>
         <Link
           href={aluno.trilhaPontoPartida ? `/aluno/trilha/${aluno.trilhaPontoPartida}` : "/aluno/trilha"}
-          className="mt-4 inline-block rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+          className="mt-4 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
         >
           {aluno.trilhaPontoPartida ? `Continuar de ${aluno.trilhaPontoPartida} →` : "Ir para a trilha →"}
         </Link>
@@ -77,7 +77,7 @@ export default async function PainelAlunoPage() {
                   <div className="flex items-center gap-3">
                     <Link
                       href={`/aluno/resultado/${t.id}`}
-                      className="text-sm font-medium text-emerald-600 hover:underline"
+                      className="text-sm font-medium text-valeedu-green hover:underline"
                     >
                       {t.totalAcertos}/{t.totalQuestoes} · ver resultado
                     </Link>

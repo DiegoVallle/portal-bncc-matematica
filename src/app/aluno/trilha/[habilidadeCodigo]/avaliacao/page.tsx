@@ -33,7 +33,7 @@ export default async function AvaliacaoFinalPage({
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
         <p className="text-sm text-slate-600">Ainda não há avaliação final pronta para {habilidadeCodigo}.</p>
-        <Link href={`/aluno/trilha/${habilidadeCodigo}`} className="mt-4 inline-block text-sm text-emerald-700 hover:underline">
+        <Link href={`/aluno/trilha/${habilidadeCodigo}`} className="mt-4 inline-block text-sm text-valeedu-green-dark hover:underline">
           ← Voltar
         </Link>
       </main>

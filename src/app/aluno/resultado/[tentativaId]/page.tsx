@@ -58,7 +58,7 @@ export default async function ResultadoTentativaPage({
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
         <p className="text-sm text-slate-600">Você acertou</p>
-        <p className="text-4xl font-bold text-emerald-600">
+        <p className="text-4xl font-bold text-valeedu-green">
           {tentativa.totalAcertos}/{tentativa.totalQuestoes}
         </p>
         <p className="text-sm text-slate-600">{percentual}% de aproveitamento</p>
@@ -172,7 +172,7 @@ export default async function ResultadoTentativaPage({
                       key={alt.id}
                       className={
                         alt.correta
-                          ? "font-semibold text-emerald-700"
+                          ? "font-semibold text-valeedu-green-dark"
                           : alt.id === resposta.alternativaId
                             ? "font-semibold text-red-700"
                             : "text-slate-600"

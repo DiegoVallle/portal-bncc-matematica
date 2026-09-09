@@ -14,7 +14,7 @@ function BotaoEnviar({ texto }: { texto: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="mt-5 w-full rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60 sm:w-auto"
+      className="mt-5 w-full rounded-lg bg-valeedu-green px-4 py-3 text-sm font-semibold text-white hover:bg-valeedu-green-dark disabled:opacity-60 sm:w-auto"
     >
       {pending ? "Enviando..." : texto}
     </button>
@@ -84,7 +84,7 @@ export default function AvaliacaoFinalFormAberta({
             <strong>Sua resposta:</strong> {q.respostaAluno}
           </p>
           {q.respostaEsperada ? (
-            <p className="mt-1 text-sm text-emerald-700">
+            <p className="mt-1 text-sm text-valeedu-green-dark">
               <strong>Resposta esperada:</strong> {q.respostaEsperada}
             </p>
           ) : (

@@ -11,7 +11,7 @@ function BotaoEnviar() {
     <button
       type="submit"
       disabled={pending}
-      className="mt-5 w-full rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60 sm:w-auto"
+      className="mt-5 w-full rounded-lg bg-valeedu-green px-4 py-3 text-sm font-semibold text-white hover:bg-valeedu-green-dark disabled:opacity-60 sm:w-auto"
     >
       {pending ? "Enviando..." : "Enviar avaliação"}
     </button>
@@ -44,7 +44,7 @@ export default function AvaliacaoFinalFormMC({
             {q.alternativasTexto.map((texto, alt) => (
               <label
                 key={alt}
-                className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 text-base hover:bg-slate-50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50"
+                className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 text-base hover:bg-slate-50 has-[:checked]:border-valeedu-green has-[:checked]:bg-emerald-50"
               >
                 <input type="radio" name={`questao_${q.id}`} value={alt} required className="mt-1" />
                 <span className="font-mono text-sm text-slate-500">{LETRAS[alt]})</span>

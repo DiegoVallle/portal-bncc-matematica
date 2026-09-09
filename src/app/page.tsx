@@ -40,7 +40,7 @@ export default async function Home() {
             href="/aluno/entrar"
             className="group rounded-2xl border border-slate-200 bg-white p-8 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
           >
-            <h2 className="text-xl font-semibold text-slate-900 group-hover:text-emerald-700">
+            <h2 className="text-xl font-semibold text-slate-900 group-hover:text-valeedu-green-dark">
               Sou aluno(a)
             </h2>
             <p className="mt-2 text-sm text-slate-600">

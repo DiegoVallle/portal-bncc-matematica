@@ -56,7 +56,7 @@ export default async function TesteDiagnosticoPage({
               {questao.alternativas.map((alt) => (
                 <label
                   key={alt.id}
-                  className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 text-base hover:bg-slate-50 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50"
+                  className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 text-base hover:bg-slate-50 has-[:checked]:border-valeedu-green has-[:checked]:bg-emerald-50"
                 >
                   <input
                     type="radio"

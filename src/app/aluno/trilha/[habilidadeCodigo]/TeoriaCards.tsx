@@ -22,7 +22,7 @@ export default function TeoriaCards({
   if (mostrarExemplo) {
     return (
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">Exemplo resolvido</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-valeedu-green">Exemplo resolvido</p>
         <div className="prose prose-sm prose-slate mt-3 max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{exemploResolvido}</ReactMarkdown>
         </div>
@@ -38,7 +38,7 @@ export default function TeoriaCards({
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
+      <p className="text-xs font-semibold uppercase tracking-wide text-valeedu-green">
         Teoria · {indice + 1} de {blocos.length}
       </p>
       <div className="prose prose-sm prose-slate mt-3 max-w-none">
@@ -57,14 +57,14 @@ export default function TeoriaCards({
         {indice < blocos.length - 1 ? (
           <button
             onClick={() => setIndice((i) => Math.min(blocos.length - 1, i + 1))}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+            className="rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
           >
             Próximo →
           </button>
         ) : (
           <button
             onClick={() => setMostrarExemplo(true)}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+            className="rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
           >
             Ver exemplo resolvido →
           </button>

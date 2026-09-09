@@ -34,7 +34,7 @@ export default async function ExerciciosEntradaPage({
         <p className="text-sm text-slate-600">
           Ainda não há exercícios de múltipla escolha disponíveis para {habilidadeCodigo}.
         </p>
-        <Link href={`/aluno/trilha/${habilidadeCodigo}`} className="mt-4 inline-block text-sm text-emerald-700 hover:underline">
+        <Link href={`/aluno/trilha/${habilidadeCodigo}`} className="mt-4 inline-block text-sm text-valeedu-green-dark hover:underline">
           ← Voltar
         </Link>
       </main>
@@ -63,7 +63,7 @@ export default async function ExerciciosEntradaPage({
           <p className="mt-2 text-sm text-slate-600">Que tal fazer a avaliação final pra ver se você já domina essa habilidade?</p>
           <Link
             href={`/aluno/trilha/${habilidadeCodigo}/avaliacao`}
-            className="mt-4 inline-block rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+            className="mt-4 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
           >
             Fazer avaliação final →
           </Link>

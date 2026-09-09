@@ -8,7 +8,7 @@ export default function BotaoEnviarFormulario({ texto = "Enviar respostas" }: { 
     <button
       type="submit"
       disabled={pending}
-      className="w-full rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60 sm:w-auto"
+      className="w-full rounded-lg bg-valeedu-green px-4 py-3 text-sm font-semibold text-white hover:bg-valeedu-green-dark disabled:opacity-60 sm:w-auto"
     >
       {pending ? "Enviando..." : texto}
     </button>
