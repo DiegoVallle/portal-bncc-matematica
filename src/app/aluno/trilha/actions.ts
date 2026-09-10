@@ -217,7 +217,10 @@ export async function responderExercicio(
     alternativaCorretaIndex: feedback.mostrarResposta && ehMultiplaEscolha ? indiceCorreto : undefined,
     respostaCorretaTexto: feedback.mostrarResposta && ehNumerica ? (questao.respostaEsperada as string) : undefined,
     resolucao: feedback.mostrarResposta && questao.resolucao ? unescapeMarkdown(questao.resolucao) : undefined,
-    mensagemDiagnostico: diagnostico ? TIPO_ERRO_MENSAGENS[diagnostico.tipoErro] ?? null : null,
+    // Sempre gravado no banco (aplicarProgresso/tentativa acima), mas só
+    // aparece pro aluno a partir da 2ª errada — 1ª errada fica em silêncio
+    // (Fase 8a, Silent Way).
+    mensagemDiagnostico: diagnostico && numeroTentativa >= 2 ? TIPO_ERRO_MENSAGENS[diagnostico.tipoErro] ?? null : null,
   };
 }
 

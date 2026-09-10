@@ -336,12 +336,12 @@ export function selecionarProximaQuestaoComInterativas(
 }
 
 // --- Feedback progressivo de tentativa (até 3 por questão) ---
-// Centraliza a regra: acerto revela resposta; erro nas tentativas 1 e 2 dá uma
-// dica sem revelar o gabarito; erro na 3ª BLOQUEIA a questão (não revela) até
-// o professor digitar o PIN dele — ver desbloquearComSenha em
-// src/app/aluno/trilha/actions.ts. Antes a 3ª errada revelava a resposta
-// sozinha; virou bloqueio a pedido do Diego (evita o aluno só "colecionar"
-// respostas erradas até o sistema entregar de graça).
+// Centraliza a regra: acerto revela resposta; 1ª errada fica em silêncio (só
+// o feedback visual de "errado", sem texto — princípio do Silent Way: o
+// aluno primeiro tenta perceber o erro sozinho, o professor não explica de
+// cara); 2ª errada mostra a 1ª dica autorada; erro na 3ª BLOQUEIA a questão
+// (não revela) até o professor digitar o PIN dele — ver desbloquearComSenha
+// em src/app/aluno/trilha/actions.ts.
 export type FeedbackTentativa = {
   correta: boolean;
   tentativasRestantes: number;
@@ -363,7 +363,9 @@ export function obterFeedbackTentativa(params: {
   if (tentativasRestantes === 0) {
     return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: false, bloqueada: true };
   }
-  const dica = dicas[numeroTentativa - 1] ?? null;
+  // 1ª errada: silêncio (dica: null). Só a partir da 2ª aparece a 1ª dica
+  // autorada — nunca antes disso, mesmo que dicas[0] exista.
+  const dica = numeroTentativa >= 2 ? (dicas[0] ?? dicas[1] ?? null) : null;
   return { correta: false, tentativasRestantes, dica, mostrarResposta: false, bloqueada: false };
 }
 
