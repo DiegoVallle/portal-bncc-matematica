@@ -82,15 +82,19 @@ function BlocoLigarPares({
   const [ativo, setAtivo] = useState<string | null>(null);
   const [pares, setPares] = useState<Record<string, string>>({});
 
+  // Sempre via updater funcional (nunca lendo a variável `pares` capturada no
+  // closure) — evita perder atualizações se dois cliques caírem no mesmo ciclo
+  // de render. `onMudar` roda num efeito reagindo ao estado, nunca com o valor
+  // antigo passado na mão.
+  useEffect(() => onMudar(pares), [pares, onMudar]);
+
   function escolherEsquerda(item: string) {
-    setAtivo(item === ativo ? null : item);
+    setAtivo((atual) => (item === atual ? null : item));
   }
 
   function escolherDireita(item: string) {
     if (!ativo) return;
-    const novosPares = { ...pares, [ativo]: item };
-    setPares(novosPares);
-    onMudar(novosPares);
+    setPares((atuais) => ({ ...atuais, [ativo]: item }));
     setAtivo(null);
   }
 
@@ -150,11 +154,10 @@ function BlocoClassificacao({
   onMudar: (classificacao: Record<string, string>) => void;
 }) {
   const [classificacao, setClassificacao] = useState<Record<string, string>>({});
+  useEffect(() => onMudar(classificacao), [classificacao, onMudar]);
 
   function escolher(item: string, categoria: string) {
-    const nova = { ...classificacao, [item]: categoria };
-    setClassificacao(nova);
-    onMudar(nova);
+    setClassificacao((atual) => ({ ...atual, [item]: categoria }));
   }
 
   return (
