@@ -16,6 +16,12 @@ model Professor {
   senhaHash String
   createdAt DateTime @default(now())
 
+  // PIN curto pra desbloquear uma questão da trilha depois de 3 erros — não é
+  // a senha de login (evita digitar a senha real repetidamente na frente da
+  // turma). Guardado em texto puro de propósito: é um PIN de sala de aula,
+  // não uma credencial de conta.
+  pinDesbloqueio String @default("1234")
+
   alunos Aluno[]
 }
 
@@ -222,6 +228,12 @@ model TentativaQuestaoConteudo {
   // se autoavalia depois de responder. `correta` guarda o autorrelato — não é
   // verificação do servidor — e por isso nunca fecha DOMINADO sozinho.
   criadaEm      DateTime  @default(now())
+
+  // Depois de 3 tentativas erradas, a questão fica bloqueada (sem revelar a
+  // resposta) até o professor digitar o PIN dele (Professor.pinDesbloqueio).
+  // Marcado na tentativa que esgotou as 3 chances — sem isso, a questão não
+  // conta como "resolvida" pra fins de avançar/pular pra próxima.
+  desbloqueadaPeloProfessor Boolean @default(false)
 
   alunoId String
   aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)

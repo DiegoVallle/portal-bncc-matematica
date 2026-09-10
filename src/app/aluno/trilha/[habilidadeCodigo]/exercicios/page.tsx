@@ -3,7 +3,7 @@ import Link from "next/link";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
-import { ordenarQuestoesPratica, selecionarProximaQuestaoComInterativas } from "@/lib/trilha";
+import { calcularResolvidas, ordenarQuestoesPratica, selecionarProximaQuestaoComInterativas } from "@/lib/trilha";
 
 // Sem estado próprio de UI — só decide pra qual exercício mandar o aluno (o
 // primeiro ainda não resolvido) e redireciona. "Resolvido" = alguma tentativa
@@ -28,7 +28,11 @@ export default async function ExerciciosEntradaPage({
     where: {
       conteudoId: habilidade.conteudo.id,
       nivel: { not: "AVALIACAO" },
-      OR: [{ tipoResposta: "MULTIPLA_ESCOLHA" }, { atividadeInterativa: { not: Prisma.DbNull } }],
+      OR: [
+        { tipoResposta: "MULTIPLA_ESCOLHA" },
+        { tipoResposta: "NUMERICA" },
+        { atividadeInterativa: { not: Prisma.DbNull } },
+      ],
     },
   });
   const ordenadas = ordenarQuestoesPratica(questoes).map((q) => ({ id: q.id, interativa: !!q.atividadeInterativa }));
@@ -49,20 +53,10 @@ export default async function ExerciciosEntradaPage({
   const tentativas = await prisma.tentativaQuestaoConteudo.findMany({
     where: { alunoId: sessao.id, questaoConteudoId: { in: ordenadas.map((q) => q.id) } },
     orderBy: { criadaEm: "asc" },
+    select: { questaoConteudoId: true, correta: true, desbloqueadaPeloProfessor: true, criadaEm: true },
   });
 
-  const resolvidas = new Set<string>();
-  const contagem = new Map<string, number>();
-  const ordemResolucao: string[] = [];
-  for (const t of tentativas) {
-    const n = (contagem.get(t.questaoConteudoId) ?? 0) + 1;
-    contagem.set(t.questaoConteudoId, n);
-    const passouAResolvida = !resolvidas.has(t.questaoConteudoId) && (t.correta || n >= 3);
-    if (passouAResolvida) {
-      resolvidas.add(t.questaoConteudoId);
-      ordemResolucao.push(t.questaoConteudoId);
-    }
-  }
+  const { resolvidas, ordemResolucao } = calcularResolvidas(tentativas);
 
   const proximaId = selecionarProximaQuestaoComInterativas(ordenadas, resolvidas, ordemResolucao);
 

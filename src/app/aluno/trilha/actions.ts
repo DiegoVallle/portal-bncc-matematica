@@ -10,6 +10,7 @@ import { obterSessao } from "@/lib/auth";
 import {
   classificarErro,
   corrigirAtividadeInterativa,
+  corrigirNumerica,
   obterFeedbackTentativa,
   TIPO_ERRO_MENSAGENS,
   unescapeMarkdown,
@@ -72,7 +73,12 @@ export type EstadoResposta =
       tentativasRestantes: number;
       dica: string | null;
       mostrarResposta: boolean;
+      // 3ª tentativa errada: não revela, trava até o PIN do professor (ver
+      // DesbloqueioSenha.tsx + desbloquearComSenha).
+      bloqueada?: boolean;
       alternativaCorretaIndex?: number;
+      // Gabarito de questão NUMERICA revelado (equivalente ao índice pra MC).
+      respostaCorretaTexto?: string;
       resolucao?: string | null;
       erro?: string;
       // Sondagem da origem da dificuldade: quando o distrator escolhido tem um
@@ -117,8 +123,10 @@ export async function iniciarHabilidade(habilidadeCodigo: string) {
 
 // Recalcula tudo no servidor — nunca confia em "correto"/índice vindos prontos
 // do client. Até 3 tentativas por questão, todas preservadas individualmente
-// (nunca sobrescritas); dica evolui a cada erro, gabarito só revela na 3ª
-// errada ou no acerto. tempoMs é só telemetria, nunca decide nota/gate.
+// (nunca sobrescritas); dica evolui a cada erro. Suporta dois formatos:
+// MULTIPLA_ESCOLHA (índice da alternativa) e NUMERICA (valor digitado,
+// corrigido automaticamente contra `respostaEsperada` — ver corrigirNumerica).
+// tempoMs é só telemetria, nunca decide nota/gate.
 export async function responderExercicio(
   questaoConteudoId: string,
   _estadoAnterior: EstadoResposta,
@@ -131,7 +139,9 @@ export async function responderExercicio(
     where: { id: questaoConteudoId },
     include: { conteudo: true },
   });
-  if (!questao || questao.tipoResposta !== "MULTIPLA_ESCOLHA" || !Array.isArray(questao.alternativas)) {
+  const ehMultiplaEscolha = questao?.tipoResposta === "MULTIPLA_ESCOLHA" && Array.isArray(questao.alternativas);
+  const ehNumerica = questao?.tipoResposta === "NUMERICA" && !!questao.respostaEsperada;
+  if (!questao || (!ehMultiplaEscolha && !ehNumerica)) {
     return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: false, erro: "Questão inválida." };
   }
 
@@ -139,26 +149,31 @@ export async function responderExercicio(
     where: { alunoId: sessao.id, questaoConteudoId },
   });
   if (tentativasAnteriores >= 3) {
-    const alternativas = questao.alternativas as { texto: string; correta: boolean }[];
-    return {
-      correta: false,
-      tentativasRestantes: 0,
-      dica: null,
-      mostrarResposta: true,
-      alternativaCorretaIndex: alternativas.findIndex((a) => a.correta),
-      resolucao: questao.resolucao ? unescapeMarkdown(questao.resolucao) : null,
-      erro: "Você já usou as 3 tentativas desta questão.",
-    };
+    // Já esgotou as 3 — continua bloqueada até o PIN do professor (não revela aqui).
+    return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: false, bloqueada: true };
   }
 
-  const indiceEscolhido = Number(formData.get("alternativaIndex"));
-  const alternativas = questao.alternativas as { texto: string; correta: boolean }[];
-  if (!Number.isInteger(indiceEscolhido) || indiceEscolhido < 0 || indiceEscolhido >= alternativas.length) {
-    return { correta: false, tentativasRestantes: 3 - tentativasAnteriores, dica: null, mostrarResposta: false, erro: "Escolha uma alternativa." };
+  const alternativas = ehMultiplaEscolha ? (questao.alternativas as { texto: string; correta: boolean }[]) : [];
+  let indiceEscolhido: number | undefined;
+  let indiceCorreto = -1;
+  let valorDigitado: string | undefined;
+  let correta: boolean;
+
+  if (ehMultiplaEscolha) {
+    indiceEscolhido = Number(formData.get("alternativaIndex"));
+    if (!Number.isInteger(indiceEscolhido) || indiceEscolhido < 0 || indiceEscolhido >= alternativas.length) {
+      return { correta: false, tentativasRestantes: 3 - tentativasAnteriores, dica: null, mostrarResposta: false, erro: "Escolha uma alternativa." };
+    }
+    indiceCorreto = alternativas.findIndex((a) => a.correta);
+    correta = indiceEscolhido === indiceCorreto;
+  } else {
+    valorDigitado = String(formData.get("valorDigitado") ?? "").trim();
+    if (!valorDigitado) {
+      return { correta: false, tentativasRestantes: 3 - tentativasAnteriores, dica: null, mostrarResposta: false, erro: "Digite uma resposta." };
+    }
+    correta = corrigirNumerica(questao.respostaEsperada as string, valorDigitado);
   }
 
-  const indiceCorreto = alternativas.findIndex((a) => a.correta);
-  const correta = indiceEscolhido === indiceCorreto;
   const numeroTentativa = tentativasAnteriores + 1;
   const dicas = Array.isArray(questao.dicas) ? (questao.dicas as string[]).map(unescapeMarkdown) : [];
 
@@ -166,12 +181,14 @@ export async function responderExercicio(
 
   // Sondagem da origem da dificuldade: numa resposta errada, tenta casar o
   // distrator escolhido com o mapa `errosProvaveis` autorado pra essa questão
-  // (Fase 2 — ver gerar-alternativas-pilot-*.ts). Não decide nada sozinho: é
-  // guardado como hipótese (tipoErro + confiança) e só vira mensagem quando
-  // encontrado; sem match, o erro simplesmente fica sem classificação.
-  const diagnostico = !correta
-    ? classificarErro(questao.errosProvaveis, alternativas[indiceEscolhido]?.texto ?? "")
-    : null;
+  // (Fase 2 — ver gerar-alternativas-pilot-*.ts). Só se aplica a múltipla
+  // escolha (não há "distrator" numa resposta numérica digitada livremente).
+  // Não decide nada sozinho: é guardado como hipótese (tipoErro + confiança)
+  // e só vira mensagem quando encontrado; sem match, fica sem classificação.
+  const diagnostico =
+    !correta && ehMultiplaEscolha && indiceEscolhido !== undefined
+      ? classificarErro(questao.errosProvaveis, alternativas[indiceEscolhido]?.texto ?? "")
+      : null;
 
   // tempoMs é telemetria — não influencia correta/dica/status, só é guardado.
   const tempoMsBruto = Number(formData.get("tempoMs"));
@@ -184,7 +201,7 @@ export async function responderExercicio(
       data: {
         alunoId: sessao.id,
         questaoConteudoId,
-        resposta: { alternativaIndex: indiceEscolhido },
+        resposta: ehMultiplaEscolha ? { alternativaIndex: indiceEscolhido } : { valorDigitado },
         correta,
         tempoMs,
         tipoErro: diagnostico?.tipoErro as TipoErroEnum | undefined,
@@ -197,9 +214,62 @@ export async function responderExercicio(
 
   return {
     ...feedback,
-    alternativaCorretaIndex: feedback.mostrarResposta ? indiceCorreto : undefined,
+    alternativaCorretaIndex: feedback.mostrarResposta && ehMultiplaEscolha ? indiceCorreto : undefined,
+    respostaCorretaTexto: feedback.mostrarResposta && ehNumerica ? (questao.respostaEsperada as string) : undefined,
     resolucao: feedback.mostrarResposta && questao.resolucao ? unescapeMarkdown(questao.resolucao) : undefined,
     mensagemDiagnostico: diagnostico ? TIPO_ERRO_MENSAGENS[diagnostico.tipoErro] ?? null : null,
+  };
+}
+
+// Desbloqueia uma questão travada (3 erros) depois do professor digitar o PIN
+// dele (Professor.pinDesbloqueio — separado da senha de login). Marca a
+// última tentativa como `desbloqueadaPeloProfessor` (é isso que faz ela
+// contar como "resolvida" nas outras telas — ver calcularResolvidas em
+// src/lib/trilha.ts) e devolve o gabarito, igual a uma revelação normal.
+export async function desbloquearComSenha(
+  questaoConteudoId: string,
+  _estadoAnterior: EstadoResposta,
+  formData: FormData
+): Promise<EstadoResposta> {
+  const sessao = await obterSessao();
+  if (!sessao || sessao.role !== "aluno") redirect("/aluno/entrar");
+
+  const pinDigitado = String(formData.get("pin") ?? "").trim();
+
+  const aluno = await prisma.aluno.findUnique({ where: { id: sessao.id }, include: { professor: true } });
+  if (!aluno) redirect("/aluno/entrar");
+
+  if (!pinDigitado || pinDigitado !== aluno.professor.pinDesbloqueio) {
+    return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: false, bloqueada: true, erro: "PIN incorreto." };
+  }
+
+  const questao = await prisma.questaoConteudo.findUnique({ where: { id: questaoConteudoId } });
+  if (!questao) redirect("/aluno/trilha");
+
+  const ultimaTentativa = await prisma.tentativaQuestaoConteudo.findFirst({
+    where: { alunoId: sessao.id, questaoConteudoId },
+    orderBy: { criadaEm: "desc" },
+  });
+  if (ultimaTentativa) {
+    await prisma.tentativaQuestaoConteudo.update({
+      where: { id: ultimaTentativa.id },
+      data: { desbloqueadaPeloProfessor: true },
+    });
+  }
+
+  const ehMultiplaEscolha = questao.tipoResposta === "MULTIPLA_ESCOLHA" && Array.isArray(questao.alternativas);
+  const ehNumerica = questao.tipoResposta === "NUMERICA" && !!questao.respostaEsperada;
+  const alternativas = ehMultiplaEscolha ? (questao.alternativas as { texto: string; correta: boolean }[]) : [];
+
+  return {
+    correta: false,
+    tentativasRestantes: 0,
+    dica: null,
+    mostrarResposta: true,
+    bloqueada: false,
+    alternativaCorretaIndex: ehMultiplaEscolha ? alternativas.findIndex((a) => a.correta) : undefined,
+    respostaCorretaTexto: ehNumerica ? (questao.respostaEsperada as string) : undefined,
+    resolucao: questao.resolucao ? unescapeMarkdown(questao.resolucao) : null,
   };
 }
 
@@ -228,14 +298,8 @@ export async function responderAtividadeInterativa(
     where: { alunoId: sessao.id, questaoConteudoId },
   });
   if (tentativasAnteriores >= 3) {
-    return {
-      correta: false,
-      tentativasRestantes: 0,
-      dica: null,
-      mostrarResposta: true,
-      resolucao: questao.resolucao ? unescapeMarkdown(questao.resolucao) : null,
-      erro: "Você já usou as 3 tentativas desta questão.",
-    };
+    // Já esgotou as 3 — continua bloqueada até o PIN do professor.
+    return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: false, bloqueada: true };
   }
 
   const respostaBruta = String(formData.get("respostaJson") ?? "");

@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useFormStatus } from "react-dom";
 import { responderExercicio, type EstadoResposta } from "../../../actions";
+import DesbloqueioSenha from "./DesbloqueioSenha";
 
 const LETRAS = ["A", "B", "C", "D", "E", "F"];
 
@@ -77,19 +78,72 @@ function CardAlternativas({
   );
 }
 
+// Questão de resposta numérica (tipoResposta = NUMERICA): um campo só, em vez
+// da lista A-F — corrigido automaticamente no servidor (ver corrigirNumerica
+// em src/lib/trilha.ts), sem inventar múltipla escolha pra resultado que é só
+// número.
+function CampoNumerico({
+  valor,
+  onMudar,
+  revelado,
+  correta,
+  respostaCorretaTexto,
+}: {
+  valor: string;
+  onMudar: (v: string) => void;
+  revelado: boolean;
+  correta?: boolean;
+  respostaCorretaTexto?: string;
+}) {
+  return (
+    <div className="mt-4">
+      <input
+        type="text"
+        inputMode="decimal"
+        name="valorDigitado"
+        value={valor}
+        onChange={(e) => onMudar(e.target.value)}
+        disabled={revelado}
+        placeholder="Digite sua resposta"
+        className={`w-48 rounded-lg border p-3 text-base ${
+          revelado
+            ? correta
+              ? "border-valeedu-green bg-emerald-50 text-valeedu-green-dark"
+              : "border-red-400 bg-red-50 text-red-700"
+            : "border-slate-200 focus:border-valeedu-green focus:outline-none"
+        }`}
+      />
+      {revelado && !correta && respostaCorretaTexto && (
+        <p className="mt-2 text-sm text-valeedu-green-dark">
+          Resposta certa: <strong>{respostaCorretaTexto}</strong>
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function RespostaExercicio({
   questaoId,
   alternativasTexto,
+  numerica,
   tentativasUsadas,
   jaResolvidaAoEntrar,
+  bloqueadaAoEntrar,
   revelacaoInicial,
   proximaHref,
 }: {
   questaoId: string;
   alternativasTexto: string[];
+  numerica?: boolean;
   tentativasUsadas: number;
   jaResolvidaAoEntrar: boolean;
-  revelacaoInicial: { alternativaCorretaIndex: number; resolucao: string | null; algumaCorreta: boolean } | null;
+  bloqueadaAoEntrar: boolean;
+  revelacaoInicial: {
+    alternativaCorretaIndex?: number;
+    respostaCorretaTexto?: string;
+    resolucao: string | null;
+    algumaCorreta: boolean;
+  } | null;
   habilidadeCodigo: string;
   proximaHref: string;
 }) {
@@ -98,6 +152,8 @@ export default function RespostaExercicio({
     undefined
   );
   const [indiceEscolhido, setIndiceEscolhido] = useState<number | null>(null);
+  const [valorDigitado, setValorDigitado] = useState("");
+  const [desbloqueado, setDesbloqueado] = useState<EstadoResposta>(undefined);
   const inicioRef = useRef<number>(0);
   useEffect(() => {
     inicioRef.current = Date.now();
@@ -111,22 +167,30 @@ export default function RespostaExercicio({
   const [estadoAnterior, setEstadoAnterior] = useState(estado);
   if (estado !== estadoAnterior) {
     setEstadoAnterior(estado);
-    if (estado && !estado.correta && !estado.mostrarResposta) {
+    if (estado && !estado.correta && !estado.mostrarResposta && !estado.bloqueada) {
       setIndiceEscolhido(null);
     }
   }
 
-  // Caso já resolvida antes de entrar nesta tela (acerto anterior ou 3
-  // tentativas esgotadas em outra visita) — mostra só o resultado, sem form.
+  // Caso já resolvida antes de entrar nesta tela (acerto anterior, ou 3
+  // tentativas esgotadas e já desbloqueadas em outra visita) — mostra só o
+  // resultado, sem form.
   if (jaResolvidaAoEntrar && revelacaoInicial) {
     return (
       <div>
-        <CardAlternativas
-          alternativasTexto={alternativasTexto}
-          indiceCorreto={revelacaoInicial.alternativaCorretaIndex}
-          indiceEscolhido={null}
-          interativo={false}
-        />
+        {!numerica && (
+          <CardAlternativas
+            alternativasTexto={alternativasTexto}
+            indiceCorreto={revelacaoInicial.alternativaCorretaIndex}
+            indiceEscolhido={null}
+            interativo={false}
+          />
+        )}
+        {numerica && revelacaoInicial.respostaCorretaTexto && (
+          <p className="mt-4 text-base font-semibold text-valeedu-green-dark">
+            Resposta: {revelacaoInicial.respostaCorretaTexto}
+          </p>
+        )}
         <p className={`mt-4 text-sm font-medium ${revelacaoInicial.algumaCorreta ? "text-valeedu-green-dark" : "text-slate-600"}`}>
           {revelacaoInicial.algumaCorreta ? "Você já acertou essa questão." : "Você já usou as 3 tentativas desta questão."}
         </p>
@@ -143,13 +207,24 @@ export default function RespostaExercicio({
     );
   }
 
-  const revelado = estado?.mostrarResposta === true;
+  // Estado efetivo pra exibição: prioriza o resultado do desbloqueio por PIN
+  // (ação separada de responderExercicio) quando existir.
+  const estadoEfetivo = desbloqueado ?? estado;
+  const revelado = estadoEfetivo?.mostrarResposta === true;
+  // Bloqueada: ou a última tentativa do servidor disse (3ª errada agora), ou
+  // o aluno já tinha esgotado antes de entrar nesta tela e ainda não desbloqueou.
+  const bloqueada = estadoEfetivo?.bloqueada === true || (estado === undefined && bloqueadaAoEntrar);
+
   // A tentativa que está prestes a ser feita. Deriva do `tentativasRestantes`
   // devolvido pela action (não de `tentativasUsadas`, que é a prop inicial do
   // servidor e não muda entre re-renders do client component depois de cada
   // submit). Numa resposta inválida (sem gravar tentativa de verdade) a action
   // devolve `tentativasRestantes` sem decrementar, então a fórmula não avança.
-  const numeroTentativaAtual = estado && !revelado ? 4 - estado.tentativasRestantes : tentativasUsadas + 1;
+  const numeroTentativaAtual = estado && !revelado && !bloqueada ? 4 - estado.tentativasRestantes : tentativasUsadas + 1;
+
+  if (bloqueada) {
+    return <DesbloqueioSenha questaoId={questaoId} onDesbloqueado={setDesbloqueado} />;
+  }
 
   return (
     <form
@@ -158,34 +233,44 @@ export default function RespostaExercicio({
         acao(formData);
       }}
     >
-      <CardAlternativas
-        alternativasTexto={alternativasTexto}
-        indiceCorreto={revelado ? estado?.alternativaCorretaIndex : undefined}
-        indiceEscolhido={indiceEscolhido}
-        interativo={!revelado}
-        onEscolher={setIndiceEscolhido}
-      />
+      {numerica ? (
+        <CampoNumerico
+          valor={valorDigitado}
+          onMudar={setValorDigitado}
+          revelado={revelado}
+          correta={estadoEfetivo?.correta}
+          respostaCorretaTexto={estadoEfetivo?.respostaCorretaTexto}
+        />
+      ) : (
+        <CardAlternativas
+          alternativasTexto={alternativasTexto}
+          indiceCorreto={revelado ? estadoEfetivo?.alternativaCorretaIndex : undefined}
+          indiceEscolhido={indiceEscolhido}
+          interativo={!revelado}
+          onEscolher={setIndiceEscolhido}
+        />
+      )}
 
-      {estado?.erro && !revelado && <p className="mt-3 text-sm text-red-600">{estado.erro}</p>}
+      {estadoEfetivo?.erro && !revelado && <p className="mt-3 text-sm text-red-600">{estadoEfetivo.erro}</p>}
 
-      {!revelado && estado?.mensagemDiagnostico && (
+      {!revelado && estadoEfetivo?.mensagemDiagnostico && (
         <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
-          🔍 <strong>Possível causa:</strong> {estado.mensagemDiagnostico}
+          🔍 <strong>Possível causa:</strong> {estadoEfetivo.mensagemDiagnostico}
         </div>
       )}
 
-      {!revelado && estado?.dica && (
+      {!revelado && estadoEfetivo?.dica && (
         <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-          💡 <strong>Dica:</strong> {estado.dica}
+          💡 <strong>Dica:</strong> {estadoEfetivo.dica}
         </div>
       )}
 
       {revelado ? (
         <div className="mt-4">
-          <p className={`text-sm font-medium ${estado?.correta ? "text-valeedu-green-dark" : "text-slate-700"}`}>
-            {estado?.correta ? "Correto! 🎉" : "Não foi dessa vez — veja a resposta certa acima."}
+          <p className={`text-sm font-medium ${estadoEfetivo?.correta ? "text-valeedu-green-dark" : "text-slate-700"}`}>
+            {estadoEfetivo?.correta ? "Correto! 🎉" : "Não foi dessa vez — veja a resposta certa acima."}
           </p>
-          {estado?.resolucao && <p className="mt-2 text-sm text-slate-600">{estado.resolucao}</p>}
+          {estadoEfetivo?.resolucao && <p className="mt-2 text-sm text-slate-600">{estadoEfetivo.resolucao}</p>}
           <Link
             href={proximaHref}
             className="mt-5 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"

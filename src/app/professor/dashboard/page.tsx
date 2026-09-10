@@ -4,6 +4,7 @@ import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { sairProfessor } from "../actions";
 import CadastrarAlunoForm from "./CadastrarAlunoForm";
+import PinDesbloqueioForm from "./PinDesbloqueioForm";
 
 export default async function DashboardProfessorPage() {
   const sessao = await obterSessao();
@@ -31,6 +32,14 @@ export default async function DashboardProfessorPage() {
           <button className="text-sm text-slate-600 hover:underline">Sair</button>
         </form>
       </div>
+
+      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-slate-900">PIN de desbloqueio</h2>
+        <p className="mt-1 text-sm text-slate-600">
+          Depois de 3 erros numa questão da trilha, o aluno precisa desse PIN pra ver a resposta e continuar.
+        </p>
+        <PinDesbloqueioForm pinAtual={professor?.pinDesbloqueio ?? "1234"} />
+      </section>
 
       <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-900">Cadastrar aluno</h2>

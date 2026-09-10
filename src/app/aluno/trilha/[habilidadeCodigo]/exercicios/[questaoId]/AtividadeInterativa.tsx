@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useFormStatus } from "react-dom";
 import { responderAtividadeInterativa, type EstadoResposta } from "../../../actions";
+import DesbloqueioSenha from "./DesbloqueioSenha";
 
 type PayloadOrdenacao = { tipo: "ORDENACAO"; itens: string[] };
 type PayloadLigarPares = { tipo: "LIGAR_PARES"; esquerda: string[]; direita: string[] };
@@ -193,6 +194,7 @@ export default function AtividadeInterativa({
   payload,
   tituloTipo,
   jaResolvidaAoEntrar,
+  bloqueadaAoEntrar,
   resolucaoInicial,
   proximaHref,
 }: {
@@ -201,6 +203,7 @@ export default function AtividadeInterativa({
   payload: PayloadAtividade;
   tituloTipo: string;
   jaResolvidaAoEntrar: boolean;
+  bloqueadaAoEntrar: boolean;
   resolucaoInicial: { resolucao: string | null; algumaCorreta: boolean } | null;
   proximaHref: string;
 }) {
@@ -210,6 +213,7 @@ export default function AtividadeInterativa({
   );
   const respostaAtualRef = useRef<unknown>(null);
   const [pronto, setPronto] = useState(false);
+  const [desbloqueado, setDesbloqueado] = useState<EstadoResposta>(undefined);
   const inicioRef = useRef<number>(0);
   useEffect(() => {
     inicioRef.current = Date.now();
@@ -232,20 +236,26 @@ export default function AtividadeInterativa({
     );
   }
 
-  const revelado = estado?.mostrarResposta === true;
+  const estadoEfetivo = desbloqueado ?? estado;
+  const revelado = estadoEfetivo?.mostrarResposta === true;
+  const bloqueada = estadoEfetivo?.bloqueada === true || (estado === undefined && bloqueadaAoEntrar);
 
   function marcarPronto(resposta: unknown, completo: boolean) {
     respostaAtualRef.current = resposta;
     setPronto(completo);
   }
 
+  if (bloqueada) {
+    return <DesbloqueioSenha questaoId={questaoId} onDesbloqueado={setDesbloqueado} />;
+  }
+
   if (revelado) {
     return (
       <div>
-        <p className={`text-sm font-medium ${estado?.correta ? "text-valeedu-green-dark" : "text-slate-700"}`}>
-          {estado?.correta ? "Correto! 🎉" : "Não foi dessa vez."}
+        <p className={`text-sm font-medium ${estadoEfetivo?.correta ? "text-valeedu-green-dark" : "text-slate-700"}`}>
+          {estadoEfetivo?.correta ? "Correto! 🎉" : "Não foi dessa vez."}
         </p>
-        {estado?.resolucao && <p className="mt-2 text-sm text-slate-600">{estado.resolucao}</p>}
+        {estadoEfetivo?.resolucao && <p className="mt-2 text-sm text-slate-600">{estadoEfetivo.resolucao}</p>}
         <Link
           href={proximaHref}
           className="mt-5 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
@@ -285,10 +295,10 @@ export default function AtividadeInterativa({
         />
       )}
 
-      {estado?.erro && <p className="mt-3 text-sm text-red-600">{estado.erro}</p>}
-      {estado?.dica && (
+      {estadoEfetivo?.erro && <p className="mt-3 text-sm text-red-600">{estadoEfetivo.erro}</p>}
+      {estadoEfetivo?.dica && (
         <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-          💡 <strong>Dica:</strong> {estado.dica}
+          💡 <strong>Dica:</strong> {estadoEfetivo.dica}
         </div>
       )}
 

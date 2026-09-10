@@ -100,3 +100,21 @@ export async function cadastrarAlunoPeloProfessor(
 
   redirect("/professor/dashboard");
 }
+
+// PIN curto usado pra desbloquear uma questão da trilha depois de 3 erros
+// (Professor.pinDesbloqueio, default "1234") — separado da senha de login.
+export async function atualizarPinDesbloqueio(
+  _estado: EstadoFormulario,
+  formData: FormData
+): Promise<EstadoFormulario> {
+  const sessao = await obterSessao();
+  if (!sessao || sessao.role !== "professor") redirect("/professor/login");
+
+  const pin = String(formData.get("pin") ?? "").trim();
+  if (!/^\d{4,8}$/.test(pin)) {
+    return { erro: "O PIN deve ter de 4 a 8 números." };
+  }
+
+  await prisma.professor.update({ where: { id: sessao.id }, data: { pinDesbloqueio: pin } });
+  redirect("/professor/dashboard");
+}

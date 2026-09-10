@@ -4,6 +4,7 @@ import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
 import {
+  calcularResolvidas,
   NIVEL_LABELS,
   ordenarQuestoesPratica,
   paraClienteAtividade,
@@ -34,16 +35,21 @@ export default async function ExercicioPage({
   const atividade = questao?.atividadeInterativa as unknown as TipoAtividadeInterativa | null | undefined;
   const ehMultiplaEscolha =
     questao?.tipoResposta === "MULTIPLA_ESCOLHA" && Array.isArray(questao.alternativas);
-  if (!questao || questao.conteudo.habilidade.codigo !== habilidadeCodigo || (!ehMultiplaEscolha && !atividade)) {
+  const ehNumerica = questao?.tipoResposta === "NUMERICA" && !!questao.respostaEsperada;
+  if (!questao || questao.conteudo.habilidade.codigo !== habilidadeCodigo || (!ehMultiplaEscolha && !ehNumerica && !atividade)) {
     notFound();
   }
 
-  // Pool de prática = múltipla escolha OU atividade interativa, nunca avaliação.
+  // Pool de prática = múltipla escolha, numérica ou atividade interativa — nunca avaliação.
   const todas = await prisma.questaoConteudo.findMany({
     where: {
       conteudoId: questao.conteudoId,
       nivel: { not: "AVALIACAO" },
-      OR: [{ tipoResposta: "MULTIPLA_ESCOLHA" }, { atividadeInterativa: { not: Prisma.DbNull } }],
+      OR: [
+        { tipoResposta: "MULTIPLA_ESCOLHA" },
+        { tipoResposta: "NUMERICA" },
+        { atividadeInterativa: { not: Prisma.DbNull } },
+      ],
     },
   });
   const ordenadas = ordenarQuestoesPratica(todas).map((q) => ({ id: q.id, interativa: !!q.atividadeInterativa }));
@@ -51,23 +57,15 @@ export default async function ExercicioPage({
   const tentativas = await prisma.tentativaQuestaoConteudo.findMany({
     where: { alunoId: sessao.id, questaoConteudoId: { in: ordenadas.map((q) => q.id) } },
     orderBy: { criadaEm: "asc" },
+    select: { questaoConteudoId: true, correta: true, desbloqueadaPeloProfessor: true, criadaEm: true },
   });
 
-  const resolvidas = new Set<string>();
-  const contagem = new Map<string, number>();
-  const ordemResolucao: string[] = [];
-  for (const t of tentativas) {
-    const n = (contagem.get(t.questaoConteudoId) ?? 0) + 1;
-    contagem.set(t.questaoConteudoId, n);
-    const passouAResolvida = !resolvidas.has(t.questaoConteudoId) && (t.correta || n >= 3);
-    if (passouAResolvida) {
-      resolvidas.add(t.questaoConteudoId);
-      ordemResolucao.push(t.questaoConteudoId);
-    }
-  }
+  const { resolvidas, ordemResolucao } = calcularResolvidas(tentativas);
 
   const tentativasDestaQuestao = tentativas.filter((t) => t.questaoConteudoId === questaoId);
   const jaResolvida = resolvidas.has(questaoId);
+  // Esgotou as 3 tentativas mas nenhuma foi desbloqueada pelo professor ainda.
+  const bloqueadaAoEntrar = tentativasDestaQuestao.length >= 3 && !jaResolvida;
 
   const proximaId = selecionarProximaQuestaoComInterativas(ordenadas, resolvidas, ordemResolucao, questaoId);
   const proximaHref = proximaId
@@ -98,6 +96,7 @@ export default async function ExercicioPage({
             payload={paraClienteAtividade(atividade)}
             tituloTipo={TIPO_ATIVIDADE_LABELS[atividade.tipo]}
             jaResolvidaAoEntrar={jaResolvida}
+            bloqueadaAoEntrar={bloqueadaAoEntrar}
             resolucaoInicial={
               jaResolvida
                 ? {
@@ -114,13 +113,20 @@ export default async function ExercicioPage({
             <RespostaExercicio
               key={questaoId}
               questaoId={questaoId}
-              alternativasTexto={(questao.alternativas as AlternativaArmazenada[]).map((a) => unescapeMarkdown(a.texto))}
+              numerica={ehNumerica}
+              alternativasTexto={
+                ehMultiplaEscolha ? (questao.alternativas as AlternativaArmazenada[]).map((a) => unescapeMarkdown(a.texto)) : []
+              }
               tentativasUsadas={tentativasDestaQuestao.length}
               jaResolvidaAoEntrar={jaResolvida}
+              bloqueadaAoEntrar={bloqueadaAoEntrar}
               revelacaoInicial={
                 jaResolvida
                   ? {
-                      alternativaCorretaIndex: (questao.alternativas as AlternativaArmazenada[]).findIndex((a) => a.correta),
+                      alternativaCorretaIndex: ehMultiplaEscolha
+                        ? (questao.alternativas as AlternativaArmazenada[]).findIndex((a) => a.correta)
+                        : undefined,
+                      respostaCorretaTexto: ehNumerica ? (questao.respostaEsperada ?? undefined) : undefined,
                       resolucao: questao.resolucao ? unescapeMarkdown(questao.resolucao) : null,
                       algumaCorreta: tentativasDestaQuestao.some((t) => t.correta),
                     }

@@ -32,7 +32,11 @@ export default async function ConteudoHabilidadePage({
       where: {
         conteudoId: conteudo.id,
         nivel: { not: "AVALIACAO" },
-        OR: [{ tipoResposta: "MULTIPLA_ESCOLHA" }, { atividadeInterativa: { not: Prisma.DbNull } }],
+        OR: [
+          { tipoResposta: "MULTIPLA_ESCOLHA" },
+          { tipoResposta: "NUMERICA" },
+          { atividadeInterativa: { not: Prisma.DbNull } },
+        ],
       },
     }),
     prisma.questaoConteudo.count({

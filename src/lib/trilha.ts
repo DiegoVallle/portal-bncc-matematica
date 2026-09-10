@@ -337,12 +337,17 @@ export function selecionarProximaQuestaoComInterativas(
 
 // --- Feedback progressivo de tentativa (até 3 por questão) ---
 // Centraliza a regra: acerto revela resposta; erro nas tentativas 1 e 2 dá uma
-// dica sem revelar o gabarito; erro na 3ª revela resposta e encerra tentativas.
+// dica sem revelar o gabarito; erro na 3ª BLOQUEIA a questão (não revela) até
+// o professor digitar o PIN dele — ver desbloquearComSenha em
+// src/app/aluno/trilha/actions.ts. Antes a 3ª errada revelava a resposta
+// sozinha; virou bloqueio a pedido do Diego (evita o aluno só "colecionar"
+// respostas erradas até o sistema entregar de graça).
 export type FeedbackTentativa = {
   correta: boolean;
   tentativasRestantes: number;
   dica: string | null;
   mostrarResposta: boolean;
+  bloqueada: boolean;
 };
 
 export function obterFeedbackTentativa(params: {
@@ -352,14 +357,14 @@ export function obterFeedbackTentativa(params: {
 }): FeedbackTentativa {
   const { correta, numeroTentativa, dicas } = params;
   if (correta) {
-    return { correta: true, tentativasRestantes: 0, dica: null, mostrarResposta: true };
+    return { correta: true, tentativasRestantes: 0, dica: null, mostrarResposta: true, bloqueada: false };
   }
   const tentativasRestantes = Math.max(0, 3 - numeroTentativa);
   if (tentativasRestantes === 0) {
-    return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: true };
+    return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: false, bloqueada: true };
   }
   const dica = dicas[numeroTentativa - 1] ?? null;
-  return { correta: false, tentativasRestantes, dica, mostrarResposta: false };
+  return { correta: false, tentativasRestantes, dica, mostrarResposta: false, bloqueada: false };
 }
 
 // --- Sondagem da origem da dificuldade (classificação de erro por distrator) ---
@@ -444,4 +449,43 @@ export function calcularScore(
   return tentativasVerificadas
     .filter((t) => t.correta && !t.autoavaliada)
     .reduce((soma, t) => soma + (PONTOS_POR_NIVEL[t.nivel] ?? 0), 0);
+}
+
+// --- Correção automática de resposta numérica ---
+// Compara texto digitado × gabarito aceitando vírgula ou ponto decimal e
+// espaços nas pontas — nada além disso (sem tolerância de arredondamento:
+// o banco só usa NUMERICA pra respostas exatas, ex: "24", "-5", "7,5").
+export function corrigirNumerica(respostaEsperada: string, digitado: string): boolean {
+  const normalizar = (t: string) => t.trim().replace(",", ".").replace(/^\+/, "");
+  const esperado = normalizar(respostaEsperada);
+  const dado = normalizar(digitado);
+  if (esperado === dado) return true;
+  const nEsperado = Number(esperado);
+  const nDado = Number(dado);
+  return Number.isFinite(nEsperado) && Number.isFinite(nDado) && nEsperado === nDado;
+}
+
+// --- Resolução de exercícios de prática: centraliza "o que já está resolvido" ---
+// Resolvida = alguma tentativa correta, OU 3 tentativas esgotadas E
+// desbloqueada pelo professor (esgotar sozinho NÃO resolve — trava até o PIN,
+// ver responderExercicio/responderAtividadeInterativa). `ordemResolucao` é a
+// ordem cronológica em que cada questão virou resolvida — usada pela seleção
+// de atividades interativas (ver selecionarProximaQuestaoComInterativas).
+export function calcularResolvidas(
+  tentativas: { questaoConteudoId: string; correta: boolean; desbloqueadaPeloProfessor: boolean }[]
+): { resolvidas: Set<string>; ordemResolucao: string[] } {
+  const resolvidas = new Set<string>();
+  const ordemResolucao: string[] = [];
+  const contagem = new Map<string, number>();
+  for (const t of tentativas) {
+    const n = (contagem.get(t.questaoConteudoId) ?? 0) + 1;
+    contagem.set(t.questaoConteudoId, n);
+    const passouAResolvida =
+      !resolvidas.has(t.questaoConteudoId) && (t.correta || (n >= 3 && t.desbloqueadaPeloProfessor));
+    if (passouAResolvida) {
+      resolvidas.add(t.questaoConteudoId);
+      ordemResolucao.push(t.questaoConteudoId);
+    }
+  }
+  return { resolvidas, ordemResolucao };
 }
