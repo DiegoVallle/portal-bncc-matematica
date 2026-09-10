@@ -323,3 +323,24 @@ export const TIPO_ERRO_MENSAGENS: Record<string, string> = {
 export function unescapeMarkdown(texto: string): string {
   return texto.replace(/\\([\\`*_{}[\]()#+\-.!>=|~])/g, "$1");
 }
+
+// --- Pontuação (placar pessoal, sem ranking) ---
+// Pontos por nível de questão de trilha, só pra acerto verificado pelo
+// servidor (correta=true e autoavaliada=false — nunca conta autorrelato da
+// avaliação sem gabarito). Mostrado só como número absoluto pro próprio
+// aluno, nunca comparado com outros.
+export const PONTOS_POR_NIVEL: Record<string, number> = {
+  FACIL: 10,
+  MEDIO: 15,
+  APOSTILA: 20,
+  DESAFIO: 30,
+  AVALIACAO: 25,
+};
+
+export function calcularScore(
+  tentativasVerificadas: { correta: boolean; autoavaliada: boolean; nivel: string }[]
+): number {
+  return tentativasVerificadas
+    .filter((t) => t.correta && !t.autoavaliada)
+    .reduce((soma, t) => soma + (PONTOS_POR_NIVEL[t.nivel] ?? 0), 0);
+}

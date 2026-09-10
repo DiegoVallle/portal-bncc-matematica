@@ -32,6 +32,11 @@ model Aluno {
   // nunca bloqueia acesso às outras habilidades.
   trilhaPontoPartida String?
 
+  // Controle de acesso ao diagnóstico (ver src/lib/acesso.ts). Alunos
+  // existentes nascem MATRICULADO por padrão (retrocompatível).
+  status              StatusMatricula @default(MATRICULADO)
+  diagnosticoLiberado Boolean         @default(false)
+
   professorId String
   professor   Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
 
@@ -124,6 +129,14 @@ enum StatusDominio {
   DOMINADO
   REVISAO
   PRE_REQUISITO_PENDENTE
+}
+
+// EXPERIMENTAL: aluno recém-cadastrado, só tem acesso ao teste resumido até
+// o professor matricular. MATRICULADO: acesso normal (padrão retrocompatível
+// pros alunos já existentes).
+enum StatusMatricula {
+  EXPERIMENTAL
+  MATRICULADO
 }
 
 model Conteudo {
@@ -239,6 +252,11 @@ model Tentativa {
   finalizadoEm  DateTime?
   totalQuestoes Int       @default(0)
   totalAcertos  Int       @default(0)
+
+  // Teto de questões consideradas (exibidas e corrigidas), aplicado à mesma
+  // lista ordenada por `ordem` — não é um banco separado. Usado pelo "teste
+  // resumido" do aluno experimental (ver src/lib/acesso.ts); null = sem teto.
+  limiteQuestoes Int?
 
   alunoId String
   aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)

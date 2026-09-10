@@ -38,3 +38,39 @@ export async function definirPontoPartidaTrilha(
 
   redirect(`/professor/alunos/${alunoId}`);
 }
+
+// Converte um aluno experimental em matriculado e libera o teste completo de
+// nivelamento — o "nível sugerido" é o próprio professor lendo o gráfico de
+// desempenho por unidade desta página, não um cálculo automático.
+export async function matricularAluno(alunoId: string) {
+  const sessao = await obterSessao();
+  if (!sessao || sessao.role !== "professor") redirect("/professor/login");
+
+  const aluno = await prisma.aluno.findUnique({ where: { id: alunoId } });
+  if (!aluno || aluno.professorId !== sessao.id) redirect("/professor/dashboard");
+
+  await prisma.aluno.update({
+    where: { id: alunoId },
+    data: { status: "MATRICULADO", diagnosticoLiberado: true },
+  });
+
+  redirect(`/professor/alunos/${alunoId}`);
+}
+
+// Libera um novo diagnóstico completo pra um aluno já matriculado (ex: pra
+// reavaliar o nível depois de um tempo na trilha). Uso único — fecha sozinho
+// assim que o aluno finaliza a tentativa (ver submeterTentativa).
+export async function liberarDiagnostico(alunoId: string) {
+  const sessao = await obterSessao();
+  if (!sessao || sessao.role !== "professor") redirect("/professor/login");
+
+  const aluno = await prisma.aluno.findUnique({ where: { id: alunoId } });
+  if (!aluno || aluno.professorId !== sessao.id) redirect("/professor/dashboard");
+
+  await prisma.aluno.update({
+    where: { id: alunoId },
+    data: { diagnosticoLiberado: true },
+  });
+
+  redirect(`/professor/alunos/${alunoId}`);
+}

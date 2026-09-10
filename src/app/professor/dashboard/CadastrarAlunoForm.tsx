@@ -54,6 +54,10 @@ export default function CadastrarAlunoForm() {
           ))}
         </select>
       </div>
+      <label className="flex items-center gap-2 pb-2 text-sm text-slate-700">
+        <input type="checkbox" name="experimental" className="h-4 w-4" />
+        Experimental (primeira aula — faz um teste resumido antes de matricular)
+      </label>
       <button
         type="submit"
         disabled={pendente}

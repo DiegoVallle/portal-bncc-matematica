@@ -72,6 +72,7 @@ export async function cadastrarAlunoPeloProfessor(
   const usuario = String(formData.get("usuario") ?? "").trim().toLowerCase();
   const senha = String(formData.get("senha") ?? "");
   const anoEscolar = Number(formData.get("anoEscolar"));
+  const experimental = formData.get("experimental") === "on";
 
   if (!nome || !usuario || senha.length < 4) {
     return { erro: "Preencha nome, usuário e uma senha com pelo menos 4 caracteres." };
@@ -87,7 +88,14 @@ export async function cadastrarAlunoPeloProfessor(
 
   const senhaHash = await bcrypt.hash(senha, 10);
   await prisma.aluno.create({
-    data: { nome, usuario, senhaHash, anoEscolar, professorId: sessao.id },
+    data: {
+      nome,
+      usuario,
+      senhaHash,
+      anoEscolar,
+      professorId: sessao.id,
+      status: experimental ? "EXPERIMENTAL" : "MATRICULADO",
+    },
   });
 
   redirect("/professor/dashboard");

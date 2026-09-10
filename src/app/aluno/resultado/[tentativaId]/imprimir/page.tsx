@@ -21,14 +21,10 @@ export default async function ImprimirRelatorioPage({
   let aluno;
   let voltarHref: string;
 
+  // Aluno não tem acesso ao próprio resultado, nem em versão impressa — quem
+  // revisa e imprime é o professor, em /professor/alunos/[alunoId].
   if (sessao.role === "aluno") {
-    [tentativa, aluno] = await Promise.all([
-      prisma.tentativa.findUnique({ where: { id: tentativaId } }),
-      prisma.aluno.findUnique({ where: { id: sessao.id }, include: { professor: true } }),
-    ]);
-    if (!tentativa || tentativa.alunoId !== sessao.id) notFound();
-    if (!aluno) notFound();
-    voltarHref = `/aluno/resultado/${tentativaId}`;
+    redirect("/aluno/painel");
   } else if (sessao.role === "professor") {
     tentativa = await prisma.tentativa.findUnique({
       where: { id: tentativaId },

@@ -51,7 +51,6 @@ export default async function ExercicioPage({
   const tentativasDestaQuestao = tentativas.filter((t) => t.questaoConteudoId === questaoId);
   const jaResolvida = resolvidas.has(questaoId);
 
-  const posicao = ordenadas.findIndex((q) => q.id === questaoId);
   const proximaId = selecionarProximaQuestao(ordenadas, resolvidas, questaoId);
 
   const alternativas = questao.alternativas as AlternativaArmazenada[];
@@ -68,9 +67,7 @@ export default async function ExercicioPage({
         <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-600">
           Nível: {NIVEL_LABELS[questao.nivel] ?? questao.nivel}
         </span>
-        <span className="text-slate-500">
-          Prática · {posicao + 1} de {ordenadas.length}
-        </span>
+        <span className="text-slate-500">Continue praticando</span>
       </div>
 
       <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">

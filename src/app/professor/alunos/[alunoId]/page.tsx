@@ -6,6 +6,7 @@ import { desempenhoPorUnidade } from "@/lib/relatorios";
 import GraficoUnidades from "@/components/GraficoUnidades";
 import { NUCLEOS } from "@/lib/trilha";
 import DefinirPontoPartidaForm from "./DefinirPontoPartidaForm";
+import { matricularAluno, liberarDiagnostico } from "./actions";
 
 export default async function AlunoDetalhePage({
   params,
@@ -59,9 +60,49 @@ export default async function AlunoDetalhePage({
       <div className="mt-2">
         <h1 className="text-2xl font-bold text-slate-900">{aluno.nome}</h1>
         <p className="text-sm text-slate-600">
-          @{aluno.usuario} · {aluno.anoEscolar}º ano
+          @{aluno.usuario} · {aluno.anoEscolar}º ano ·{" "}
+          {aluno.status === "EXPERIMENTAL" ? "Experimental" : "Matriculado"}
         </p>
       </div>
+
+      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-slate-900">Matrícula</h2>
+        {aluno.status === "EXPERIMENTAL" ? (
+          <>
+            <p className="mt-1 text-sm text-slate-600">
+              {tentativas.length === 0
+                ? "Aluno ainda não finalizou o teste resumido."
+                : "Veja o desempenho abaixo e, quando decidir o nível, matricule o aluno pra liberar o teste completo."}
+            </p>
+            <form action={matricularAluno.bind(null, aluno.id)} className="mt-3">
+              <button
+                type="submit"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              >
+                Matricular aluno
+              </button>
+            </form>
+          </>
+        ) : aluno.diagnosticoLiberado ? (
+          <p className="mt-1 text-sm text-slate-600">
+            Teste diagnóstico liberado — aguardando o aluno responder.
+          </p>
+        ) : (
+          <>
+            <p className="mt-1 text-sm text-slate-600">
+              Aluno matriculado, sem diagnóstico pendente. Libere um novo teste se quiser reavaliar o nível.
+            </p>
+            <form action={liberarDiagnostico.bind(null, aluno.id)} className="mt-3">
+              <button
+                type="submit"
+                className="rounded-lg border border-blue-300 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
+              >
+                Liberar novo diagnóstico
+              </button>
+            </form>
+          </>
+        )}
+      </section>
 
       {nucleosDoAno.length > 0 && (
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">

@@ -18,13 +18,17 @@ export default async function TesteDiagnosticoPage({
 
   const tentativa = await prisma.tentativa.findUnique({ where: { id: tentativaId } });
   if (!tentativa || tentativa.alunoId !== sessao.id) notFound();
-  if (tentativa.finalizadoEm) redirect(`/aluno/resultado/${tentativaId}`);
+  if (tentativa.finalizadoEm) redirect("/aluno/painel");
 
-  const questoes = await prisma.questao.findMany({
+  const todasQuestoes = await prisma.questao.findMany({
     where: { anoEscolar: tentativa.anoEscolar, bimestre: tentativa.bimestre },
     include: { alternativas: { orderBy: { ordem: "asc" } } },
     orderBy: { ordem: "asc" },
   });
+  // Mesmo teto aplicado na correção (ver submeterTentativa em ../../actions.ts).
+  const questoes = tentativa.limiteQuestoes
+    ? todasQuestoes.slice(0, tentativa.limiteQuestoes)
+    : todasQuestoes;
 
   const enviar = submeterTentativa.bind(null, tentativaId);
 
