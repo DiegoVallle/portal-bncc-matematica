@@ -4,9 +4,66 @@
 // src/app/aluno/actions.ts (motor do diagnóstico).
 
 import { redirect } from "next/navigation";
+import type { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { obterSessao } from "@/lib/auth";
-import { classificarErro, obterFeedbackTentativa, TIPO_ERRO_MENSAGENS, unescapeMarkdown } from "@/lib/trilha";
+import {
+  classificarErro,
+  corrigirAtividadeInterativa,
+  obterFeedbackTentativa,
+  TIPO_ERRO_MENSAGENS,
+  unescapeMarkdown,
+  type AtividadeInterativa,
+} from "@/lib/trilha";
+
+type TipoErroEnum =
+  | "CONCEITO"
+  | "PROCEDIMENTO"
+  | "CALCULO"
+  | "INTERPRETACAO"
+  | "REPRESENTACAO"
+  | "PRE_REQUISITO"
+  | "ERRO_NAO_CLASSIFICADO";
+
+// Compartilhado entre responderExercicio e responderAtividadeInterativa —
+// única fonte do upsert de ProgressoHabilidade, pra nunca reintroduzir o bug
+// de contagem em dobro (create com incremento + update reaplicando por cima).
+async function aplicarProgresso(
+  tx: Prisma.TransactionClient,
+  alunoId: string,
+  conteudoId: string,
+  correta: boolean,
+  tipoErroSeErrado: TipoErroEnum | undefined
+) {
+  const progressoExistente = await tx.progressoHabilidade.findUnique({
+    where: { alunoId_conteudoId: { alunoId, conteudoId } },
+  });
+
+  const incrementoDominio = correta ? 0.05 : -0.03;
+  const novoDominio = Math.max(0, Math.min(1, (progressoExistente?.dominio ?? 0) + incrementoDominio));
+  const novosAcertosSemAjuda = correta ? (progressoExistente?.acertosSemAjuda ?? 0) + 1 : progressoExistente?.acertosSemAjuda ?? 0;
+  const novosErrosConsecutivos = correta ? 0 : (progressoExistente?.errosConsecutivos ?? 0) + 1;
+  const novoUltimoTipoErro = !correta ? (tipoErroSeErrado ?? "ERRO_NAO_CLASSIFICADO") : progressoExistente?.ultimoTipoErro;
+
+  await tx.progressoHabilidade.upsert({
+    where: { alunoId_conteudoId: { alunoId, conteudoId } },
+    create: {
+      alunoId,
+      conteudoId,
+      status: "EM_APRENDIZAGEM",
+      dominio: novoDominio,
+      acertosSemAjuda: novosAcertosSemAjuda,
+      errosConsecutivos: novosErrosConsecutivos,
+      ultimoTipoErro: correta ? undefined : novoUltimoTipoErro,
+    },
+    update: {
+      dominio: novoDominio,
+      acertosSemAjuda: novosAcertosSemAjuda,
+      errosConsecutivos: novosErrosConsecutivos,
+      ...(correta ? {} : { ultimoTipoErro: novoUltimoTipoErro }),
+    },
+  });
+}
 
 export type EstadoResposta =
   | undefined
@@ -121,7 +178,6 @@ export async function responderExercicio(
   const tempoMs = Number.isFinite(tempoMsBruto) && tempoMsBruto > 0 ? Math.round(tempoMsBruto) : null;
 
   const conteudoId = questao.conteudoId;
-  const incrementoDominio = correta ? 0.05 : -0.03;
 
   await prisma.$transaction(async (tx) => {
     await tx.tentativaQuestaoConteudo.create({
@@ -131,55 +187,12 @@ export async function responderExercicio(
         resposta: { alternativaIndex: indiceEscolhido },
         correta,
         tempoMs,
-        tipoErro: diagnostico?.tipoErro as
-          | "CONCEITO"
-          | "PROCEDIMENTO"
-          | "CALCULO"
-          | "INTERPRETACAO"
-          | "REPRESENTACAO"
-          | "PRE_REQUISITO"
-          | "ERRO_NAO_CLASSIFICADO"
-          | undefined,
+        tipoErro: diagnostico?.tipoErro as TipoErroEnum | undefined,
         confiancaErro: diagnostico?.confianca,
       },
     });
 
-    // Calcula os valores finais UMA vez, a partir do que já existia (ou da
-    // base zerada, se essa é a 1ª tentativa nessa habilidade), e aplica no
-    // upsert só uma vez — nunca em create+update separados. Fazer os dois
-    // (create já com o incremento desta tentativa, seguido de um update
-    // incondicional por cima) contava a mesma tentativa em dobro na estreia.
-    const progressoExistente = await tx.progressoHabilidade.findUnique({
-      where: { alunoId_conteudoId: { alunoId: sessao.id, conteudoId } },
-    });
-
-    const novoDominio = Math.max(0, Math.min(1, (progressoExistente?.dominio ?? 0) + incrementoDominio));
-    const novosAcertosSemAjuda = correta ? (progressoExistente?.acertosSemAjuda ?? 0) + 1 : progressoExistente?.acertosSemAjuda ?? 0;
-    const novosErrosConsecutivos = correta ? 0 : (progressoExistente?.errosConsecutivos ?? 0) + 1;
-    // Só atualiza em erro — um acerto não apaga o padrão de erro mais recente,
-    // ele só volta a mudar quando outro erro acontecer.
-    const novoUltimoTipoErro = !correta
-      ? ((diagnostico?.tipoErro as never) ?? "ERRO_NAO_CLASSIFICADO")
-      : progressoExistente?.ultimoTipoErro;
-
-    await tx.progressoHabilidade.upsert({
-      where: { alunoId_conteudoId: { alunoId: sessao.id, conteudoId } },
-      create: {
-        alunoId: sessao.id,
-        conteudoId,
-        status: "EM_APRENDIZAGEM",
-        dominio: novoDominio,
-        acertosSemAjuda: novosAcertosSemAjuda,
-        errosConsecutivos: novosErrosConsecutivos,
-        ultimoTipoErro: correta ? undefined : novoUltimoTipoErro,
-      },
-      update: {
-        dominio: novoDominio,
-        acertosSemAjuda: novosAcertosSemAjuda,
-        errosConsecutivos: novosErrosConsecutivos,
-        ...(correta ? {} : { ultimoTipoErro: novoUltimoTipoErro }),
-      },
-    });
+    await aplicarProgresso(tx, sessao.id, conteudoId, correta, diagnostico?.tipoErro as TipoErroEnum | undefined);
   });
 
   return {
@@ -187,6 +200,77 @@ export async function responderExercicio(
     alternativaCorretaIndex: feedback.mostrarResposta ? indiceCorreto : undefined,
     resolucao: feedback.mostrarResposta && questao.resolucao ? unescapeMarkdown(questao.resolucao) : undefined,
     mensagemDiagnostico: diagnostico ? TIPO_ERRO_MENSAGENS[diagnostico.tipoErro] ?? null : null,
+  };
+}
+
+// --- Fase 4: atividades interativas (ordenação, ligar pares, classificação) ---
+// Mesmas regras do exercício padrão (até 3 tentativas, dica evolui, gabarito
+// só revela no acerto ou na 3ª errada) — reaproveita obterFeedbackTentativa e
+// aplicarProgresso pra manter o comportamento idêntico em toda a trilha.
+// A correção compara por TEXTO contra o `atividadeInterativa` gravado no
+// banco (nunca confia em índice/posição vindo do client — ver
+// corrigirAtividadeInterativa em src/lib/trilha.ts).
+export async function responderAtividadeInterativa(
+  questaoConteudoId: string,
+  _estadoAnterior: EstadoResposta,
+  formData: FormData
+): Promise<EstadoResposta> {
+  const sessao = await obterSessao();
+  if (!sessao || sessao.role !== "aluno") redirect("/aluno/entrar");
+
+  const questao = await prisma.questaoConteudo.findUnique({ where: { id: questaoConteudoId } });
+  const atividade = questao?.atividadeInterativa as unknown as AtividadeInterativa | null;
+  if (!questao || !atividade) {
+    return { correta: false, tentativasRestantes: 0, dica: null, mostrarResposta: false, erro: "Atividade inválida." };
+  }
+
+  const tentativasAnteriores = await prisma.tentativaQuestaoConteudo.count({
+    where: { alunoId: sessao.id, questaoConteudoId },
+  });
+  if (tentativasAnteriores >= 3) {
+    return {
+      correta: false,
+      tentativasRestantes: 0,
+      dica: null,
+      mostrarResposta: true,
+      resolucao: questao.resolucao ? unescapeMarkdown(questao.resolucao) : null,
+      erro: "Você já usou as 3 tentativas desta questão.",
+    };
+  }
+
+  const respostaBruta = String(formData.get("respostaJson") ?? "");
+  let resposta: unknown;
+  try {
+    resposta = JSON.parse(respostaBruta);
+  } catch {
+    return { correta: false, tentativasRestantes: 3 - tentativasAnteriores, dica: null, mostrarResposta: false, erro: "Complete a atividade antes de responder." };
+  }
+
+  const correta = corrigirAtividadeInterativa(atividade, resposta);
+  const numeroTentativa = tentativasAnteriores + 1;
+  const dicas = Array.isArray(questao.dicas) ? (questao.dicas as string[]).map(unescapeMarkdown) : [];
+  const feedback = obterFeedbackTentativa({ correta, numeroTentativa, dicas });
+
+  const tempoMsBruto = Number(formData.get("tempoMs"));
+  const tempoMs = Number.isFinite(tempoMsBruto) && tempoMsBruto > 0 ? Math.round(tempoMsBruto) : null;
+  const conteudoId = questao.conteudoId;
+
+  await prisma.$transaction(async (tx) => {
+    await tx.tentativaQuestaoConteudo.create({
+      data: {
+        alunoId: sessao.id,
+        questaoConteudoId,
+        resposta: resposta as Prisma.InputJsonValue,
+        correta,
+        tempoMs,
+      },
+    });
+    await aplicarProgresso(tx, sessao.id, conteudoId, correta, undefined);
+  });
+
+  return {
+    ...feedback,
+    resolucao: feedback.mostrarResposta && questao.resolucao ? unescapeMarkdown(questao.resolucao) : undefined,
   };
 }
 

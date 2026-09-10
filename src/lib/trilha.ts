@@ -234,6 +234,107 @@ export function selecionarProximaQuestao(
   return proxima?.id ?? null;
 }
 
+// --- Fase 4: atividades interativas (piloto) ---
+// Formatos de atividade guardados em QuestaoConteudo.atividadeInterativa.
+// Cada tipo carrega o gabarito completo (autorado, revisado por humano) — a
+// tela de exercício nunca manda esse objeto inteiro pro client, só a versão
+// "pública" (ver funções `paraCliente*` abaixo), sempre comparando por TEXTO
+// (nunca índice/posição), pra não vazar a resposta certa no HTML da página.
+export type AtividadeOrdenacao = { tipo: "ORDENACAO"; itens: string[] };
+export type AtividadeLigarPares = { tipo: "LIGAR_PARES"; pares: { esquerda: string; direita: string }[] };
+export type AtividadeClassificacao = {
+  tipo: "CLASSIFICACAO";
+  categorias: string[];
+  itens: { texto: string; categoria: string }[];
+};
+export type AtividadeInterativa = AtividadeOrdenacao | AtividadeLigarPares | AtividadeClassificacao;
+
+export const TIPO_ATIVIDADE_LABELS: Record<AtividadeInterativa["tipo"], string> = {
+  ORDENACAO: "Coloque em ordem",
+  LIGAR_PARES: "Ligue os pares",
+  CLASSIFICACAO: "Classifique",
+};
+
+function embaralhar<T>(itens: T[]): T[] {
+  const copia = [...itens];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+// Versão segura pra mandar ao client: nunca inclui a ordem/categoria/par
+// corretos, só os textos embaralhados que o aluno vai reorganizar.
+export function paraClienteAtividade(atividade: AtividadeInterativa) {
+  if (atividade.tipo === "ORDENACAO") {
+    return { tipo: "ORDENACAO" as const, itens: embaralhar(atividade.itens) };
+  }
+  if (atividade.tipo === "LIGAR_PARES") {
+    return {
+      tipo: "LIGAR_PARES" as const,
+      esquerda: atividade.pares.map((p) => p.esquerda),
+      direita: embaralhar(atividade.pares.map((p) => p.direita)),
+    };
+  }
+  return {
+    tipo: "CLASSIFICACAO" as const,
+    categorias: atividade.categorias,
+    itens: embaralhar(atividade.itens.map((i) => i.texto)),
+  };
+}
+
+// Corrige no servidor comparando por texto contra o gabarito guardado —
+// exige acerto total (sem nota parcial), igual ao padrão de múltipla escolha.
+export function corrigirAtividadeInterativa(
+  atividade: AtividadeInterativa,
+  resposta: unknown
+): boolean {
+  if (atividade.tipo === "ORDENACAO") {
+    const ordemEnviada = Array.isArray(resposta) ? (resposta as unknown[]) : null;
+    if (!ordemEnviada || ordemEnviada.length !== atividade.itens.length) return false;
+    return ordemEnviada.every((texto, i) => texto === atividade.itens[i]);
+  }
+  if (atividade.tipo === "LIGAR_PARES") {
+    const mapa = resposta && typeof resposta === "object" ? (resposta as Record<string, unknown>) : null;
+    if (!mapa) return false;
+    return atividade.pares.every((p) => mapa[p.esquerda] === p.direita);
+  }
+  const mapa = resposta && typeof resposta === "object" ? (resposta as Record<string, unknown>) : null;
+  if (!mapa) return false;
+  return atividade.itens.every((i) => mapa[i.texto] === i.categoria);
+}
+
+// Política de seleção: prioriza uma atividade interativa ainda não resolvida
+// depois de ~2 exercícios padrão resolvidos desde a última interativa — não é
+// uma posição fixa (ex. "toda 3ª questão"), pra não travar quando a ordem
+// virar adaptativa depois. `ordemResolucao` = ids na ordem cronológica em que
+// cada questão foi resolvida (1ª tentativa correta ou 3ª tentativa esgotada).
+export function selecionarProximaQuestaoComInterativas(
+  questoesOrdenadas: { id: string; interativa: boolean }[],
+  resolvidas: Set<string>,
+  ordemResolucao: string[],
+  apartirDe?: string
+): string | null {
+  const naoResolvidas = questoesOrdenadas.filter((q) => !resolvidas.has(q.id));
+  if (naoResolvidas.length === 0) return null;
+
+  let regularesDesdeUltimaInterativa = 0;
+  for (let i = ordemResolucao.length - 1; i >= 0; i--) {
+    const q = questoesOrdenadas.find((x) => x.id === ordemResolucao[i]);
+    if (!q) continue;
+    if (q.interativa) break;
+    regularesDesdeUltimaInterativa++;
+  }
+
+  const interativasDisponiveis = naoResolvidas.filter((q) => q.interativa);
+  if (interativasDisponiveis.length > 0 && regularesDesdeUltimaInterativa >= 2) {
+    return interativasDisponiveis[0].id;
+  }
+
+  return selecionarProximaQuestao(questoesOrdenadas, resolvidas, apartirDe);
+}
+
 // --- Feedback progressivo de tentativa (até 3 por questão) ---
 // Centraliza a regra: acerto revela resposta; erro nas tentativas 1 e 2 dá uma
 // dica sem revelar o gabarito; erro na 3ª revela resposta e encerra tentativas.

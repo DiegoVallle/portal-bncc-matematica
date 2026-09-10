@@ -188,6 +188,14 @@ model QuestaoConteudo {
   recursoVisual Json?
   ilustracaoSvg String?
 
+  // Atividade interativa opcional (Fase 4): { tipo: "ORDENACAO"|"LIGAR_PARES"|
+  // "CLASSIFICACAO", ... dados específicos do tipo }. Quando presente, a tela
+  // de exercício renderiza essa atividade em vez do card padrão de múltipla
+  // escolha — mas a questão continua tendo `alternativas` como fallback (não
+  // é obrigatório ter as duas). Ver src/lib/trilha.ts (tipos + seleção) e
+  // src/app/aluno/trilha/[habilidadeCodigo]/exercicios/[questaoId]/AtividadeInterativa.tsx.
+  atividadeInterativa Json?
+
   podeSerDiagnostico Boolean @default(false)
   podeSerAvaliacao   Boolean @default(false)
   podeSerRevisao     Boolean @default(true)

@@ -2,9 +2,11 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { STATUS_LABELS } from "@/lib/trilha";
 import AulaStepper from "./AulaStepper";
 import TeoriaCards from "./TeoriaCards";
+import IlustracaoQuestao from "@/components/IlustracaoQuestao";
 import { iniciarHabilidade } from "../actions";
 
 export default async function ConteudoHabilidadePage({
@@ -27,7 +29,11 @@ export default async function ConteudoHabilidadePage({
 
   const [totalExerciciosMc, totalAvaliacao, progresso] = await Promise.all([
     prisma.questaoConteudo.count({
-      where: { conteudoId: conteudo.id, tipoResposta: "MULTIPLA_ESCOLHA", nivel: { not: "AVALIACAO" } },
+      where: {
+        conteudoId: conteudo.id,
+        nivel: { not: "AVALIACAO" },
+        OR: [{ tipoResposta: "MULTIPLA_ESCOLHA" }, { atividadeInterativa: { not: Prisma.DbNull } }],
+      },
     }),
     prisma.questaoConteudo.count({
       where: { conteudoId: conteudo.id, nivel: "AVALIACAO" },
@@ -63,6 +69,7 @@ export default async function ConteudoHabilidadePage({
       </div>
 
       <div className="mt-6 space-y-6">
+        {conteudo.ilustracaoSvg && <IlustracaoQuestao svg={conteudo.ilustracaoSvg} />}
         <TeoriaCards teoriaBase={conteudo.teoriaBase} exemploResolvido={conteudo.exemploResolvido} />
 
         {totalExerciciosMc > 0 && (

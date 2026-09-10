@@ -1,5 +1,6 @@
-// Renderiza a ilustração SVG (definida pelo autor das questões em prisma/seed-data/questoes.ts)
-// associada a uma questão de Geometria. O conteúdo é confiável (não vem de usuários).
+// Renderiza um SVG curado por quem autora o conteúdo (questão do diagnóstico
+// ou aula da trilha) — nunca vindo de usuário. Reaproveitado tanto por
+// Questao.ilustracaoSvg (diagnóstico) quanto por Conteudo.ilustracaoSvg (trilha).
 export default function IlustracaoQuestao({ svg }: { svg: string }) {
   return (
     <div

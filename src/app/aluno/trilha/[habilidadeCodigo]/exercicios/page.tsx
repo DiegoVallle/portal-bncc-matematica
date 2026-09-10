@@ -2,7 +2,8 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { ordenarQuestoesPratica, selecionarProximaQuestao } from "@/lib/trilha";
+import { Prisma } from "@/generated/prisma/client";
+import { ordenarQuestoesPratica, selecionarProximaQuestaoComInterativas } from "@/lib/trilha";
 
 // Sem estado próprio de UI — só decide pra qual exercício mandar o aluno (o
 // primeiro ainda não resolvido) e redireciona. "Resolvido" = alguma tentativa
@@ -24,9 +25,13 @@ export default async function ExerciciosEntradaPage({
   if (!habilidade || !habilidade.conteudo) notFound();
 
   const questoes = await prisma.questaoConteudo.findMany({
-    where: { conteudoId: habilidade.conteudo.id, tipoResposta: "MULTIPLA_ESCOLHA", nivel: { not: "AVALIACAO" } },
+    where: {
+      conteudoId: habilidade.conteudo.id,
+      nivel: { not: "AVALIACAO" },
+      OR: [{ tipoResposta: "MULTIPLA_ESCOLHA" }, { atividadeInterativa: { not: Prisma.DbNull } }],
+    },
   });
-  const ordenadas = ordenarQuestoesPratica(questoes);
+  const ordenadas = ordenarQuestoesPratica(questoes).map((q) => ({ id: q.id, interativa: !!q.atividadeInterativa }));
 
   if (ordenadas.length === 0) {
     return (
@@ -43,17 +48,23 @@ export default async function ExerciciosEntradaPage({
 
   const tentativas = await prisma.tentativaQuestaoConteudo.findMany({
     where: { alunoId: sessao.id, questaoConteudoId: { in: ordenadas.map((q) => q.id) } },
+    orderBy: { criadaEm: "asc" },
   });
 
   const resolvidas = new Set<string>();
   const contagem = new Map<string, number>();
+  const ordemResolucao: string[] = [];
   for (const t of tentativas) {
-    contagem.set(t.questaoConteudoId, (contagem.get(t.questaoConteudoId) ?? 0) + 1);
-    if (t.correta) resolvidas.add(t.questaoConteudoId);
+    const n = (contagem.get(t.questaoConteudoId) ?? 0) + 1;
+    contagem.set(t.questaoConteudoId, n);
+    const passouAResolvida = !resolvidas.has(t.questaoConteudoId) && (t.correta || n >= 3);
+    if (passouAResolvida) {
+      resolvidas.add(t.questaoConteudoId);
+      ordemResolucao.push(t.questaoConteudoId);
+    }
   }
-  for (const [id, n] of contagem) if (n >= 3) resolvidas.add(id);
 
-  const proximaId = selecionarProximaQuestao(ordenadas, resolvidas);
+  const proximaId = selecionarProximaQuestaoComInterativas(ordenadas, resolvidas, ordemResolucao);
 
   if (!proximaId) {
     return (
