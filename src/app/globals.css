@@ -5,10 +5,10 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Identidade visual ValeEdu Matemática — extraídas do logo (public/logo-valeedu.png) */
+  /* Verde escurecido para contraste de texto branco; azul da marca. */
   --color-valeedu-blue: #1a4d80;
   --color-valeedu-blue-dark: #0f3159;
-  --color-valeedu-green: #4a9c4e;
+  --color-valeedu-green: #357a39;
   --color-valeedu-green-dark: #357a39;
 }
 
@@ -18,5 +18,38 @@
   }
   body {
     background: #ffffff !important;
+  }
+}
+
+@layer base {
+  body { background-color: #f5f7f4; }
+  :where(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid #1a4d80;
+    outline-offset: 4px;
+  }
+  :where(button, input, select) { min-height: 44px; }
+  button:not(:disabled), select { cursor: pointer; }
+  ::selection { background: #dcebdc; color: #0f3159; }
+}
+
+@layer components {
+  .ve-card {
+    border: 1px solid #dce4e3;
+    border-radius: 24px;
+    background: white;
+    box-shadow: 0 8px 28px #0f315907;
+  }
+  .ve-eyebrow {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #357a39;
+  }
+  .ve-welcome {
+    border-top: 4px solid #357a39;
+    background: #edf4ec;
+    border-radius: 24px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
   }
 }

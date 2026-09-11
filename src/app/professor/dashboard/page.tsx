@@ -25,6 +25,7 @@ export default async function DashboardProfessorPage() {
     <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12">
       <div className="flex items-center justify-between">
         <div>
+          <p className="ve-eyebrow mb-2">Espaço do professor</p>
           <h1 className="text-2xl font-bold text-slate-900">Olá, {professor?.nome}</h1>
           <p className="text-sm text-slate-600">Cadastre alunos e acompanhe o diagnóstico.</p>
         </div>
@@ -33,7 +34,7 @@ export default async function DashboardProfessorPage() {
         </form>
       </div>
 
-      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="ve-card mt-8 p-6">
         <h2 className="text-lg font-semibold text-slate-900">PIN de desbloqueio</h2>
         <p className="mt-1 text-sm text-slate-600">
           Depois de 3 erros numa questão da trilha, o aluno precisa desse PIN pra ver a resposta e continuar.
@@ -41,7 +42,7 @@ export default async function DashboardProfessorPage() {
         <PinDesbloqueioForm pinAtual={professor?.pinDesbloqueio ?? "1234"} />
       </section>
 
-      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="ve-card mt-8 p-6">
         <h2 className="text-lg font-semibold text-slate-900">Cadastrar aluno</h2>
         <p className="mt-1 text-sm text-slate-600">
           Crie o acesso do aluno e informe o usuário e a senha para ele entrar no portal.

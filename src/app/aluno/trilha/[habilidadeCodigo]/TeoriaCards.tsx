@@ -21,9 +21,9 @@ export default function TeoriaCards({
 
   if (mostrarExemplo) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="ve-card p-6 sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-wide text-valeedu-green">Exemplo resolvido</p>
-        <div className="prose prose-sm prose-slate mt-3 max-w-none">
+        <div className="prose prose-slate mt-3 max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{exemploResolvido}</ReactMarkdown>
         </div>
         <button
@@ -37,11 +37,11 @@ export default function TeoriaCards({
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="ve-card p-6 sm:p-8">
       <p className="text-xs font-semibold uppercase tracking-wide text-valeedu-green">
-        Teoria · {indice + 1} de {blocos.length}
+        Vamos entender
       </p>
-      <div className="prose prose-sm prose-slate mt-3 max-w-none">
+      <div className="prose prose-slate mt-3 max-w-none">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{blocos[indice]}</ReactMarkdown>
       </div>
 

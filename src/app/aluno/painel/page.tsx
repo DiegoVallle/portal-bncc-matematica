@@ -42,9 +42,10 @@ export default async function PainelAlunoPage({
   );
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
+    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
       <div className="flex items-center justify-between">
         <div>
+          <p className="ve-eyebrow mb-2">Meu espaço de aprendizagem</p>
           <h1 className="text-2xl font-bold text-slate-900">Olá, {aluno.nome}</h1>
           <p className="text-sm text-slate-600">{aluno.anoEscolar}º ano</p>
         </div>
@@ -59,7 +60,7 @@ export default async function PainelAlunoPage({
         </p>
       )}
 
-      <section className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm">
+      <section className="ve-welcome mt-8">
         {atividade === "TESTE_RESUMIDO" && (
           <>
             <h2 className="text-lg font-semibold text-slate-900">Vamos começar!</h2>
@@ -123,9 +124,9 @@ export default async function PainelAlunoPage({
         )}
       </section>
 
-      <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
-        <p className="text-sm text-slate-600">Seu placar</p>
-        <p className="text-3xl font-bold text-valeedu-green">{score} pontos</p>
+      <section className="ve-card mt-6 p-6">
+        <p className="text-sm text-slate-600">Cada conquista conta</p>
+        <p className="mt-2 text-4xl font-semibold tracking-tight text-valeedu-green">{score} pontos</p>
       </section>
     </main>
   );

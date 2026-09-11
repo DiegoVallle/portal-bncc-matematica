@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "ValeEdu Matemática",
-  description: "Testes diagnósticos de Matemática alinhados à BNCC, por ano e bimestre.",
+  description: "Aprenda matemática com aulas, atividades interativas e acompanhamento do professor.",
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900">
+      <body className="min-h-full flex flex-col text-slate-900">
         <div className="print:hidden">
           <AppHeader />
         </div>
