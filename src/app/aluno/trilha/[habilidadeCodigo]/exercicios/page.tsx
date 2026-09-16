@@ -61,11 +61,13 @@ export default async function ExerciciosEntradaPage({
   const proximaId = selecionarProximaQuestaoComInterativas(ordenadas, resolvidas, ordemResolucao);
 
   if (!proximaId) {
+    const temGuiada = (await prisma.questaoConteudo.count({where:{conteudoId:habilidade.conteudo.id,nivel:{not:"AVALIACAO"},tipoResposta:"TEXTO",atividadeInterativa:{equals:Prisma.AnyNull}}})) > 0;
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 text-center">
           <p className="text-lg font-semibold text-slate-900">Você concluiu os exercícios disponíveis! 🎉</p>
-          <p className="mt-2 text-sm text-slate-600">Que tal fazer a avaliação final pra ver se você já domina essa habilidade?</p>
+          <p className="mt-2 text-sm text-slate-600">{temGuiada ? "Você pode continuar estudando com os exercícios abertos e consultar as respostas antes de fazer a avaliação." : "Retome a explicação se precisar ou siga para a avaliação."}</p>
+          {temGuiada && <Link href={`/aluno/trilha/${habilidadeCodigo}/pratica-guiada`} className="mt-4 mr-3 inline-block rounded-lg border border-valeedu-blue px-4 py-3 text-sm font-medium text-valeedu-blue">Continuar praticando com consulta →</Link>}
           <Link
             href={`/aluno/trilha/${habilidadeCodigo}/avaliacao`}
             className="mt-4 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"

@@ -34,7 +34,7 @@ export default async function ConteudoHabilidadePage({
   const aulaParam = Number((await searchParams).aula ?? "1");
   const aulaInicial = Number.isInteger(aulaParam) && aulaParam >= 1 && aulaParam <= aulas.length ? aulaParam - 1 : 0;
 
-  const [totalExerciciosMc, totalAvaliacao, progresso] = await Promise.all([
+  const [totalExerciciosMc, totalAvaliacao, progresso, totalGuiada] = await Promise.all([
     prisma.questaoConteudo.count({
       where: {
         conteudoId: conteudo.id,
@@ -52,6 +52,7 @@ export default async function ConteudoHabilidadePage({
     prisma.progressoHabilidade.findUnique({
       where: { alunoId_conteudoId: { alunoId: sessao.id, conteudoId: conteudo.id } },
     }),
+    prisma.questaoConteudo.count({where:{conteudoId:conteudo.id,nivel:{not:"AVALIACAO"},tipoResposta:"TEXTO",atividadeInterativa:{equals:Prisma.AnyNull}}}),
   ]);
 
   const comecar = iniciarHabilidade.bind(null, habilidade.codigo);
@@ -94,6 +95,7 @@ export default async function ConteudoHabilidadePage({
             </button>
           </form>
         )}
+        {totalGuiada > 0 && <Link href={`/aluno/trilha/${habilidadeCodigo}/pratica-guiada`} className="inline-block rounded-lg border border-valeedu-blue px-5 py-3 font-medium text-valeedu-blue">Praticar com consulta à resposta →</Link>}
         </TeoriaCards>
       </div>
     </main>

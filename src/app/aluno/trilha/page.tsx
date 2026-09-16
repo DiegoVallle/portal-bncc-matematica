@@ -13,8 +13,13 @@ export default async function TrilhaPage() {
   const aluno = await prisma.aluno.findUnique({ where: { id: sessao.id } });
   if (!aluno) redirect("/aluno/entrar");
 
+  // A trilha atribuída pode ser de outro ano para recomposição da aprendizagem.
+  const pontoPartida = aluno.trilhaPontoPartida
+    ? await prisma.habilidade.findUnique({where:{codigo:aluno.trilhaPontoPartida},select:{anoEscolar:true}})
+    : null;
+  const anoTrilha = pontoPartida?.anoEscolar ?? aluno.anoEscolar;
   const conteudos = await prisma.conteudo.findMany({
-    where: { habilidade: { anoEscolar: aluno.anoEscolar } },
+    where: { habilidade: { anoEscolar: anoTrilha } },
     include: { habilidade: true },
   });
 
@@ -43,7 +48,7 @@ export default async function TrilhaPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Trilha de conteúdo</h1>
-          <p className="text-sm text-slate-600">{aluno.anoEscolar}º ano · estude cada habilidade no seu ritmo</p>
+          <p className="text-sm text-slate-600">{anoTrilha}º ano · estude cada habilidade no seu ritmo</p>
         </div>
         <form action={sairAluno}>
           <button className="text-sm text-slate-600 hover:underline">Sair</button>
@@ -58,7 +63,7 @@ export default async function TrilhaPage() {
 
       {habilidades.length === 0 ? (
         <p className="mt-8 text-sm text-slate-600">
-          Ainda não há trilha de conteúdo cadastrada para o {aluno.anoEscolar}º ano.
+          Ainda não há trilha de conteúdo cadastrada para o {anoTrilha}º ano.
         </p>
       ) : (
         <div className="mt-8">

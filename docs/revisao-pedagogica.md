@@ -55,4 +55,12 @@ Não foi realizada uma validação matemática individual dos 1.480 gabaritos ne
 
 ## Referência curricular
 
+## Correção de acesso ao conteúdo — 16/09/2026
+
+A versão publicada anterior foi confirmada como Ready. Nova consulta encontrou as 37 teorias preenchidas, mas 34 habilidades ofereciam somente uma atividade na prática corrigida. Foram disponibilizados 1.164 exercícios abertos já existentes em 36 habilidades, separados das avaliações e das atividades interativas. Cada item permite registrar raciocínio localmente e consultar a resposta; não há correção automática, pontuação ou persistência das respostas abertas. Todos os itens selecionados têm resposta ou resolução preenchida (verificação estrutural, não validação matemática individual).
+
+A listagem passa a respeitar o ano da habilidade atribuída pelo professor, quando houver, em vez de usar obrigatoriamente o ano de matrícula. Isso corrige a listagem vazia quando uma trilha de outro ano é atribuída. Não foram criados conteúdos para anos sem material cadastrado.
+
+Verificações: filtro exclui avaliação; resposta não aparece antes da ação de consulta; campo vazio não habilita consulta; renderização no navegador; consulta da resposta após preenchimento. IDs, gabaritos, notas e progresso existentes preservados.
+
 [BNCC — documento oficial do MEC](https://basenacionalcomum.mec.gov.br/images/BNCC_EI_EF_110518_versaofinal_site.pdf). As explicações, exemplos e perguntas desta revisão são autorais. A organização em subaulas é uma decisão editorial para reduzir a carga por encontro, não uma divisão prescrita pela BNCC.
