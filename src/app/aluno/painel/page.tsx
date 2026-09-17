@@ -189,10 +189,12 @@ export default async function PainelAlunoPage({
                   <span className="text-xs text-slate-500">{STATUS_LABELS[n.statusPredominante] ?? ""}</span>
                 </div>
                 <div className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
-                  <div
-                    className="h-full rounded-full bg-valeedu-green transition-[width]"
-                    style={{ width: `${Math.max(6, Math.round(n.progresso * 100))}%` }}
-                  />
+                  {n.progresso > 0 && (
+                    <div
+                      className="h-full rounded-full bg-valeedu-green transition-[width]"
+                      style={{ width: `${Math.max(6, Math.round(n.progresso * 100))}%` }}
+                    />
+                  )}
                 </div>
               </li>
             ))}
