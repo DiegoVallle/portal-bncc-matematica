@@ -1,3 +1,4 @@
+import CenaAlfabetizacao from "@/components/CenaAlfabetizacao";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { obterSessao } from "@/lib/auth";
@@ -34,7 +35,7 @@ export default async function NivelFonicoEntradaPage({ params }: { params: Promi
   if (atividades.length === 0) {
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12 text-center">
-        <p className="text-sm text-slate-600">Esta atividade ainda não está disponível.</p>
+        <div className="aventura-card p-6"><CenaAlfabetizacao nivel={nivel} compacta /><h1 className="mt-5 text-xl font-bold">Uma nova descoberta está chegando</h1><p className="mt-3 text-sm text-slate-600">Vamos escolher outra brincadeira por enquanto?</p></div>
         <Link href="/aluno/alfabetizacao" className="mt-4 inline-block text-sm text-valeedu-green-dark hover:underline">
           ← Voltar
         </Link>
@@ -53,11 +54,12 @@ export default async function NivelFonicoEntradaPage({ params }: { params: Promi
   if (!proxima) {
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12 text-center">
-        <p className="text-5xl">🎉</p>
+        <CenaAlfabetizacao nivel={nivel} compacta />
+        <p className="mt-5 text-5xl" aria-hidden="true">🎉</p>
         <p className="mt-4 text-xl font-semibold text-slate-900">Você concluiu esta atividade!</p>
         <Link
           href="/aluno/alfabetizacao"
-          className="mt-6 inline-block rounded-lg bg-valeedu-green px-5 py-3 text-sm font-medium text-white hover:bg-valeedu-green-dark"
+          className="mt-6 inline-block aventura-botao"
         >
           Ver todas as atividades
         </Link>

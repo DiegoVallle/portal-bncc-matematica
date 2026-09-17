@@ -1,8 +1,10 @@
+import Link from "next/link";
+import CenaAlfabetizacao from "@/components/CenaAlfabetizacao";
 import { redirect, notFound } from "next/navigation";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { ORDEM_FONICA, type NivelFonico } from "@/lib/alfabetizacao";
-import { ordenarAtividadesFonicas, hashDeterministico, type TipoAtividadeFonica } from "@/lib/fonica";
+import { hashDeterministico, type TipoAtividadeFonica } from "@/lib/fonica";
 import AtividadeFonicaPlayer from "./AtividadeFonicaPlayer";
 
 function ehNivelValido(valor: string): valor is NivelFonico {
@@ -29,8 +31,6 @@ export default async function AtividadeFonicaPage({
   const atividade = conteudo.atividades.find((a) => a.id === atividadeId);
   if (!atividade) notFound();
 
-  const ordenadas = ordenarAtividadesFonicas(conteudo.atividades);
-  const posicao = ordenadas.findIndex((a) => a.id === atividadeId);
 
   // Embaralha a ordem das opções — o banco sempre lista a opção certa
   // primeiro (mais fácil de autorar o seed), então sem isso a criança
@@ -44,9 +44,9 @@ export default async function AtividadeFonicaPage({
 
   return (
     <main className="mx-auto w-full max-w-xl flex-1 px-6 py-10">
-      <p className="text-center text-xs font-medium text-slate-400">
-        Atividade {posicao + 1} de {ordenadas.length}
-      </p>
+      <Link href="/aluno/alfabetizacao" className="mb-4 inline-flex min-h-11 items-center text-sm font-medium text-valeedu-blue">← Minhas descobertas</Link>
+      <h1 className="mb-4 text-center text-xl font-bold text-valeedu-blue">Vamos descobrir juntos!</h1>
+      <CenaAlfabetizacao nivel={nivel} compacta />
       <AtividadeFonicaPlayer
         key={atividade.id}
         atividadeId={atividade.id}

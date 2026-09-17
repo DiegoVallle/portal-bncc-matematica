@@ -1,0 +1,25 @@
+.aventura {
+  background: radial-gradient(ellipse at top left, #e5efdf 0%, transparent 55%),
+    radial-gradient(ellipse at bottom right, #fae8b8 0%, transparent 45%), #faf7ee;
+  color: #213d39;
+}
+.aventura h1 { color: #193f48; text-wrap: balance; letter-spacing: -.025em; }
+.aventura main { padding-top: 2rem; padding-bottom: 3rem; }
+.aventura .aventura-card {
+  border: 2px solid #dbe5d3; border-radius: 2rem; background: #fffef9;
+  box-shadow: 0 6px 0 #dbe5d380, 0 14px 30px #193f4808;
+}
+.aventura .aventura-botao {
+  display: inline-flex; min-height: 48px; align-items: center; justify-content: center;
+  padding: .8rem 1.5rem; border-radius: 999px; font-weight: 700;
+  background: #357a39; color: white; border: 2px solid #28612b;
+  box-shadow: 0 4px 0 #245728; text-decoration: none;
+}
+.aventura .aventura-botao:hover { background: #28612b; }
+.aventura .aventura-ouvir { min-height: 48px; background: #e7f0f4; color: #1a4d80; border: 2px solid #c6dae3; }
+.aventura .aventura-feedback { width: 100%; border-radius: 1.5rem; padding: 1.25rem; background: #eaf3e4; color: #285d2d; }
+.aventura .aventura-repetir { border-radius: 1.25rem; padding: 1rem; background: #fff1ce; color: #795012; }
+.aventura :is(button,a):focus-visible { outline: 3px solid #1a4d80; outline-offset: 5px; }
+.aventura button:disabled { cursor: wait; opacity: .6; }
+@media (max-width: 420px) { .aventura main { padding-left: 1rem; padding-right: 1rem; } }
+@media (prefers-reduced-motion: reduce) { .aventura * { transition: none !important; animation: none !important; } }

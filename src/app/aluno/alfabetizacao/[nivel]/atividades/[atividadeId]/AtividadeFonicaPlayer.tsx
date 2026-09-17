@@ -121,16 +121,16 @@ export default function AtividadeFonicaPlayer({
   const acertou = estado?.correta === true;
 
   return (
-    <div className="mt-6 flex flex-col items-center gap-6 rounded-2xl border border-valeedu-blue/20 bg-white p-8 text-center shadow-sm">
+    <div className="aventura-card mt-6 flex flex-col items-center gap-6 rounded-3xl border border-valeedu-blue/15 bg-white p-5 sm:p-8 text-center shadow-sm">
       <button
         type="button"
         onClick={() => falar(instrucaoAudio)}
-        className="rounded-full bg-valeedu-blue/10 px-4 py-2 text-sm font-medium text-valeedu-blue hover:bg-valeedu-blue/20"
+        className="aventura-ouvir rounded-full bg-valeedu-blue/10 px-4 py-2 text-sm font-medium text-valeedu-blue hover:bg-valeedu-blue/20"
       >
         🔊 Ouvir de novo
       </button>
 
-      {opcoes.length > 0 && (
+      {ehVoz && opcoes.length > 0 && (
         <div className="flex flex-wrap items-center justify-center gap-3">
           {opcoes.map((op) => (
             <div key={op.texto} className="flex flex-col items-center gap-1">
@@ -142,12 +142,12 @@ export default function AtividadeFonicaPlayer({
       )}
 
       {acertou ? (
-        <div className="flex flex-col items-center gap-3">
-          <p className="text-4xl">✅</p>
+        <div role="status" className="aventura-feedback flex flex-col items-center gap-3">
+          <p aria-hidden="true" className="text-4xl">🌟</p>
           <p className="text-lg font-semibold text-valeedu-green-dark">Isso mesmo!</p>
           <Link
             href={nivelHref}
-            className="rounded-lg bg-valeedu-green px-5 py-3 text-sm font-medium text-white hover:bg-valeedu-green-dark"
+            className="aventura-botao"
           >
             Próxima →
           </Link>
@@ -169,9 +169,10 @@ export default function AtividadeFonicaPlayer({
                   type="submit"
                   name="respostaClique"
                   value={op.texto}
-                  className="flex flex-col items-center gap-2 rounded-xl border-2 border-slate-200 p-4 text-4xl hover:border-valeedu-blue hover:bg-valeedu-blue/5"
+                  aria-label={op.texto}
+                  className="flex flex-col items-center gap-2 min-h-28 rounded-2xl border-2 border-slate-200 bg-[#fffdf6] p-4 text-5xl shadow-sm hover:border-valeedu-blue hover:bg-valeedu-blue/5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-valeedu-blue"
                 >
-                  <span>{op.emoji}</span>
+                  <span aria-hidden="true">{tipo === "CORRESPONDENCIA_SOM_LETRA" ? op.texto : op.emoji}</span>
                 </button>
               ))}
             </div>
@@ -185,6 +186,7 @@ export default function AtividadeFonicaPlayer({
                 type="button"
                 onClick={iniciarGravacao}
                 disabled={gravando}
+                aria-label="Ler em voz alta"
                 className="flex h-24 w-24 items-center justify-center rounded-full bg-valeedu-blue text-4xl text-white shadow-md disabled:opacity-60"
               >
                 🎤
@@ -199,7 +201,7 @@ export default function AtividadeFonicaPlayer({
               <button
                 type="submit"
                 disabled={!transcricao}
-                className="rounded-lg bg-valeedu-green px-5 py-3 text-sm font-medium text-white hover:bg-valeedu-green-dark disabled:opacity-50"
+                className="aventura-botao disabled:opacity-50"
               >
                 Enviar
               </button>
@@ -207,13 +209,13 @@ export default function AtividadeFonicaPlayer({
           )}
 
           {ehVoz && !suportaVoz && (
-            <p className="text-sm text-amber-600">
+            <p role="status" className="aventura-repetir text-sm">
               Este navegador não reconhece voz — peça pra um adulto abrir esta atividade no Google Chrome.
             </p>
           )}
 
           {respondeu && !acertou && (
-            <p className="text-base font-medium text-amber-600">{estado?.erro ?? "Vamos tentar de novo! 🔁"}</p>
+            <p role="status" className="aventura-repetir text-base font-medium">{estado?.erro ?? "Vamos tentar de novo! 🔁"}</p>
           )}
         </form>
       )}

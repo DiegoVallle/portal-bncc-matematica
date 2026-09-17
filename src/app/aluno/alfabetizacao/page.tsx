@@ -1,3 +1,4 @@
+import CenaAlfabetizacao from "@/components/CenaAlfabetizacao";
 import { redirect } from "next/navigation";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -34,11 +35,12 @@ export default async function AlfabetizacaoPage() {
   };
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
-      <h1 className="text-2xl font-bold text-slate-900">Vamos aprender a ler! 📖</h1>
-      <p className="mt-1 text-sm text-slate-600">Toque em uma atividade pra começar.</p>
+    <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12">
+      <p className="mb-3 text-sm font-semibold tracking-wide text-valeedu-green-dark">ValeEdu · Pequenas grandes descobertas</p>
+      <h1 className="text-2xl font-bold text-slate-900">Uma aventura de sons e histórias</h1>
+      <p className="mt-1 text-sm text-slate-600">Ouça, descubra e brinque. Cada descoberta é um novo passo!</p>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {conteudos.map((conteudo) => {
           const info = obterNivelFonico(conteudo.nivel);
           const status = statusPorConteudo.get(conteudo.id) ?? "NAO_INICIADO";
@@ -49,13 +51,14 @@ export default async function AlfabetizacaoPage() {
             <form key={conteudo.id} action={iniciarNivelFonico.bind(null, conteudo.nivel)}>
               <button
                 type="submit"
-                className="flex w-full flex-col items-center gap-2 rounded-2xl border-2 border-valeedu-blue/30 bg-white p-6 text-center shadow-sm transition hover:border-valeedu-blue hover:shadow-md"
+                className="aventura-card group flex h-full w-full flex-col gap-3 rounded-3xl border-2 border-valeedu-blue/15 bg-white p-3 text-center shadow-sm transition hover:border-valeedu-green hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-valeedu-blue"
               >
-                <span className="text-5xl">{ICONE_NIVEL[conteudo.nivel] ?? "⭐"}</span>
+                <CenaAlfabetizacao nivel={conteudo.nivel} />
+                <span aria-hidden="true" className="text-2xl">{ICONE_NIVEL[conteudo.nivel] ?? "⭐"}</span>
                 <span className="text-lg font-semibold text-slate-900">{info?.nome ?? conteudo.nivel}</span>
                 {concluido && <span className="text-sm font-medium text-valeedu-green-dark">Concluído ✓</span>}
                 {!concluido && emAndamento && <span className="text-sm font-medium text-valeedu-blue">Continuar →</span>}
-                {!concluido && !emAndamento && <span className="text-sm text-slate-500">Começar →</span>}
+                {!concluido && !emAndamento && <span className="text-sm text-slate-500">Vamos brincar →</span>}
               </button>
             </form>
           );
