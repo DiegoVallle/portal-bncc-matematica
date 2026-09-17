@@ -124,7 +124,7 @@ export default async function DashboardProfessorPage() {
                     <div>
                       <p className="font-medium text-slate-900">{aluno.nome}</p>
                       <p className="text-sm text-slate-500">
-                        @{aluno.usuario} · {aluno.anoEscolar}º ano
+                        @{aluno.usuario} · {aluno.trilhaTipo === "ALFABETIZACAO" ? "Alfabetização" : `${aluno.anoEscolar}º ano`}
                       </p>
                     </div>
                     <div className="text-right text-sm">

@@ -43,6 +43,13 @@ model Aluno {
   status              StatusMatricula @default(MATRICULADO)
   diagnosticoLiberado Boolean         @default(false)
 
+  // Qual trilha este aluno estuda — decidido pelo professor no cadastro.
+  // MATEMATICA (padrão, retrocompatível) segue o fluxo normal de
+  // diagnóstico/matrícula/trilha de conteúdo. ALFABETIZACAO pula esse fluxo
+  // inteiro (não faz sentido pra criança de 5-8 anos ainda não alfabetizada)
+  // e vai direto pra Trilha de Alfabetização — ver painel/page.tsx.
+  trilhaTipo TrilhaTipo @default(MATEMATICA)
+
   professorId String
   professor   Professor @relation(fields: [professorId], references: [id], onDelete: Cascade)
 
@@ -146,6 +153,11 @@ enum StatusDominio {
 enum StatusMatricula {
   EXPERIMENTAL
   MATRICULADO
+}
+
+enum TrilhaTipo {
+  MATEMATICA
+  ALFABETIZACAO
 }
 
 model Conteudo {

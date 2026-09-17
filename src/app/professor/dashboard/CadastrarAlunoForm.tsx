@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { cadastrarAlunoPeloProfessor } from "../actions";
 import { ANOS_ESCOLARES } from "@/lib/bncc";
 
 export default function CadastrarAlunoForm() {
   const [estado, action, pendente] = useActionState(cadastrarAlunoPeloProfessor, undefined);
+  const [trilhaTipo, setTrilhaTipo] = useState<"MATEMATICA" | "ALFABETIZACAO">("MATEMATICA");
 
   return (
     <form action={action} className="flex flex-wrap items-end gap-3">
@@ -41,23 +42,39 @@ export default function CadastrarAlunoForm() {
         />
       </div>
       <div>
-        <label className="block text-xs font-medium text-slate-700">Ano escolar</label>
+        <label className="block text-xs font-medium text-slate-700">Trilha</label>
         <select
-          name="anoEscolar"
-          required
-          className="mt-1 w-28 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          name="trilhaTipo"
+          value={trilhaTipo}
+          onChange={(e) => setTrilhaTipo(e.target.value as "MATEMATICA" | "ALFABETIZACAO")}
+          className="mt-1 w-40 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
         >
-          {ANOS_ESCOLARES.map((ano) => (
-            <option key={ano} value={ano}>
-              {ano}º ano
-            </option>
-          ))}
+          <option value="MATEMATICA">Matemática</option>
+          <option value="ALFABETIZACAO">Alfabetização</option>
         </select>
       </div>
-      <label className="flex items-center gap-2 pb-2 text-sm text-slate-700">
-        <input type="checkbox" name="experimental" className="h-4 w-4" />
-        Experimental (primeira aula — faz um teste resumido antes de matricular)
-      </label>
+      {trilhaTipo === "MATEMATICA" && (
+        <div>
+          <label className="block text-xs font-medium text-slate-700">Ano escolar</label>
+          <select
+            name="anoEscolar"
+            required
+            className="mt-1 w-28 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          >
+            {ANOS_ESCOLARES.map((ano) => (
+              <option key={ano} value={ano}>
+                {ano}º ano
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+      {trilhaTipo === "MATEMATICA" && (
+        <label className="flex items-center gap-2 pb-2 text-sm text-slate-700">
+          <input type="checkbox" name="experimental" className="h-4 w-4" />
+          Experimental (primeira aula — faz um teste resumido antes de matricular)
+        </label>
+      )}
       <button
         type="submit"
         disabled={pendente}

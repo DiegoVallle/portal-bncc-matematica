@@ -34,6 +34,37 @@ export default async function PainelAlunoPage({
   const aluno = await prisma.aluno.findUnique({ where: { id: sessao.id } });
   if (!aluno) redirect("/aluno/entrar");
 
+  // Alfabetização pula o fluxo de diagnóstico/matrícula/trilha de Matemática
+  // inteiro (não se aplica pra criança de 5-8 anos ainda não alfabetizada) —
+  // painel próprio, sem as consultas e seções específicas de matemática
+  // abaixo.
+  if (aluno.trilhaTipo === "ALFABETIZACAO") {
+    return (
+      <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="ve-eyebrow mb-2">Meu espaço de aprendizagem</p>
+            <h1 className="text-2xl font-bold text-slate-900">Olá, {aluno.nome}</h1>
+          </div>
+          <form action={sairAluno}>
+            <button className="text-sm text-slate-600 hover:underline">Sair</button>
+          </form>
+        </div>
+
+        <section className="ve-welcome mt-8">
+          <h2 className="text-lg font-semibold text-slate-900">Vamos aprender a ler!</h2>
+          <p className="mt-1 text-sm text-slate-600">Toque para continuar suas descobertas.</p>
+          <Link
+            href="/aluno/alfabetizacao"
+            className="mt-4 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
+          >
+            Continuar →
+          </Link>
+        </section>
+      </main>
+    );
+  }
+
   const { enviado } = await searchParams;
 
   const temTentativaFinalizada =

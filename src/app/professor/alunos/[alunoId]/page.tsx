@@ -36,10 +36,15 @@ export default async function AlunoDetalhePage({
 
   const desempenho = desempenhoPorUnidade(respostas).filter((d) => d.total > 0);
 
-  const habilidadesTrilha = await prisma.habilidade.findMany({
-    where: { anoEscolar: aluno.anoEscolar, conteudo: { isNot: null } },
-    select: { codigo: true, descricao: true },
-  });
+  // Ponto de partida por código BNCC só existe pra trilha de Matemática — a
+  // de Alfabetização é um percurso único, sem seleção de ano/habilidade.
+  const habilidadesTrilha =
+    aluno.trilhaTipo === "MATEMATICA"
+      ? await prisma.habilidade.findMany({
+          where: { anoEscolar: aluno.anoEscolar, conteudo: { isNot: null } },
+          select: { codigo: true, descricao: true },
+        })
+      : [];
   const descricaoPorCodigo = new Map(habilidadesTrilha.map((h) => [h.codigo, h.descricao]));
   const nucleosDoAno = NUCLEOS.map((n) => ({
     letra: n.letra,
@@ -60,11 +65,25 @@ export default async function AlunoDetalhePage({
       <div className="mt-2">
         <h1 className="text-2xl font-bold text-slate-900">{aluno.nome}</h1>
         <p className="text-sm text-slate-600">
-          @{aluno.usuario} · {aluno.anoEscolar}º ano ·{" "}
-          {aluno.status === "EXPERIMENTAL" ? "Experimental" : "Matriculado"}
+          @{aluno.usuario} ·{" "}
+          {aluno.trilhaTipo === "ALFABETIZACAO" ? (
+            "Trilha de Alfabetização"
+          ) : (
+            <>
+              {aluno.anoEscolar}º ano · {aluno.status === "EXPERIMENTAL" ? "Experimental" : "Matriculado"}
+            </>
+          )}
         </p>
       </div>
 
+      {aluno.trilhaTipo === "ALFABETIZACAO" ? (
+        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-slate-900">Matrícula</h2>
+          <p className="mt-1 text-sm text-slate-600">
+            Aluno matriculado direto na Trilha de Alfabetização — não passa pelo diagnóstico da Matemática.
+          </p>
+        </section>
+      ) : (
       <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-900">Matrícula</h2>
         {aluno.status === "EXPERIMENTAL" ? (
@@ -103,8 +122,9 @@ export default async function AlunoDetalhePage({
           </>
         )}
       </section>
+      )}
 
-      {nucleosDoAno.length > 0 && (
+      {aluno.trilhaTipo === "MATEMATICA" && nucleosDoAno.length > 0 && (
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-900">Trilha de conteúdo</h2>
           <p className="text-sm text-slate-600">

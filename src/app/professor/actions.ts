@@ -71,14 +71,24 @@ export async function cadastrarAlunoPeloProfessor(
   const nome = String(formData.get("nome") ?? "").trim();
   const usuario = String(formData.get("usuario") ?? "").trim().toLowerCase();
   const senha = String(formData.get("senha") ?? "");
-  const anoEscolar = Number(formData.get("anoEscolar"));
+  const trilhaTipoBruto = String(formData.get("trilhaTipo") ?? "MATEMATICA");
+  const trilhaTipo = trilhaTipoBruto === "ALFABETIZACAO" ? "ALFABETIZACAO" : "MATEMATICA";
   const experimental = formData.get("experimental") === "on";
 
   if (!nome || !usuario || senha.length < 4) {
     return { erro: "Preencha nome, usuário e uma senha com pelo menos 4 caracteres." };
   }
-  if (!Number.isInteger(anoEscolar) || anoEscolar < 1 || anoEscolar > 9) {
-    return { erro: "Escolha um ano escolar válido (1º a 9º ano)." };
+
+  // Ano escolar/experimental só fazem sentido pra trilha de Matemática — a
+  // de Alfabetização pula o fluxo de diagnóstico inteiro (não cabe pra
+  // criança de 5-8 anos ainda não alfabetizada) e o ano fica com um valor
+  // fixo, nunca exibido nem usado por essa trilha.
+  let anoEscolar = 1;
+  if (trilhaTipo === "MATEMATICA") {
+    anoEscolar = Number(formData.get("anoEscolar"));
+    if (!Number.isInteger(anoEscolar) || anoEscolar < 1 || anoEscolar > 9) {
+      return { erro: "Escolha um ano escolar válido (1º a 9º ano)." };
+    }
   }
 
   const usuarioExistente = await prisma.aluno.findUnique({ where: { usuario } });
@@ -94,7 +104,10 @@ export async function cadastrarAlunoPeloProfessor(
       senhaHash,
       anoEscolar,
       professorId: sessao.id,
-      status: experimental ? "EXPERIMENTAL" : "MATRICULADO",
+      trilhaTipo,
+      // Alfabetização é sempre matriculada direto — o status EXPERIMENTAL
+      // existe só pro fluxo de diagnóstico da trilha de Matemática.
+      status: trilhaTipo === "MATEMATICA" && experimental ? "EXPERIMENTAL" : "MATRICULADO",
     },
   });
 
