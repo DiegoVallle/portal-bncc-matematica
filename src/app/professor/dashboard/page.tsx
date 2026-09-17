@@ -2,6 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { obterAtividadeAluno } from "@/lib/acesso";
+import { TIPO_ERRO_LABELS } from "@/lib/trilha";
 import { sairProfessor } from "../actions";
 import CadastrarAlunoForm from "./CadastrarAlunoForm";
 import PinDesbloqueioForm from "./PinDesbloqueioForm";
@@ -10,7 +12,7 @@ export default async function DashboardProfessorPage() {
   const sessao = await obterSessao();
   if (!sessao || sessao.role !== "professor") redirect("/professor/login");
 
-  const [professor, alunos] = await Promise.all([
+  const [professor, alunos, errosDaTurma] = await Promise.all([
     prisma.professor.findUnique({ where: { id: sessao.id } }),
     prisma.aluno.findMany({
       where: { professorId: sessao.id },
@@ -19,7 +21,20 @@ export default async function DashboardProfessorPage() {
       },
       orderBy: [{ anoEscolar: "asc" }, { nome: "asc" }],
     }),
+    prisma.tentativaQuestaoConteudo.groupBy({
+      by: ["tipoErro"],
+      where: { aluno: { professorId: sessao.id }, tipoErro: { not: null } },
+      _count: { tipoErro: true },
+      orderBy: { _count: { tipoErro: "desc" } },
+      take: 3,
+    }),
   ]);
+
+  // Quem precisa de uma ação do professor agora — matricular ou atribuir
+  // ponto de partida (ver src/lib/acesso.ts, mesma regra do painel do aluno).
+  const precisamDeAcao = alunos
+    .map((aluno) => ({ aluno, atividade: obterAtividadeAluno(aluno, aluno.tentativas.length > 0) }))
+    .filter((a) => a.atividade === "AGUARDANDO_MATRICULA" || a.atividade === "AGUARDANDO_ATRIBUICAO");
 
   return (
     <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-12">
@@ -33,6 +48,40 @@ export default async function DashboardProfessorPage() {
           <button className="text-sm text-slate-600 hover:underline">Sair</button>
         </form>
       </div>
+
+      {precisamDeAcao.length > 0 && (
+        <section className="ve-card mt-8 border-l-4 border-l-amber-400 p-6">
+          <h2 className="text-lg font-semibold text-slate-900">Precisa da sua atenção</h2>
+          <p className="mt-1 text-sm text-slate-600">Esses alunos estão esperando uma decisão sua pra continuar.</p>
+          <ul className="mt-4 divide-y divide-slate-200">
+            {precisamDeAcao.map(({ aluno, atividade }) => (
+              <li key={aluno.id}>
+                <Link href={`/professor/alunos/${aluno.id}`} className="flex items-center justify-between gap-3 py-3 hover:text-valeedu-blue">
+                  <span className="font-medium text-slate-900">{aluno.nome}</span>
+                  <span className="text-sm text-amber-700">
+                    {atividade === "AGUARDANDO_MATRICULA" ? "Fez o teste resumido — matricular" : "Falta definir o ponto de partida"}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {errosDaTurma.length > 0 && (
+        <section className="ve-card mt-8 p-6">
+          <h2 className="text-lg font-semibold text-slate-900">Erros mais comuns da turma</h2>
+          <p className="mt-1 text-sm text-slate-600">Padrões de erro identificados nas respostas da trilha de conteúdo, somando todos os alunos.</p>
+          <ul className="mt-4 space-y-2">
+            {errosDaTurma.map((e) => (
+              <li key={e.tipoErro} className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-2 text-sm">
+                <span className="text-slate-800">{TIPO_ERRO_LABELS[e.tipoErro ?? ""] ?? e.tipoErro}</span>
+                <span className="font-medium text-slate-500">{e._count.tipoErro}×</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="ve-card mt-8 p-6">
         <h2 className="text-lg font-semibold text-slate-900">PIN de desbloqueio</h2>

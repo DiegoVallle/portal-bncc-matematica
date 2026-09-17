@@ -4,8 +4,21 @@ import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { sairAluno, iniciarTentativa } from "../actions";
 import { obterAtividadeAluno } from "@/lib/acesso";
-import { calcularScore } from "@/lib/trilha";
+import { calcularScore, NUCLEOS, STATUS_LABELS } from "@/lib/trilha";
 import IniciarTesteForm from "./IniciarTesteForm";
+
+// Peso de progresso por status, só pra desenhar a barra do mapa de núcleos —
+// nunca mostrado como número/porcentagem pro aluno (ver regra "sem totais").
+const PESO_STATUS: Record<string, number> = {
+  NAO_INICIADO: 0,
+  DIAGNOSTICO: 0.15,
+  EM_APRENDIZAGEM: 0.4,
+  EM_PRATICA: 0.55,
+  DOMINIO_PROVISORIO: 0.75,
+  DOMINADO: 1,
+  REVISAO: 0.3,
+  PRE_REQUISITO_PENDENTE: 0.1,
+};
 
 // O aluno nunca escolhe o que fazer aqui — o painel mostra sempre uma única
 // atividade, decidida por obterAtividadeAluno() (ver src/lib/acesso.ts).
@@ -40,6 +53,38 @@ export default async function PainelAlunoPage({
       nivel: t.questaoConteudo.nivel,
     }))
   );
+
+  // Mapa de progresso por núcleo — visão geral da trilha sem citar quantidade
+  // de habilidades/exercícios (só a barra de preenchimento, nunca um número).
+  const conteudosDoAno = await prisma.conteudo.findMany({
+    where: { habilidade: { anoEscolar: aluno.anoEscolar } },
+    select: { id: true, habilidade: { select: { codigo: true } } },
+  });
+  const progressosAluno =
+    conteudosDoAno.length > 0
+      ? await prisma.progressoHabilidade.findMany({
+          where: { alunoId: aluno.id, conteudoId: { in: conteudosDoAno.map((c) => c.id) } },
+          select: { conteudoId: true, status: true },
+        })
+      : [];
+  const statusPorCodigo = new Map<string, string>(
+    conteudosDoAno.map((c) => [
+      c.habilidade.codigo,
+      String(progressosAluno.find((p) => p.conteudoId === c.id)?.status ?? "NAO_INICIADO"),
+    ])
+  );
+  const mapaNucleos = NUCLEOS.map((n) => {
+    const statusDoNucleo: string[] = n.codigos
+      .map((cod) => statusPorCodigo.get(cod))
+      .filter((s): s is string => typeof s === "string");
+    const progresso =
+      statusDoNucleo.length > 0
+        ? statusDoNucleo.reduce((soma, s) => soma + (PESO_STATUS[s] ?? 0), 0) / statusDoNucleo.length
+        : 0;
+    const ordenados = [...statusDoNucleo].sort((a, b) => (PESO_STATUS[b] ?? 0) - (PESO_STATUS[a] ?? 0));
+    const statusPredominante = ordenados.length > 0 ? ordenados[Math.floor(ordenados.length / 2)] : "NAO_INICIADO";
+    return { ...n, progresso, disponivel: statusDoNucleo.length > 0, statusPredominante };
+  }).filter((n) => n.disponivel);
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
@@ -128,6 +173,32 @@ export default async function PainelAlunoPage({
         <p className="text-sm text-slate-600">Cada conquista conta</p>
         <p className="mt-2 text-4xl font-semibold tracking-tight text-valeedu-green">{score} pontos</p>
       </section>
+
+      {mapaNucleos.length > 0 && (
+        <section className="ve-card mt-6 p-6">
+          <h2 className="ve-eyebrow">Seu mapa de aprendizagem</h2>
+          <p className="mt-1 text-sm text-slate-600">Como você está indo em cada parte da matemática deste ano.</p>
+          <ul className="mt-5 space-y-4">
+            {mapaNucleos.map((n) => (
+              <li key={n.letra}>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-slate-800">{n.letra}. {n.nome}</span>
+                  <span className="text-xs text-slate-500">{STATUS_LABELS[n.statusPredominante] ?? ""}</span>
+                </div>
+                <div className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className="h-full rounded-full bg-valeedu-green transition-[width]"
+                    style={{ width: `${Math.max(6, Math.round(n.progresso * 100))}%` }}
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+          <Link href="/aluno/trilha" className="mt-5 inline-block text-sm font-medium text-valeedu-blue hover:underline">
+            Ver toda a trilha →
+          </Link>
+        </section>
+      )}
     </main>
   );
 }
