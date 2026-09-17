@@ -44,3 +44,9 @@ A cena também aparece na conclusão de cada nível. `scripts/verificar-ilustrac
 `layout.tsx` e `aventura.css` aplicam um tema restrito à árvore `/aluno/alfabetizacao`: fundo creme com verde/dourado suaves, cartões com contornos e sombra discreta, botões verdes arredondados com alvo mínimo de 48px, foco de teclado visível e respeito a movimento reduzido. Entrada, atividades, feedback, conclusão e estado sem atividades usam a mesma linguagem. Novos `loading.tsx` e `error.tsx` mantêm o estilo ao carregar ou recuperar uma falha. As telas gerais de login, professor e matemática não foram tematizadas como alfabetização.
 
 Feedback tem região acessível de status; microfone tem nome acessível; erro oferece nova tentativa e retorno. ESLint das telas de alfabetização e build/TypeScript completos passaram. Sem teste de microfone em conta real ou publicação nesta etapa.
+
+## Publicação confirmada
+
+Versão `21ae530` publicada em produção em 17/09/2026. Deployment `dpl_GsnNbWRjXuzv6kJoKjwprxxGhXVh`, estado READY, URL https://valeedu-id7b9uhne-diegovale.vercel.app e alias https://portal-bncc-matematica.vercel.app. Projeto Vercel renomeado para `valeedu`, mantendo o mesmo identificador. Build remoto e TypeScript passaram. Página de entrada e as dez imagens responderam HTTP 200 (PNG confirmado).
+
+Publicação feita a partir de uma cópia do commit, sem incluir as alterações locais de matemática ainda em andamento. Os dez níveis têm imagens preparadas; isso não amplia o conteúdo do piloto nem cria novos níveis no banco. Nenhuma migration/seed foi executada. Não houve teste autenticado de voz nesta publicação.
