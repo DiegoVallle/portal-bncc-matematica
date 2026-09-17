@@ -1,4 +1,4 @@
-// Prisma schema — Portal de Diagnóstico BNCC Matemática (Fundamental I e II)
+// Prisma schema — ValeEdu (trilhas de Matemática e Alfabetização, Fundamental I e II)
 
 generator client {
   provider = "prisma-client"

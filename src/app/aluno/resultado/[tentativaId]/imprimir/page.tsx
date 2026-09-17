@@ -240,7 +240,7 @@ export default async function ImprimirRelatorioPage({
       </section>
 
       <footer className="mt-8 border-t border-slate-300 pt-3 text-xs text-slate-500">
-        Relatório gerado em {dataGeracao} pelo ValeEdu Matemática.
+        Relatório gerado em {dataGeracao} pelo ValeEdu.
       </footer>
     </main>
   );

@@ -10,12 +10,12 @@ export default async function Home() {
   return (
     <main className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-12 px-6 py-12 lg:grid-cols-[1.2fr_1fr] lg:py-20">
       <section>
-        <p className="ve-eyebrow">Matemática com acompanhamento</p>
+        <p className="ve-eyebrow">Aprendizagem com acompanhamento</p>
         <h1 className="mt-5 max-w-xl text-4xl font-semibold leading-tight tracking-tight text-valeedu-blue-dark sm:text-6xl">
           Cada descoberta,<br />um passo à frente.
         </h1>
         <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate-600">
-          Um espaço para entender matemática, experimentar ideias e ganhar confiança. Com o professor por perto em cada etapa.
+          Um espaço para aprender matemática e alfabetização, experimentar ideias e ganhar confiança. Com o professor por perto em cada etapa.
         </p>
         <div className="mt-10 flex flex-wrap gap-3 text-sm font-medium text-valeedu-blue">
           {["Entender", "Praticar", "Evoluir"].map((etapa, i) => (

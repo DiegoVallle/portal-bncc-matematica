@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ValeEdu Matemática",
-  description: "Aprenda matemática com aulas, atividades interativas e acompanhamento do professor.",
+  title: "ValeEdu",
+  description: "Aprenda matemática e alfabetização com aulas, atividades interativas e acompanhamento do professor.",
 };
 
 export default function RootLayout({
