@@ -81,8 +81,11 @@ export default async function PainelAlunoPage({
       statusDoNucleo.length > 0
         ? statusDoNucleo.reduce((soma, s) => soma + (PESO_STATUS[s] ?? 0), 0) / statusDoNucleo.length
         : 0;
+    // Mostra o melhor status já alcançado no núcleo (não a mediana) — com só
+    // 1-2 habilidades tocadas num núcleo de 5+, a mediana quase sempre dá
+    // "Não iniciada" e esconde o progresso real que a barra já mostra.
     const ordenados = [...statusDoNucleo].sort((a, b) => (PESO_STATUS[b] ?? 0) - (PESO_STATUS[a] ?? 0));
-    const statusPredominante = ordenados.length > 0 ? ordenados[Math.floor(ordenados.length / 2)] : "NAO_INICIADO";
+    const statusPredominante = ordenados.length > 0 ? ordenados[0] : "NAO_INICIADO";
     return { ...n, progresso, disponivel: statusDoNucleo.length > 0, statusPredominante };
   }).filter((n) => n.disponivel);
 
