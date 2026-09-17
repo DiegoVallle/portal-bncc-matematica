@@ -15,9 +15,11 @@ for (const [codigo,aulas] of Object.entries(AULAS_REVISADAS)) {
   assert(a.teoria.length>150 && a.exemplo.length>60 && a.feedback.length>40, codigo);
   assert(a.correta>=0 && a.correta<a.opcoes.length && Number.isInteger(a.correta));
   assert.equal(new Set(a.opcoes).size,a.opcoes.length);
-  const html=renderToStaticMarkup(createElement(TeoriaCards,{aulas,aulaInicial:i,habilidadeCodigo:codigo,teoriaBase:a.teoria,exemploResolvido:a.exemplo}));
+  const html=renderToStaticMarkup(createElement(TeoriaCards,{aulas,aulaInicial:i,habilidadeCodigo:codigo,teoriaBase:"CONSULTA_ADICIONAL_NAO_MONTADA",exemploResolvido:a.exemplo}));
   assert(html.includes(a.pergunta.replace(/&/g,'&amp;')),codigo);
   assert(!html.includes('undefined'));
+  assert(!html.includes('CONSULTA_ADICIONAL_NAO_MONTADA'));
+  for (const ancora of ['entender','exemplo','tentar','continuar']) assert(html.includes(`id="${ancora}"`));
   total++;
  }
 }
