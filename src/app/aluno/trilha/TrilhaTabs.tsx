@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import AcordeaoNucleo from "./AcordeaoNucleo";
-import { STATUS_ICONES, STATUS_LABELS } from "@/lib/trilha";
-import Link from "next/link";
+import HabilidadeLink from "./HabilidadeLink";
 
 export type HabilidadeTrilha = {
   codigo: string;
   descricao: string;
+  titulo?: string;
   status: string;
   recomendada: boolean;
 };
@@ -29,32 +29,34 @@ export default function TrilhaTabs({
 
   return (
     <div>
-      <div className="flex gap-1 border-b border-slate-200">
+      <div className="flex flex-wrap gap-2 rounded-2xl bg-slate-100 p-1.5" aria-label="Organização das aulas">
         <button
           onClick={() => setAba("pedagogica")}
-          className={`px-4 py-2 text-sm font-medium ${
+          aria-pressed={aba === "pedagogica"}
+          className={`rounded-xl px-4 py-2 text-sm font-medium ${
             aba === "pedagogica"
-              ? "border-b-2 border-valeedu-green text-valeedu-green-dark"
+              ? "bg-white text-valeedu-blue shadow-sm"
               : "text-slate-500 hover:text-slate-700"
           }`}
         >
-          Trilha por ordem pedagógica
+          Meu caminho
         </button>
         <button
           onClick={() => setAba("todas")}
-          className={`px-4 py-2 text-sm font-medium ${
+          aria-pressed={aba === "todas"}
+          className={`rounded-xl px-4 py-2 text-sm font-medium ${
             aba === "todas"
-              ? "border-b-2 border-valeedu-green text-valeedu-green-dark"
+              ? "bg-white text-valeedu-blue shadow-sm"
               : "text-slate-500 hover:text-slate-700"
           }`}
         >
-          Todas as habilidades (BNCC)
+          Consultar habilidades
         </button>
       </div>
 
       {aba === "pedagogica" ? (
         <div className="mt-4 space-y-3">
-          {porNucleo.map((n) => (
+          {porNucleo.filter(n => n.habilidades.length > 0).map((n) => (
             <AcordeaoNucleo key={n.letra} nucleo={n} />
           ))}
         </div>
@@ -62,21 +64,7 @@ export default function TrilhaTabs({
         <ul className="mt-4 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white shadow-sm">
           {todas.map((h) => (
             <li key={h.codigo}>
-              <Link
-                href={`/aluno/trilha/${h.codigo}`}
-                className={`flex items-center justify-between gap-3 px-5 py-3 hover:bg-slate-50 ${
-                  h.recomendada ? "bg-emerald-50" : ""
-                }`}
-              >
-                <span className="text-sm text-slate-900">
-                  {h.recomendada && <span title="Recomendado pelo professor">⭐ </span>}
-                  <span className="mr-2 font-mono text-slate-500">{h.codigo}</span>
-                  {h.descricao}
-                </span>
-                <span className="shrink-0 text-sm text-slate-500" title={STATUS_LABELS[h.status]}>
-                  {STATUS_ICONES[h.status] ?? "○"}
-                </span>
-              </Link>
+              <HabilidadeLink habilidade={h} />
             </li>
           ))}
         </ul>

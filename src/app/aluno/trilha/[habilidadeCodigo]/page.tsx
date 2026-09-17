@@ -8,7 +8,6 @@ import { AULAS_REVISADAS } from "@/content/aulas-revisadas";
 import { STATUS_LABELS } from "@/lib/trilha";
 import AulaStepper from "./AulaStepper";
 import TeoriaCards from "./TeoriaCards";
-import IlustracaoQuestao from "@/components/IlustracaoQuestao";
 import { iniciarHabilidade } from "../actions";
 
 export default async function ConteudoHabilidadePage({
@@ -58,16 +57,16 @@ export default async function ConteudoHabilidadePage({
   const comecar = iniciarHabilidade.bind(null, habilidade.codigo);
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
+    <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
       <p className="text-sm">
         <Link href="/aluno/trilha" className="text-slate-600 hover:underline">
           ← Voltar para a trilha
         </Link>
       </p>
 
-      <div className="mt-2 flex items-start justify-between gap-4">
+      <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <h1 className="text-2xl font-bold text-slate-900">
-          {aulas.length ? "Seu caminho de aprendizagem" : habilidade.descricao}
+          {aulas.length ? "Hora de aprender" : habilidade.descricao}
         </h1>
         {progresso && (
           <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
@@ -76,14 +75,13 @@ export default async function ConteudoHabilidadePage({
         )}
       </div>
 
-      <p className="mt-3 text-sm text-slate-500">{habilidade.codigo} · {habilidade.descricao}</p>
+      <details className="mt-3 max-w-3xl text-sm text-slate-500"><summary className="cursor-pointer">{habilidade.codigo} · Sobre esta habilidade</summary><p className="mt-2 leading-relaxed">{habilidade.descricao}</p></details>
       <div className="mt-6">
         <AulaStepper habilidadeCodigo={habilidade.codigo} temExercicios={totalExerciciosMc > 0} totalAvaliacao={totalAvaliacao} />
       </div>
 
       <div className="mt-6 space-y-6">
-        {conteudo.ilustracaoSvg && <IlustracaoQuestao svg={conteudo.ilustracaoSvg} />}
-        <TeoriaCards key={`${habilidadeCodigo}-${aulaInicial}`} aulas={aulas} aulaInicial={aulaInicial} habilidadeCodigo={habilidadeCodigo} teoriaBase={consulta.teoria} exemploResolvido={consulta.exemplo}>
+        <TeoriaCards key={`${habilidadeCodigo}-${aulaInicial}`} aulas={aulas} aulaInicial={aulaInicial} habilidadeCodigo={habilidadeCodigo} teoriaBase={consulta.teoria} exemploResolvido={consulta.exemplo} ilustracaoHabilidade={conteudo.ilustracaoSvg}>
 
         {totalExerciciosMc > 0 && (
           <form action={comecar}>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { sairAluno } from "../actions";
+import { AULAS_REVISADAS } from "@/content/aulas-revisadas";
 import { NUCLEOS } from "@/lib/trilha";
 import TrilhaTabs, { type HabilidadeTrilha } from "./TrilhaTabs";
 
@@ -31,6 +32,7 @@ export default async function TrilhaPage() {
   const habilidades: HabilidadeTrilha[] = conteudos.map((c) => ({
     codigo: c.habilidade.codigo,
     descricao: c.habilidade.descricao,
+    titulo: AULAS_REVISADAS[c.habilidade.codigo]?.map(a => a.titulo).join(" · "),
     status: statusPorConteudo.get(c.id) ?? "NAO_INICIADO",
     recomendada: c.habilidade.codigo === aluno.trilhaPontoPartida,
   }));
