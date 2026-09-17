@@ -33,7 +33,7 @@ export default async function ConteudoHabilidadePage({
   const aulaParam = Number((await searchParams).aula ?? "1");
   const aulaInicial = Number.isInteger(aulaParam) && aulaParam >= 1 && aulaParam <= aulas.length ? aulaParam - 1 : 0;
 
-  const [totalExerciciosMc, totalAvaliacao, progresso, totalGuiada] = await Promise.all([
+  const [totalExerciciosMc, totalAvaliacao, progresso, totalGuiada, tentativasDePratica] = await Promise.all([
     prisma.questaoConteudo.count({
       where: {
         conteudoId: conteudo.id,
@@ -52,7 +52,14 @@ export default async function ConteudoHabilidadePage({
       where: { alunoId_conteudoId: { alunoId: sessao.id, conteudoId: conteudo.id } },
     }),
     prisma.questaoConteudo.count({where:{conteudoId:conteudo.id,nivel:{not:"AVALIACAO"},tipoResposta:"TEXTO",atividadeInterativa:{equals:Prisma.AnyNull}}}),
+    // "Passou pelos exercícios" = tem pelo menos 1 tentativa real registrada
+    // (nunca a prática guiada, que não grava nada) — é isso que libera a
+    // avaliação final, pra nunca dar pra pular direto da aula pra ela.
+    prisma.tentativaQuestaoConteudo.count({
+      where: { alunoId: sessao.id, questaoConteudo: { conteudoId: conteudo.id, nivel: { not: "AVALIACAO" } } },
+    }),
   ]);
+  const jaPraticou = tentativasDePratica > 0;
 
   const comecar = iniciarHabilidade.bind(null, habilidade.codigo);
 
@@ -77,7 +84,7 @@ export default async function ConteudoHabilidadePage({
 
       <details className="mt-3 max-w-3xl text-sm text-slate-500"><summary className="cursor-pointer">{habilidade.codigo} · Sobre esta habilidade</summary><p className="mt-2 leading-relaxed">{habilidade.descricao}</p></details>
       <div className="mt-6">
-        <AulaStepper habilidadeCodigo={habilidade.codigo} temExercicios={totalExerciciosMc > 0} totalAvaliacao={totalAvaliacao} />
+        <AulaStepper habilidadeCodigo={habilidade.codigo} temExercicios={totalExerciciosMc > 0} totalAvaliacao={totalAvaliacao} jaPraticou={jaPraticou} />
       </div>
 
       <div className="mt-6 space-y-6">

@@ -24,6 +24,16 @@ export default async function AvaliacaoFinalPage({
   });
   if (!habilidade || !habilidade.conteudo) notFound();
 
+  // Nunca dá pra pular direto da aula pra avaliação — precisa ter praticado
+  // pelo menos uma vez de verdade primeiro (mesma regra do AulaStepper, mas
+  // aplicada aqui no servidor pra não depender só de esconder o link na UI).
+  const tentativasDePratica = await prisma.tentativaQuestaoConteudo.count({
+    where: { alunoId: sessao.id, questaoConteudo: { conteudoId: habilidade.conteudo.id, nivel: { not: "AVALIACAO" } } },
+  });
+  if (tentativasDePratica === 0) {
+    redirect(`/aluno/trilha/${habilidadeCodigo}/exercicios`);
+  }
+
   const questoes = await prisma.questaoConteudo.findMany({
     where: { conteudoId: habilidade.conteudo.id, nivel: "AVALIACAO" },
     orderBy: { ordem: "asc" },
