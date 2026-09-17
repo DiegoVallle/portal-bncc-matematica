@@ -49,6 +49,9 @@ model Aluno {
   tentativas       Tentativa[]
   tentativasTrilha TentativaQuestaoConteudo[]
   progressos       ProgressoHabilidade[]
+
+  tentativasFonicas TentativaAtividadeFonica[]
+  progressosFonicos ProgressoFonico[]
 }
 
 // Habilidade da BNCC (ex: EF05MA01), associada a um ano, unidade temática e bimestre sugerido
@@ -260,6 +263,122 @@ model ProgressoHabilidade {
 
   conteudoId String
   conteudo   Conteudo @relation(fields: [conteudoId], references: [id], onDelete: Cascade)
+
+  @@unique([alunoId, conteudoId])
+}
+
+// --- Trilha de Alfabetização (Fase 0 — rascunho de schema, NÃO migrado ainda) ---
+// Público-alvo: crianças de 5 a 8 anos ainda não alfabetizadas. Diferente da
+// trilha de Matemática, o aluno não lê nem digita: toda instrução é falada
+// (TTS) e boa parte das respostas são clique-em-imagem ou fala (STT, Web
+// Speech API pt-BR) — por isso são modelos novos, não uma adaptação de
+// QuestaoConteudo/Alternativa. Progressão única por nível fônico (não
+// separada por etapa BNCC), ponto de partida definido pelo professor, mesmo
+// padrão de Aluno.trilhaPontoPartida. Ver src/lib/alfabetizacao.ts para a
+// progressão pedagógica e o mapeamento de códigos BNCC.
+
+enum NivelFonico {
+  CONSCIENCIA_RIMA
+  CONSCIENCIA_SILABICA
+  CONSCIENCIA_FONEMICA
+  CORRESPONDENCIA_VOGAIS
+  CORRESPONDENCIA_CONSOANTES
+  SILABAS_SIMPLES
+  PALAVRAS_SIMPLES
+  ENCONTROS_E_DIGRAFOS
+  PALAVRAS_COMPLEXAS
+  FRASES_E_TEXTOS
+}
+
+enum TipoAtividadeFonica {
+  RIMA // reconhecer/apontar palavras que rimam
+  SEGMENTACAO_SILABICA // contar/bater sílabas
+  SOM_INICIAL // identificar o som inicial de uma palavra
+  CORRESPONDENCIA_SOM_LETRA // ouvir o som, apontar a letra/grafema
+  LEITURA_SILABA // ler sílaba em voz alta (STT)
+  MONTAR_PALAVRA // montar palavra a partir de sílabas (clique/arraste)
+  LEITURA_PALAVRA // ler palavra em voz alta (STT)
+  LEITURA_FRASE // ler frase curta em voz alta (STT)
+}
+
+enum TipoErroFonico {
+  DISCRIMINACAO_SONORA // confunde sons parecidos (ex: /p/ e /b/)
+  TROCA_GRAFEMA // reconhece o som mas erra a letra
+  OMISSAO // pula sílaba/fonema
+  INVERSAO // troca a ordem de sílabas/letras
+  SEGMENTACAO // erra a divisão da palavra em partes
+  ERRO_NAO_CLASSIFICADO
+}
+
+// Um "conteúdo" aqui é um nível da progressão fônica, não uma habilidade BNCC
+// isolada — vários códigos BNCC podem mapear pro mesmo nível (ver
+// src/lib/alfabetizacao.ts). `codigoBncc` é referência/rastreabilidade, não
+// chave de agrupamento como em Habilidade/Conteudo da trilha de matemática.
+model ConteudoAlfabetizacao {
+  id              String      @id @default(cuid())
+  nivel           NivelFonico @unique
+  codigoBncc      String? // código(s) BNCC de referência, quando houver 1:1 claro
+  ordemPedagogica Int         @unique
+  objetivoAluno   String?
+  instrucaoAudio  String // texto lido por TTS — o aluno não lê a tela
+  ilustracaoSvg   String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  atividades AtividadeFonica[]
+  progressos ProgressoFonico[]
+}
+
+model AtividadeFonica {
+  id             String              @id @default(cuid())
+  tipo           TipoAtividadeFonica
+  instrucaoAudio String // TTS
+  alvoTexto      String // palavra/sílaba/fonema/frase alvo — usado tanto pra
+  // renderizar imagem/opções quanto pra validar a transcrição do STT
+  opcoes         Json? // opções clicáveis (ex: 3 imagens, 1 correta), quando aplicável
+  ilustracaoSvg  String?
+  ordem          Int                 @default(0)
+
+  conteudoId String
+  conteudo   ConteudoAlfabetizacao @relation(fields: [conteudoId], references: [id], onDelete: Cascade)
+
+  tentativas TentativaAtividadeFonica[]
+}
+
+// Registro de cada tentativa — mesmo espírito de TentativaQuestaoConteudo,
+// mas com campos de voz em vez de alternativa/resposta em texto.
+model TentativaAtividadeFonica {
+  id             String          @id @default(cuid())
+  respostaClique Json? // quando a interação é clique/seleção (opções)
+  transcricaoVoz String? // texto reconhecido pelo STT, quando aplicável
+  confiancaVoz   Float? // confiança relatada pela API de reconhecimento (0-1)
+  correta        Boolean
+  tipoErro       TipoErroFonico?
+  tempoMs        Int?
+  criadaEm       DateTime        @default(now())
+
+  alunoId String
+  aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  atividadeId String
+  atividade   AtividadeFonica @relation(fields: [atividadeId], references: [id], onDelete: Cascade)
+
+  @@index([alunoId, atividadeId])
+}
+
+// Estado de domínio do aluno em cada nível fônico (1 por aluno × nível).
+// Reaproveita StatusDominio (mesmo enum da trilha de matemática).
+model ProgressoFonico {
+  id           String        @id @default(cuid())
+  status       StatusDominio @default(NAO_INICIADO)
+  dominio      Float         @default(0)
+  atualizadoEm DateTime      @updatedAt
+
+  alunoId String
+  aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  conteudoId String
+  conteudo   ConteudoAlfabetizacao @relation(fields: [conteudoId], references: [id], onDelete: Cascade)
 
   @@unique([alunoId, conteudoId])
 }
