@@ -1,9 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { obterSessao } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { obterAulaInfo, obterProximaAula, NUMERO_ULTIMA_AULA_PRONTA, BLOCO_TIPO_LABELS } from "@/lib/aulas";
 import { hashDeterministico } from "@/lib/fonica";
+import { obterMedalhaSeAplicavel, obterDecoracaoBloco, obterIconeToque } from "@/lib/assets-visuais";
 import AtividadeBlocoPlayer from "./AtividadeBlocoPlayer";
 
 // Rota sequencial do roteiro de 72 aulas (piloto: Módulo 1, Aulas 01-08 com
@@ -52,9 +54,14 @@ export default async function AulaPage({ params }: { params: Promise<{ numero: s
 
   if (!blocoAtual) {
     const proximaAula = obterProximaAula(numero);
+    const medalha = obterMedalhaSeAplicavel(numero);
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12 text-center">
-        <p className="text-5xl">🎉</p>
+        {medalha ? (
+          <Image src={medalha.src} alt="" width={medalha.largura} height={medalha.altura} className="mx-auto h-32 w-32 object-contain" />
+        ) : (
+          <p className="text-5xl">🎉</p>
+        )}
         <p className="mt-4 text-xl font-semibold text-slate-900">Aula {numero} concluída!</p>
         <p className="mt-1 text-sm text-slate-600">{info.titulo}</p>
         <div className="mt-6 flex flex-col items-center gap-3">
@@ -82,10 +89,22 @@ export default async function AulaPage({ params }: { params: Promise<{ numero: s
     (a, b) => hashDeterministico(atividade.id + a.texto) - hashDeterministico(atividade.id + b.texto)
   );
 
+  const decoracao = obterDecoracaoBloco(numero, blocoAtual.ordem);
+  const iconeToque = obterIconeToque(numero, blocoAtual.ordem);
+
   return (
     <main className="mx-auto w-full max-w-xl flex-1 px-6 py-10">
       <p className="text-center text-xs font-medium text-slate-400">{BLOCO_TIPO_LABELS[blocoAtual.tipo]}</p>
       <h1 className="mt-1 text-center text-lg font-semibold text-slate-900">{blocoAtual.titulo}</h1>
+      {decoracao && (
+        <Image
+          src={decoracao.src}
+          alt=""
+          width={decoracao.largura}
+          height={decoracao.altura}
+          className="mx-auto mt-3 h-28 w-28 object-contain"
+        />
+      )}
       <AtividadeBlocoPlayer
         key={atividade.id}
         atividadeId={atividade.id}
@@ -93,6 +112,8 @@ export default async function AulaPage({ params }: { params: Promise<{ numero: s
         instrucaoAudio={atividade.instrucaoAudio}
         opcoes={opcoes}
         aulaHref={`/aluno/alfabetizacao/aula/${numero}`}
+        primeiroBloco={blocoAtual.ordem === 1}
+        iconeToque={iconeToque}
       />
     </main>
   );

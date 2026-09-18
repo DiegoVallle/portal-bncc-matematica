@@ -8,9 +8,11 @@
 // tocar num componente compartilhado que outra sessão está evoluindo.
 
 import { useActionState, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { responderAtividadeBloco, type EstadoRespostaBloco } from "../actions";
 import type { TipoAtividadeBloco } from "@/lib/aulas";
+import { MASCOTE_POR_ESTADO, type ImagemVisual } from "@/lib/assets-visuais";
 
 type SpeechRecognitionResultLike = { transcript: string; confidence: number };
 type SpeechRecognitionLike = {
@@ -59,12 +61,16 @@ export default function AtividadeBlocoPlayer({
   instrucaoAudio,
   opcoes,
   aulaHref,
+  primeiroBloco,
+  iconeToque,
 }: {
   atividadeId: string;
   tipo: TipoAtividadeBloco;
   instrucaoAudio: string;
   opcoes: { texto: string; emoji: string }[];
   aulaHref: string;
+  primeiroBloco: boolean;
+  iconeToque: ImagemVisual | null;
 }) {
   const [estado, acao] = useActionState<EstadoRespostaBloco, FormData>(
     responderAtividadeBloco.bind(null, atividadeId),
@@ -104,6 +110,16 @@ export default function AtividadeBlocoPlayer({
 
   return (
     <div className="mt-6 flex flex-col items-center gap-6 rounded-2xl border border-valeedu-blue/20 bg-white p-8 text-center shadow-sm">
+      {primeiroBloco && !respondeu && (
+        <Image
+          src={MASCOTE_POR_ESTADO.BOAS_VINDAS.src}
+          alt=""
+          width={MASCOTE_POR_ESTADO.BOAS_VINDAS.largura}
+          height={MASCOTE_POR_ESTADO.BOAS_VINDAS.altura}
+          className="h-24 w-24 object-contain"
+        />
+      )}
+
       <button
         type="button"
         onClick={() => falar(instrucaoAudio)}
@@ -114,7 +130,13 @@ export default function AtividadeBlocoPlayer({
 
       {acertou ? (
         <div className="flex flex-col items-center gap-3">
-          <p className="text-4xl">✅</p>
+          <Image
+            src={MASCOTE_POR_ESTADO.SUCESSO.src}
+            alt=""
+            width={MASCOTE_POR_ESTADO.SUCESSO.largura}
+            height={MASCOTE_POR_ESTADO.SUCESSO.altura}
+            className="h-28 w-28 object-contain"
+          />
           <p className="text-lg font-semibold text-valeedu-green-dark">Isso mesmo!</p>
           <Link
             href={aulaHref}
@@ -154,10 +176,18 @@ export default function AtividadeBlocoPlayer({
               <button
                 type="button"
                 onClick={() => setToques((t) => t + 1)}
-                className="flex h-28 w-28 items-center justify-center rounded-full bg-valeedu-blue text-5xl text-white shadow-md active:scale-95"
+                className={
+                  iconeToque
+                    ? "flex h-28 w-28 items-center justify-center rounded-full border-4 border-valeedu-blue bg-white p-2 shadow-md active:scale-95"
+                    : "flex h-28 w-28 items-center justify-center rounded-full bg-valeedu-blue text-5xl text-white shadow-md active:scale-95"
+                }
                 aria-label="Tocar"
               >
-                👏
+                {iconeToque ? (
+                  <Image src={iconeToque.src} alt="" width={iconeToque.largura} height={iconeToque.altura} className="h-full w-full object-contain" />
+                ) : (
+                  "👏"
+                )}
               </button>
               <p className="text-2xl font-bold text-valeedu-blue">{toques}</p>
               <div className="flex gap-2">
@@ -181,6 +211,13 @@ export default function AtividadeBlocoPlayer({
 
           {tipo === "LEITURA_VOZ" && suportaVoz && (
             <div className="flex flex-col items-center gap-3">
+              <Image
+                src={MASCOTE_POR_ESTADO.ESCUTA.src}
+                alt=""
+                width={MASCOTE_POR_ESTADO.ESCUTA.largura}
+                height={MASCOTE_POR_ESTADO.ESCUTA.altura}
+                className="h-24 w-24 object-contain"
+              />
               <input type="hidden" name="transcricao" value={transcricao ?? ""} />
               <button
                 type="button"
@@ -214,7 +251,18 @@ export default function AtividadeBlocoPlayer({
           )}
 
           {respondeu && !acertou && (
-            <p className="text-base font-medium text-amber-600">{estado?.erro ?? "Vamos tentar de novo! 🔁"}</p>
+            <div className="flex flex-col items-center gap-2">
+              {!estado?.erro && (
+                <Image
+                  src={MASCOTE_POR_ESTADO.TENTAR_NOVAMENTE.src}
+                  alt=""
+                  width={MASCOTE_POR_ESTADO.TENTAR_NOVAMENTE.largura}
+                  height={MASCOTE_POR_ESTADO.TENTAR_NOVAMENTE.altura}
+                  className="h-20 w-20 object-contain"
+                />
+              )}
+              <p className="text-base font-medium text-amber-600">{estado?.erro ?? "Vamos tentar de novo!"}</p>
+            </div>
           )}
         </form>
       )}
