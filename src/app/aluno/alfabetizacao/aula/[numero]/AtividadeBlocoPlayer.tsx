@@ -7,12 +7,13 @@
 // usados no player da trilha de níveis — arquivo próprio pra não arriscar
 // tocar num componente compartilhado que outra sessão está evoluindo.
 
-import { useActionState, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { startTransition, useActionState, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { responderAtividadeBloco, type EstadoRespostaBloco } from "../actions";
 import type { TipoAtividadeBloco } from "@/lib/aulas";
 import { MASCOTE_POR_ESTADO, type ImagemVisual } from "@/lib/assets-visuais";
+import LetterTracer from "@/components/LetterTracer";
 
 type SpeechRecognitionResultLike = { transcript: string; confidence: number };
 type SpeechRecognitionLike = {
@@ -63,6 +64,7 @@ export default function AtividadeBlocoPlayer({
   aulaHref,
   primeiroBloco,
   iconeToque,
+  alvoTexto,
 }: {
   atividadeId: string;
   tipo: TipoAtividadeBloco;
@@ -71,6 +73,7 @@ export default function AtividadeBlocoPlayer({
   aulaHref: string;
   primeiroBloco: boolean;
   iconeToque: ImagemVisual | null;
+  alvoTexto: string;
 }) {
   const [estado, acao] = useActionState<EstadoRespostaBloco, FormData>(
     responderAtividadeBloco.bind(null, atividadeId),
@@ -242,6 +245,17 @@ export default function AtividadeBlocoPlayer({
                 Enviar
               </button>
             </div>
+          )}
+
+          {tipo === "TRACADO_LETRA" && (
+            <LetterTracer
+              letra={alvoTexto}
+              aoCompletar={() => {
+                const formData = new FormData();
+                if (inicioRef.current > 0) formData.set("tempoMs", String(Date.now() - inicioRef.current));
+                startTransition(() => acao(formData));
+              }}
+            />
           )}
 
           {tipo === "LEITURA_VOZ" && !suportaVoz && (

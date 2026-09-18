@@ -6,7 +6,7 @@
 // prisma/seed-data/aulas-modulo-01.ts.
 
 export type BlocoTipo = "AQUECIMENTO" | "DISCRIMINACAO" | "CONSTRUCAO" | "PRODUCAO_ORAL";
-export type TipoAtividadeBloco = "CLIQUE_COMPARACAO" | "CONTADOR_TOQUES" | "LEITURA_VOZ";
+export type TipoAtividadeBloco = "CLIQUE_COMPARACAO" | "CONTADOR_TOQUES" | "LEITURA_VOZ" | "TRACADO_LETRA";
 
 export const DURACAO_BLOCO_SEG: Record<BlocoTipo, number> = {
   AQUECIMENTO: 180,
@@ -124,4 +124,4 @@ export function obterProximaAula(numero: number): number | null {
 
 // Aulas com conteúdo real (blocos/atividades) já semeado — as demais
 // aparecem na trilha como "em breve" até serem autoradas nas próximas fases.
-export const NUMERO_ULTIMA_AULA_PRONTA = 8;
+export const NUMERO_ULTIMA_AULA_PRONTA = 16;

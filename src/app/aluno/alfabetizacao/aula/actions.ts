@@ -97,6 +97,12 @@ export async function responderAtividadeBloco(
       return { correta: false, erro: "Toque pelo menos uma vez." };
     }
     correta = String(contagem) === atividade.alvoTexto.trim();
+  } else if (atividade.tipo === "TRACADO_LETRA") {
+    // O componente só chama esta action depois de completar todos os
+    // waypoints (ver LetterTracer.tsx) — sem validação geométrica no
+    // servidor nesta fase, mesma confiança já dada ao client em
+    // CONTADOR_TOQUES (documentado no schema.prisma).
+    correta = true;
   } else {
     // LEITURA_VOZ
     transcricaoVoz = String(formData.get("transcricao") ?? "").trim();

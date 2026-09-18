@@ -436,6 +436,12 @@ enum TipoAtividadeBloco {
   CLIQUE_COMPARACAO
   CONTADOR_TOQUES
   LEITURA_VOZ
+  // Módulo 2 em diante: traçado de letra em canvas (waypoints + tolerância
+  // radial) — `alvoTexto` guarda a letra (ex: "A"), o motor de waypoints é
+  // código (LetterTracer.tsx), não dado. Sem validação geométrica no
+  // servidor nesta fase (mesmo nível de confiança já dado ao client em
+  // CONTADOR_TOQUES) — documentado como simplificação deliberada.
+  TRACADO_LETRA
 }
 
 model Aula {

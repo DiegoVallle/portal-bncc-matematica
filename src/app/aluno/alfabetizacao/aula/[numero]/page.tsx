@@ -111,6 +111,7 @@ export default async function AulaPage({ params }: { params: Promise<{ numero: s
         aulaHref={`/aluno/alfabetizacao/aula/${numero}`}
         primeiroBloco={blocoAtual.ordem === 1}
         iconeToque={iconeToque}
+        alvoTexto={atividade.alvoTexto}
       />
     </main>
   );
