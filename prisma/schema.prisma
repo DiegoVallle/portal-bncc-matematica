@@ -59,6 +59,9 @@ model Aluno {
 
   tentativasFonicas TentativaAtividadeFonica[]
   progressosFonicos ProgressoFonico[]
+
+  tentativasBloco TentativaAtividadeBloco[]
+  progressosAula  ProgressoAula[]
 }
 
 // Habilidade da BNCC (ex: EF05MA01), associada a um ano, unidade temática e bimestre sugerido
@@ -393,6 +396,128 @@ model ProgressoFonico {
   conteudo   ConteudoAlfabetizacao @relation(fields: [conteudoId], references: [id], onDelete: Cascade)
 
   @@unique([alunoId, conteudoId])
+}
+
+// --- Trilha de Alfabetização v2 — roteiro de 72 aulas (Módulo 1 em progresso) ---
+// Camada de organização ACIMA de ConteudoAlfabetizacao/AtividadeFonica — não
+// substitui nem apaga nada de lá. "Aula" agrupa 4 blocos pedagógicos fixos
+// (aquecimento/discriminação/construção/produção oral), cada um com suas
+// próprias atividades. Modelos próprios (AtividadeBloco/TentativaAtividadeBloco),
+// não reaproveitam AtividadeFonica/TentativaAtividadeFonica — evita qualquer
+// risco de migração tocar nas 50 atividades e no progresso real já existentes
+// (ver ProgressoFonico acima, Diego já tem DOMINADO em 3 níveis).
+// Ver docs/SISTEMA_ALFABETIZACAO_SPEC.md (roteiro completo) e
+// docs/recursos-visuais/ (catálogo de assets visuais, produzido por sessão
+// separada — nenhuma imagem gerada ainda, só planejada).
+
+enum BlocoTipo {
+  AQUECIMENTO
+  DISCRIMINACAO
+  CONSTRUCAO
+  PRODUCAO_ORAL
+}
+
+enum StatusAula {
+  NAO_INICIADA
+  EM_ANDAMENTO
+  CONCLUIDA
+}
+
+// Simplificação deliberada pro Módulo 1 (fatia vertical): 3 tipos cobrem as
+// mecânicas realmente novas + as já existentes reaproveitadas em espírito.
+// CLIQUE_COMPARACAO cobre rima/aliteração/som-inicial/classificação/pares
+// mínimos (mesma correção por texto normalizado de AtividadeFonica).
+// CONTADOR_TOQUES é novo: a criança toca uma vez por batida/palavra/sílaba
+// ouvida — correção compara contagem, não texto. LEITURA_VOZ reaproveita o
+// padrão de STT já existente; quando o alvo é uma imitação não-verbal (som
+// de bicho, palma), não há validação real de conteúdo — só grava a tentativa
+// e celebra (não dá pra validar "imitação de latido" com STT de fala).
+enum TipoAtividadeBloco {
+  CLIQUE_COMPARACAO
+  CONTADOR_TOQUES
+  LEITURA_VOZ
+}
+
+model Aula {
+  id             String   @id @default(cuid())
+  numero         Int      @unique // 1 a 72
+  modulo         Int // 1 a 7
+  titulo         String
+  focoPedagogico String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  blocos     BlocoAula[]
+  progressos ProgressoAula[]
+}
+
+model BlocoAula {
+  id             String    @id @default(cuid())
+  tipo           BlocoTipo
+  ordem          Int // 1 a 4
+  duracaoSeg     Int // 180 | 300 | 240 (conforme o bloco)
+  titulo         String
+  instrucaoAudio String
+
+  aulaId String
+  aula   Aula   @relation(fields: [aulaId], references: [id], onDelete: Cascade)
+
+  atividades AtividadeBloco[]
+}
+
+model AtividadeBloco {
+  id             String             @id @default(cuid())
+  tipo           TipoAtividadeBloco
+  instrucaoAudio String
+  // Alvo da correção: contagem (CONTADOR_TOQUES, ex: "3"), texto esperado
+  // (CLIQUE_COMPARACAO/LEITURA_VOZ) — nunca enviado ao client marcado como
+  // certo antes de responder, mesmo princípio de AtividadeFonica.alvoTexto.
+  alvoTexto      String
+  // Só usado em CLIQUE_COMPARACAO — opções sem marcar qual é a certa.
+  opcoes         Json?
+  // true = não há validação real de conteúdo (imitação não-verbal); grava a
+  // tentativa e sempre celebra. Só se aplica a LEITURA_VOZ.
+  semValidacao   Boolean            @default(false)
+  ordem          Int                @default(0)
+
+  blocoAulaId String
+  blocoAula   BlocoAula @relation(fields: [blocoAulaId], references: [id], onDelete: Cascade)
+
+  tentativas TentativaAtividadeBloco[]
+}
+
+model TentativaAtividadeBloco {
+  id             String   @id @default(cuid())
+  respostaClique Json?
+  transcricaoVoz String?
+  contagem       Int? // pro CONTADOR_TOQUES — número de toques dados
+  correta        Boolean
+  tempoMs        Int?
+  criadaEm       DateTime @default(now())
+
+  alunoId String
+  aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  atividadeId String
+  atividade   AtividadeBloco @relation(fields: [atividadeId], references: [id], onDelete: Cascade)
+
+  @@index([alunoId, atividadeId])
+}
+
+model ProgressoAula {
+  id               String     @id @default(cuid())
+  status           StatusAula @default(NAO_INICIADA)
+  blocosConcluidos Int        @default(0) // 0 a 4
+  estrelas         Int        @default(0)
+  atualizadoEm     DateTime   @updatedAt
+
+  alunoId String
+  aluno   Aluno  @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+
+  aulaId String
+  aula   Aula   @relation(fields: [aulaId], references: [id], onDelete: Cascade)
+
+  @@unique([alunoId, aulaId])
 }
 
 model Tentativa {
