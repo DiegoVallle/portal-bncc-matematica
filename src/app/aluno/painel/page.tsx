@@ -39,6 +39,20 @@ export default async function PainelAlunoPage({
   // painel próprio, sem as consultas e seções específicas de matemática
   // abaixo.
   if (aluno.trilhaTipo === "ALFABETIZACAO") {
+    // Retoma no roteiro novo de 72 aulas (Módulo 1, Aulas 01-08) — não mais
+    // na listagem antiga por nível. Aula seguinte à última concluída, ou a
+    // Aula 1 se o aluno nunca concluiu nenhuma (uma aula sem linha de
+    // progresso "CONCLUIDA" não significa que ela não existe — só que ainda
+    // não foi terminada, daí não dar pra simplesmente pegar a "não concluída
+    // de menor número": isso mandaria de volta pra uma aula já terminada que
+    // nunca ganhou uma segunda tentativa incompleta registrada).
+    const ultimaConcluida = await prisma.progressoAula.findFirst({
+      where: { alunoId: aluno.id, status: "CONCLUIDA" },
+      include: { aula: { select: { numero: true } } },
+      orderBy: { aula: { numero: "desc" } },
+    });
+    const proximaAula = (ultimaConcluida?.aula.numero ?? 0) + 1;
+
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
         <div className="flex items-center justify-between">
@@ -55,7 +69,7 @@ export default async function PainelAlunoPage({
           <h2 className="text-lg font-semibold text-slate-900">Vamos aprender a ler!</h2>
           <p className="mt-1 text-sm text-slate-600">Toque para continuar suas descobertas.</p>
           <Link
-            href="/aluno/alfabetizacao"
+            href={`/aluno/alfabetizacao/aula/${proximaAula}`}
             className="mt-4 inline-block rounded-lg bg-valeedu-green px-4 py-2 text-sm font-medium text-white hover:bg-valeedu-green-dark"
           >
             Continuar →
