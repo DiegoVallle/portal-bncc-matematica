@@ -8,10 +8,7 @@ import { hashDeterministico } from "@/lib/fonica";
 import { obterMedalhaSeAplicavel, obterDecoracaoBloco, obterIconeToque } from "@/lib/assets-visuais";
 import AtividadeBlocoPlayer from "./AtividadeBlocoPlayer";
 
-// Rota sequencial do roteiro de 72 aulas (piloto: Módulo 1, Aulas 01-08 com
-// conteúdo real). Nunca substitui /aluno/alfabetizacao (a trilha de 10
-// níveis já em produção) — convivem em rotas diferentes até o Módulo 1 ser
-// validado com uso real (ver plano aprovado).
+// Única trilha ativa de alfabetização: roteiro sequencial de 72 aulas.
 export default async function AulaPage({ params }: { params: Promise<{ numero: string }> }) {
   const sessao = await obterSessao();
   if (!sessao || sessao.role !== "aluno") redirect("/aluno/entrar");
